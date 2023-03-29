@@ -28,7 +28,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-class RunthingsSecretsPlugin
+class runthings_secrets_Plugin
 {
     public function __construct()
     {
@@ -199,6 +199,6 @@ class RunthingsSecretsPlugin
     }
 }
 
-$runthings_secrets = new RunthingsSecretsPlugin();
+$runthings_secrets = new runthings_secrets_Plugin();
 
 register_activation_hook(__FILE__, array($runthings_secrets, 'activate'));

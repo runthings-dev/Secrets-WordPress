@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-class RunThings_Secrets_Options_Page
+class runthings_secrets_Options_Page
 {
 
     public function __construct()
@@ -121,4 +121,4 @@ class RunThings_Secrets_Options_Page
     }
 }
 
-new RunThings_Secrets_Options_Page();
+new runthings_secrets_Options_Page();
