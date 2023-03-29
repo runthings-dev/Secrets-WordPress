@@ -3,7 +3,7 @@
 Plugin Name: Secrets
 Plugin URI: https://runthings.dev
 Description: Share secrets securely
-Version: 1.0.0
+Version: 0.5.0
 Author: Matthew Harris, runthings.dev
 Author URI: https://runthings.dev/
 License: GPLv3 or later
