@@ -23,11 +23,19 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Options_Page
 {
-
     public function __construct()
     {
         add_action('admin_menu', [$this, 'runthings_secrets_options_page']);
         add_action('admin_init', [$this, 'runthings_secrets_settings_init']);
+
+        add_action('admin_enqueue_scripts', [$this, 'runthings_secrets_enqueue_scripts']);
+        add_action('admin_footer', [$this, 'runthings_secrets_admin_footer']);
+    }
+
+    function runthings_secrets_enqueue_scripts()
+    {
+        wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13');
+        wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
     }
 
     public function runthings_secrets_options_page()
@@ -54,7 +62,7 @@ class runthings_secrets_Options_Page
                 ?>
             </form>
         </div>
-<?php
+    <?php
     }
 
     public function runthings_secrets_settings_init()
@@ -103,21 +111,38 @@ class runthings_secrets_Options_Page
     public function runthings_secrets_add_page_callback()
     {
         $add_page_id = get_option('runthings_secrets_add_page');
-        wp_dropdown_pages(array(
-            'name' => 'runthings_secrets_add_page',
-            'selected' => $add_page_id,
-            'show_option_none' => __('(no page selected)', 'runthings-secrets')
-        ));
+        echo '<select name="runthings_secrets_add_page" class="runthings-secrets-select2">';
+        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        $pages = get_pages();
+        foreach ($pages as $page) {
+            $selected = ($add_page_id == $page->ID) ? 'selected="selected"' : '';
+            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+        }
+        echo '</select>';
     }
 
     public function runthings_secrets_view_page_callback()
     {
         $view_page_id = get_option('runthings_secrets_view_page');
-        wp_dropdown_pages(array(
-            'name' => 'runthings_secrets_view_page',
-            'selected' => $view_page_id,
-            'show_option_none' => __('(no page selected)', 'runthings-secrets')
-        ));
+        echo '<select name="runthings_secrets_view_page" class="runthings-secrets-select2">';
+        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        $pages = get_pages();
+        foreach ($pages as $page) {
+            $selected = ($view_page_id == $page->ID) ? 'selected="selected"' : '';
+            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+        }
+        echo '</select>';
+    }
+
+    function runthings_secrets_admin_footer()
+    {
+    ?>
+        <script>
+            jQuery(document).ready(function($) {
+                $('.runthings-secrets-select2').select2();
+            });
+        </script>
+<?php
     }
 }
 
