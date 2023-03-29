@@ -33,7 +33,7 @@ class RunthingsSecretsPlugin
     public function __construct()
     {
         add_action('init', [$this, 'init']);
-        add_action('plugins_loaded', [$this, 'secret_sharing_plugin_load_textdomain']);
+        add_action('plugins_loaded', [$this, 'load_textdomain']);
 
         add_shortcode('runthings_secrets', [$this, 'add_secret_shortcode']);
         add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
