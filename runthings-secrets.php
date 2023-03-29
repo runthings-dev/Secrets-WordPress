@@ -33,6 +33,7 @@ class RunthingsSecretsPlugin
     public function __construct()
     {
         add_action('init', [$this, 'init']);
+        add_action('plugins_loaded', [$this, 'secret_sharing_plugin_load_textdomain']);
 
         add_shortcode('runthings_secrets', [$this, 'add_secret_shortcode']);
         add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
@@ -71,6 +72,11 @@ class RunthingsSecretsPlugin
 
     public function uninstall()
     {
+    }
+
+    public function load_textdomain()
+    {
+        load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function add_secret_shortcode()
