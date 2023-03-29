@@ -37,6 +37,8 @@ class RunthingsSecretsPlugin
 
         add_shortcode('runthings_secrets', [$this, 'add_secret_shortcode']);
         add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
+
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
     }
 
     public function init()
