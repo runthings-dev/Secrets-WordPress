@@ -177,13 +177,13 @@ class runthings_secrets_Options_Page
     public function recaptcha_public_key_callback()
     {
         $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
-        echo '<input type="text" name="runthings_secrets_recaptcha_public_key" value="' . esc_attr($recaptcha_public_key) . '" />';
+        echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_public_key" value="' . esc_attr($recaptcha_public_key) . '" />';
     }
 
     public function recaptcha_private_key_callback()
     {
         $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
-        echo '<input type="text" name="runthings_secrets_recaptcha_private_key" value="' . esc_attr($recaptcha_private_key) . '" />';
+        echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_private_key" value="' . esc_attr($recaptcha_private_key) . '" />';
     }
 
     public function pages_section_callback()
