@@ -26,11 +26,11 @@ class runthings_secrets_Options_Page
     public function __construct()
     {
         add_action('admin_notices', [$this, 'admin_notices']);
-        add_action('admin_menu', [$this, 'runthings_secrets_options_page']);
-        add_action('admin_init', [$this, 'runthings_secrets_settings_init']);
+        add_action('admin_menu', [$this, 'options_page']);
+        add_action('admin_init', [$this, 'settings_init']);
 
-        add_action('admin_enqueue_scripts', [$this, 'runthings_secrets_enqueue_scripts']);
-        add_action('admin_footer', [$this, 'runthings_secrets_admin_footer']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('admin_footer', [$this, 'admin_footer']);
     }
 
     public function admin_notices()
@@ -43,26 +43,26 @@ class runthings_secrets_Options_Page
         }
     }
 
-    function runthings_secrets_enqueue_scripts()
+    function enqueue_scripts()
     {
         wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13');
         wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
     }
 
-    public function runthings_secrets_options_page()
+    public function options_page()
     {
         add_options_page(
             __('RunThings Secrets', 'runthings-secrets'),
             __('RunThings Secrets', 'runthings-secrets'),
             'manage_options',
             'runthings-secrets',
-            [$this, 'runthings_secrets_options_page_callback']
+            [$this, 'options_page_callback']
         );
     }
 
-    public function runthings_secrets_options_page_callback()
+    public function options_page_callback()
     {
-?>
+    ?>
         <div class="wrap">
             <h1><?php _e('RunThings Secrets Settings', 'runthings-secrets'); ?></h1>
             <form method="post" action="options.php">
@@ -76,19 +76,19 @@ class runthings_secrets_Options_Page
     <?php
     }
 
-    public function runthings_secrets_settings_init()
+    public function settings_init()
     {
         add_settings_section(
             'runthings_secrets_pages_section',
             __('Secret Pages', 'runthings-secrets'),
-            [$this, 'runthings_secrets_pages_section_callback'],
+            [$this, 'pages_section_callback'],
             'runthings-secrets'
         );
 
         add_settings_field(
             'runthings_secrets_add_page',
             __('Add Secret Page', 'runthings-secrets'),
-            [$this, 'runthings_secrets_add_page_callback'],
+            [$this, 'add_page_callback'],
             'runthings-secrets',
             'runthings_secrets_pages_section'
         );
@@ -96,7 +96,7 @@ class runthings_secrets_Options_Page
         add_settings_field(
             'runthings_secrets_view_page',
             __('View Secret Page', 'runthings-secrets'),
-            [$this, 'runthings_secrets_view_page_callback'],
+            [$this, 'view_page_callback'],
             'runthings-secrets',
             'runthings_secrets_pages_section'
         );
@@ -114,12 +114,12 @@ class runthings_secrets_Options_Page
         );
     }
 
-    public function runthings_secrets_pages_section_callback()
+    public function pages_section_callback()
     {
         echo '<p>' . __('Select the WordPress pages to use for adding and viewing secrets.', 'runthings-secrets') . '</p>';
     }
 
-    public function runthings_secrets_add_page_callback()
+    public function add_page_callback()
     {
         $add_page_id = get_option('runthings_secrets_add_page');
         echo '<select name="runthings_secrets_add_page" class="runthings-secrets-select2">';
@@ -132,7 +132,7 @@ class runthings_secrets_Options_Page
         echo '</select>';
     }
 
-    public function runthings_secrets_view_page_callback()
+    public function view_page_callback()
     {
         $view_page_id = get_option('runthings_secrets_view_page');
         echo '<select name="runthings_secrets_view_page" class="runthings-secrets-select2">';
@@ -145,7 +145,7 @@ class runthings_secrets_Options_Page
         echo '</select>';
     }
 
-    function runthings_secrets_admin_footer()
+    function admin_footer()
     {
     ?>
         <script>
@@ -153,7 +153,7 @@ class runthings_secrets_Options_Page
                 $('.runthings-secrets-select2').select2();
             });
         </script>
-<?php
+    <?php
     }
 }
 
