@@ -10,7 +10,7 @@
     </p>
     <p>
         <label for="expiration"><?php _e('Expiration date:', 'runthings-secrets'); ?></label>
-        <input type="date" name="expiration" required value="<?php echo esc_attr($default_expiration); ?>">
+        <input type="date" name="expiration" required min="<?php echo date('Y-m-d'); ?>" value="<?php echo esc_attr($default_expiration); ?>">
     </p>
     <p>
         <label for="max_views"><?php _e('Maximum number of views:', 'runthings-secrets'); ?></label>
