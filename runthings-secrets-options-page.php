@@ -62,7 +62,7 @@ class runthings_secrets_Options_Page
 
     public function options_page_callback()
     {
-    ?>
+?>
         <div class="wrap">
             <h1><?php _e('RunThings Secrets Settings', 'runthings-secrets'); ?></h1>
             <form method="post" action="options.php">
@@ -101,6 +101,37 @@ class runthings_secrets_Options_Page
             'runthings_secrets_pages_section'
         );
 
+        add_settings_section(
+            'runthings_secrets_spam_protection_section',
+            __('Spam Protection', 'runthings-secrets'),
+            [$this, 'spam_protection_section_callback'],
+            'runthings-secrets'
+        );
+
+        add_settings_field(
+            'runthings_secrets_recaptcha_enabled',
+            __('Enable reCAPTCHA v3', 'runthings-secrets'),
+            [$this, 'recaptcha_enabled_callback'],
+            'runthings-secrets',
+            'runthings_secrets_spam_protection_section'
+        );
+
+        add_settings_field(
+            'runthings_secrets_recaptcha_public_key',
+            __('reCAPTCHA v3 Public Key', 'runthings-secrets'),
+            [$this, 'recaptcha_public_key_callback'],
+            'runthings-secrets',
+            'runthings_secrets_spam_protection_section'
+        );
+
+        add_settings_field(
+            'runthings_secrets_recaptcha_private_key',
+            __('reCAPTCHA v3 Private Key', 'runthings-secrets'),
+            [$this, 'recaptcha_private_key_callback'],
+            'runthings-secrets',
+            'runthings_secrets_spam_protection_section'
+        );
+
         register_setting(
             'runthings-secrets-settings',
             'runthings_secrets_add_page',
@@ -112,6 +143,47 @@ class runthings_secrets_Options_Page
             'runthings_secrets_view_page',
             'intval'
         );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_recaptcha_enabled',
+            'intval'
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_recaptcha_public_key',
+            'sanitize_text_field'
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_recaptcha_private_key',
+            'sanitize_text_field'
+        );
+    }
+    public function spam_protection_section_callback()
+    {
+        echo '<p>' . __('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
+        echo '<p>' . __('Get your reCAPTCHA v3 keys <a href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets') . '</p>';
+    }
+
+    public function recaptcha_enabled_callback()
+    {
+        $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
+        echo '<input type="checkbox" name="runthings_secrets_recaptcha_enabled" value="1" ' . checked(1, $recaptcha_enabled, false) . ' />';
+    }
+
+    public function recaptcha_public_key_callback()
+    {
+        $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
+        echo '<input type="text" name="runthings_secrets_recaptcha_public_key" value="' . esc_attr($recaptcha_public_key) . '" />';
+    }
+
+    public function recaptcha_private_key_callback()
+    {
+        $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+        echo '<input type="text" name="runthings_secrets_recaptcha_private_key" value="' . esc_attr($recaptcha_private_key) . '" />';
     }
 
     public function pages_section_callback()
@@ -153,7 +225,7 @@ class runthings_secrets_Options_Page
                 $('.runthings-secrets-select2').select2();
             });
         </script>
-    <?php
+<?php
     }
 }
 
