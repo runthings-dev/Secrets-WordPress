@@ -165,7 +165,7 @@ class runthings_secrets_Options_Page
     public function spam_protection_section_callback()
     {
         echo '<p>' . __('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
-        echo '<p>' . __('Get your reCAPTCHA v3 keys <a href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets') . '</p>';
+        echo '<p>' . __('Get your reCAPTCHA v3 keys <a target="_blank" href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets') . '</p>';
     }
 
     public function recaptcha_enabled_callback()
