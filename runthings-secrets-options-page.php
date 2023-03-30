@@ -25,11 +25,22 @@ class runthings_secrets_Options_Page
 {
     public function __construct()
     {
+        add_action('admin_notices', [$this, 'admin_notices']);
         add_action('admin_menu', [$this, 'runthings_secrets_options_page']);
         add_action('admin_init', [$this, 'runthings_secrets_settings_init']);
 
         add_action('admin_enqueue_scripts', [$this, 'runthings_secrets_enqueue_scripts']);
         add_action('admin_footer', [$this, 'runthings_secrets_admin_footer']);
+    }
+
+    public function admin_notices()
+    {
+        $add_secret_page = get_option('runthings_secrets_add_secret_page');
+        $view_secret_page = get_option('runthings_secrets_view_secret_page');
+        if (empty($add_secret_page) || empty($view_secret_page)) {
+            $message = __('Please set the "Add Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets');
+            printf('<div class="notice notice-warning"><p>%s</p></div>', sprintf($message, admin_url('options-general.php?page=runthings-secrets')));
+        }
     }
 
     function runthings_secrets_enqueue_scripts()
