@@ -35,6 +35,8 @@ class runthings_secrets_Add_Secret
         ob_start();
 
         include plugin_dir_path(__FILE__) . 'templates/add-secret-form.php';
+        
+        $this->maybe_add_recaptcha_setup_script();
 
         if (isset($_POST['secret'])) {
             $uuid = $this->form_submit_handler();
@@ -55,7 +57,7 @@ class runthings_secrets_Add_Secret
         }
     }
 
-    public function maybe_add_recaptcha_setup()
+    public function maybe_add_recaptcha_setup_script()
     {
         $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
         $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
