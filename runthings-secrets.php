@@ -35,9 +35,9 @@ class runthings_secrets_Plugin
         add_action('init', [$this, 'init']);
         add_action('plugins_loaded', [$this, 'load_textdomain']);
 
-        add_shortcode('runthings_secrets', [$this, 'add_secret_shortcode']);
         add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
 
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
     }
 
@@ -81,20 +81,6 @@ class runthings_secrets_Plugin
         load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
-    public function add_secret_shortcode()
-    {
-        ob_start();
-
-        include plugin_dir_path(__FILE__) . 'templates/add-secret-form.php';
-
-        if (isset($_POST['secret'])) {
-            $uuid = $this->form_submit_handler();
-            include plugin_dir_path(__FILE__) . 'templates/secret-created.php';
-        }
-
-        return ob_get_clean();
-    }
-
     public function view_secret_shortcode()
     {
         $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
@@ -105,44 +91,6 @@ class runthings_secrets_Plugin
         include plugin_dir_path(__FILE__) . 'templates/view-secret.php';
 
         return ob_get_clean();
-    }
-
-    private function form_submit_handler()
-    {
-        // Verify nonce field.
-        if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
-            return;
-        }
-
-        // Validate form inputs.
-        $secret = sanitize_textarea_field($_POST['secret']);
-        $expiration = sanitize_text_field($_POST['expiration']);
-        $max_views = intval($_POST['max_views']);
-
-        // Encrypt the secret.
-        $encrypted_secret = $secret; // Your encryption code goes here.
-
-        // Store the secret in the database table.
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'runthings_secrets';
-
-        $uuid = wp_generate_uuid4();
-        $views = 0;
-        $created_at = current_time('mysql');
-
-        $wpdb->insert(
-            $table_name,
-            array(
-                'uuid' => $uuid,
-                'secret' => $encrypted_secret,
-                'max_views' => $max_views,
-                'views' => $views,
-                'expiration' => $expiration,
-                'created_at' => $created_at
-            )
-        );
-
-        return $uuid;
     }
 
     private function get_secret($uuid)
