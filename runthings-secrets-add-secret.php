@@ -49,9 +49,30 @@ class runthings_secrets_Add_Secret
         $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
         $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
         $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
-    
+
         if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
             wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key);
+        }
+    }
+
+    public function maybe_add_recaptcha_setup()
+    {
+        $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
+        $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
+        $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+
+        if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
+?>
+            <script>
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('<?php echo $recaptcha_public_key; ?>', {
+                        action: 'add_secret'
+                    }).then(function(token) {
+                        document.getElementById('recaptcha_token').value = token;
+                    });
+                });
+            </script>
+<?php
         }
     }
 
@@ -65,6 +86,17 @@ class runthings_secrets_Add_Secret
         $secret = sanitize_textarea_field($_POST['secret']);
         $expiration = sanitize_text_field($_POST['expiration']);
         $max_views = intval($_POST['max_views']);
+
+        $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
+        $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
+        $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+
+        if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
+            if(!$this->verify_recaptcha_token()){
+                return; // TODO - improve handling
+                // $error_message = __('reCAPTCHA verification failed, please try again.', 'runthings-secrets');
+            }
+        }
 
         // encrypt the secret
         $encrypted_secret = $secret; // encryption code goes here
@@ -91,4 +123,28 @@ class runthings_secrets_Add_Secret
 
         return $uuid;
     }
+
+    private function verify_recaptcha_token() {
+        $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+        $recaptcha_token = $_POST['recaptcha_token'];
+        $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
+          'body' => array(
+            'secret' => $recaptcha_private_key,
+            'response' => $recaptcha_token
+          )
+        ));
+      
+        if (!is_wp_error($response)) {
+          $response_body = json_decode(wp_remote_retrieve_body($response), true);
+          if ($response_body['success'] && $response_body['score'] >= 0.5) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
 }
+
+new runthings_secrets_Add_Secret();

@@ -1,6 +1,6 @@
 <?php
-  $default_expiration = date('Y-m-d', strtotime('+7 days'));
-  $default_max_views = 5;
+$default_expiration = date('Y-m-d', strtotime('+7 days'));
+$default_max_views = 5;
 ?>
 <form method="post">
     <?php wp_nonce_field('runthings_secrets_add', 'runthings_secrets_add_nonce'); ?>
@@ -17,6 +17,7 @@
         <input type="number" name="max_views" min="1" max="10" required value="<?php echo esc_attr($default_max_views); ?>">
     </p>
     <p>
+        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
         <input type="submit" value="<?php _e('Submit', 'runthings-secrets'); ?>">
     </p>
 </form>
