@@ -29,7 +29,7 @@ class runthings_secrets_Options_Page
         add_action('admin_menu', [$this, 'options_page']);
         add_action('admin_init', [$this, 'settings_init']);
 
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_footer', [$this, 'admin_footer']);
     }
 
@@ -43,7 +43,7 @@ class runthings_secrets_Options_Page
         }
     }
 
-    function enqueue_scripts()
+    public function admin_enqueue_scripts()
     {
         wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13');
         wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
