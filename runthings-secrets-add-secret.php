@@ -30,6 +30,8 @@ class runthings_secrets_Add_Secret
 
     public function add_secret_shortcode()
     {
+        add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
+
         ob_start();
 
         include plugin_dir_path(__FILE__) . 'templates/add-secret-form.php';
@@ -40,6 +42,17 @@ class runthings_secrets_Add_Secret
         }
 
         return ob_get_clean();
+    }
+
+    public function maybe_enqueue_recaptcha()
+    {
+        $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
+        $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
+        $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+    
+        if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
+            wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key);
+        }
     }
 
     private function form_submit_handler()
