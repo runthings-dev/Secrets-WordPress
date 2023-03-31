@@ -77,6 +77,8 @@ class runthings_secrets_View_Secret
                     array('id' => $secret->id)
                 );
 
+                $this->incremement_global_views_total_stat();
+
                 // Decrypt and display the secret to the user.
                 // Not needed right now as not doing anything
                 // $decrypted_secret = $secret->secret; // Your decryption code goes here.
@@ -91,6 +93,13 @@ class runthings_secrets_View_Secret
         }
 
         return $secret;
+    }
+
+    private function incremement_global_views_total_stat()
+    {
+        $total_count = get_option('runthings_secrets_stats_total_views', 0);
+
+        update_option('runthings_secrets_stats_total_views', ++$total_count);
     }
 }
 

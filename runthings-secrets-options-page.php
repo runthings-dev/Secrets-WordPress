@@ -132,6 +132,13 @@ class runthings_secrets_Options_Page
             'runthings_secrets_spam_protection_section'
         );
 
+        add_settings_section(
+            'runthings_secrets_stats_section',
+            __('Statistics', 'runthings-secrets'),
+            [$this, 'stats_section_callback'],
+            'runthings-secrets'
+        );
+
         register_setting(
             'runthings-secrets-settings',
             'runthings_secrets_add_page',
@@ -162,6 +169,7 @@ class runthings_secrets_Options_Page
             'sanitize_text_field'
         );
     }
+
     public function spam_protection_section_callback()
     {
         echo '<p>' . __('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
@@ -215,6 +223,15 @@ class runthings_secrets_Options_Page
             echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
         }
         echo '</select>';
+    }
+
+    public function stats_section_callback()
+    {
+        $total_views_count = get_option('runthings_secrets_stats_total_views', 0);
+        $total_secrets_count = get_option('runthings_secrets_stats_total_secrets', 0);
+
+        echo '<p><strong>' . __('Total Secrets Created', 'runthings-secrets') . ':</strong> ' . $total_secrets_count  . '</p>';
+        echo '<p><strong>' . __('Total Secrets Viewed', 'runthings-secrets') . ':</strong> ' . $total_views_count  . '</p>';
     }
 
     function admin_footer()

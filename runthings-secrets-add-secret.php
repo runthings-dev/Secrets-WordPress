@@ -123,6 +123,8 @@ class runthings_secrets_Add_Secret
             )
         );
 
+        $this->incremement_global_secrets_total_stat();
+
         return $uuid;
     }
 
@@ -147,7 +149,14 @@ class runthings_secrets_Add_Secret
         } else {
             return false;
         }
-      }
+    }
+
+    private function incremement_global_secrets_total_stat()
+    {
+        $total_count = get_option('runthings_secrets_stats_total_secrets', 0);
+
+        update_option('runthings_secrets_stats_total_secrets', ++$total_count);
+    }
 }
 
 new runthings_secrets_Add_Secret();

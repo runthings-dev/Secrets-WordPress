@@ -47,6 +47,7 @@ class runthings_secrets_Plugin
     public function activate()
     {
         $this->activate_database();
+        $this->activate_options();
     }
 
     public function deactivate()
@@ -85,18 +86,10 @@ class runthings_secrets_Plugin
         dbDelta($sql);
     }
 
-    public function deactivate()
+    private function activate_options()
     {
-        // delete table(s)
-    }
-
-    public function uninstall()
-    {
-    }
-
-    public function load_textdomain()
-    {
-        load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        add_option('runthings_secrets_stats_total_secrets', 0);
+        add_option('runthings_secrets_stats_total_views', 0);
     }
 }
 
