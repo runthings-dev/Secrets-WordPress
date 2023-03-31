@@ -46,6 +46,25 @@ class runthings_secrets_Plugin
 
     public function activate()
     {
+        $this->activate_database();
+    }
+
+    public function deactivate()
+    {
+        // delete table(s)
+    }
+
+    public function uninstall()
+    {
+    }
+
+    public function load_textdomain()
+    {
+        load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    }
+
+    private function activate_database()
+    {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'runthings_secrets';
