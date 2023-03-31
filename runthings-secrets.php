@@ -35,9 +35,8 @@ class runthings_secrets_Plugin
         add_action('init', [$this, 'init']);
         add_action('plugins_loaded', [$this, 'load_textdomain']);
 
-        add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
-
         include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-view-secret.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
     }
 
@@ -79,71 +78,6 @@ class runthings_secrets_Plugin
     public function load_textdomain()
     {
         load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    }
-
-    public function view_secret_shortcode()
-    {
-        $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
-        $secret = $this->get_secret($uuid);
-
-        ob_start();
-
-        include plugin_dir_path(__FILE__) . 'templates/view-secret.php';
-
-        return ob_get_clean();
-    }
-
-    private function get_secret($uuid)
-    {
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . 'runthings_secrets';
-
-        $secret = $wpdb->get_row(
-            $wpdb->prepare(
-                "SELECT * FROM $table_name WHERE uuid = %s",
-                $uuid
-            )
-        );
-
-        if ($secret) {
-            // Check if the secret has expired or reached its maximum number of views.
-            if ($secret->expiration < current_time('mysql') || $secret->views >= $secret->max_views) {
-                // set error state
-                $secret->is_error = true;
-                $secret->error_message = "This secret has expired or reached its maximum number of views.";
-
-                // Delete the secret from the database.
-                $wpdb->delete(
-                    $table_name,
-                    array('id' => $secret->id)
-                );
-            } else {
-                // set error state
-                $secret->is_error = false;
-                $secret->error_message = "";
-
-                // Increment the views count.
-                $wpdb->update(
-                    $table_name,
-                    array('views' => $secret->views + 1),
-                    array('id' => $secret->id)
-                );
-
-                // Decrypt and display the secret to the user.
-                // Not needed right now as not doing anything
-                // $decrypted_secret = $secret->secret; // Your decryption code goes here.
-                // echo '<p>Your secret is: ' . $decrypted_secret . '</p>';
-            }
-        } else {
-            // TODO make proper class for the view secret object
-            $secret = new stdClass();
-
-            $secret->is_error = true;
-            $secret->error_message = "Invalid secret sharing URL.";
-        }
-
-        return $secret;
     }
 }
 
