@@ -55,7 +55,7 @@ class runthings_secrets_View_Secret
 
         if ($secret) {
             // Check if the secret has expired or reached its maximum number of views.
-            if ($secret->expiration < current_time('mysql') || $secret->views >= $secret->max_views) {
+            if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
                 // set error state
                 $secret->is_error = true;
                 $secret->error_message = "This secret has expired or reached its maximum number of views.";
