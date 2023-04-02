@@ -96,6 +96,7 @@ class runthings_secrets_Plugin
 
     private function activate_options()
     {
+        add_option('runthings_secrets_enqueue_form_styles', 1);
         add_option('runthings_secrets_stats_total_secrets', 0);
         add_option('runthings_secrets_stats_total_views', 0);
     }

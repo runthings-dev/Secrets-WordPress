@@ -133,6 +133,21 @@ class runthings_secrets_Options_Page
         );
 
         add_settings_section(
+            'runthings_secrets_advanced_section',
+            __('Advanced', 'runthings-secrets'),
+            [$this, 'enqueue_advanced_section_callback'],
+            'runthings-secrets'
+        );
+
+        add_settings_field(
+            'runthings_secrets_enqueue_form_styles',
+            __('Enqueue Form Styles', 'runthings-secrets'),
+            [$this, 'enqueue_stylesheet_callback'],
+            'runthings-secrets',
+            'runthings_secrets_advanced_section'
+        );
+
+        add_settings_section(
             'runthings_secrets_stats_section',
             __('Statistics', 'runthings-secrets'),
             [$this, 'stats_section_callback'],
@@ -167,6 +182,15 @@ class runthings_secrets_Options_Page
             'runthings-secrets-settings',
             'runthings_secrets_recaptcha_private_key',
             'sanitize_text_field'
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_enqueue_form_styles',
+            array(
+                'type' => 'boolean',
+                'default' => 1
+            )
         );
     }
 
@@ -223,6 +247,17 @@ class runthings_secrets_Options_Page
             echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
         }
         echo '</select>';
+    }
+
+    public function enqueue_advanced_section_callback()
+    {
+    }
+
+    public function enqueue_stylesheet_callback()
+    {
+        $enqueue_stylesheet = get_option('runthings_secrets_enqueue_form_styles', 1);
+        echo '<input type="checkbox" name="runthings_secrets_enqueue_form_styles" value="1" ' . checked(1, $enqueue_stylesheet, false) . ' />';
+        echo '<span class="description"> ' . __('Enqueue the stylesheet for the \'add secret\' form.', 'runthings-secrets') . '</span>';
     }
 
     public function stats_section_callback()

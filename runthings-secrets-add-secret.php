@@ -30,6 +30,7 @@ class runthings_secrets_Add_Secret
 
     public function add_secret_shortcode()
     {
+        add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
         add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
         ob_start();
@@ -44,6 +45,13 @@ class runthings_secrets_Add_Secret
         }
 
         return ob_get_clean();
+    }
+
+    public function maybe_enqueue_form_styles() {
+        if (get_option('runthings_secrets_enqueue_form_styles', 1) == 1) {
+            $style_url = plugins_url('/add-secret-form.css', __FILE__);
+            wp_enqueue_style('add-secret-form-styles', $style_url, array(), null, 'all');
+        }
     }
 
     public function maybe_enqueue_recaptcha()
