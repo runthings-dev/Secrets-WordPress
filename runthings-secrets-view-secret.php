@@ -58,7 +58,7 @@ class runthings_secrets_View_Secret
             if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
                 // set error state
                 $secret->is_error = true;
-                $secret->error_message = "This secret has expired or reached its maximum number of views.";
+                $secret->error_message = __("This secret has expired or reached its maximum number of views.", 'runthings-secrets');
 
                 // Delete the secret from the database.
                 $wpdb->delete(
@@ -89,7 +89,7 @@ class runthings_secrets_View_Secret
             $secret = new stdClass();
 
             $secret->is_error = true;
-            $secret->error_message = "Invalid secret sharing URL.";
+            $secret->error_message = __("Invalid secret sharing URL.", 'runthings-secrets');
         }
 
         return $secret;
