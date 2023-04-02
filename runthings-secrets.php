@@ -35,6 +35,8 @@ class runthings_secrets_Plugin
         add_action('init', [$this, 'init']);
         add_action('plugins_loaded', [$this, 'load_textdomain']);
 
+        add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
+
         include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-view-secret.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
@@ -62,6 +64,12 @@ class runthings_secrets_Plugin
     public function load_textdomain()
     {
         load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    }
+
+    public function add_settings_link($links) {
+        $settings_link = '<a href="options-general.php?page=runthings-secrets">' . __('Settings', 'runthings-secrets') . '</a>';
+        array_unshift($links, $settings_link);
+        return $links;
     }
 
     private function activate_database()
