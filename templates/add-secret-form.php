@@ -2,7 +2,7 @@
 $default_expiration = date('Y-m-d', strtotime('+7 days'));
 $default_max_views = 5;
 ?>
-<form method="post">
+<form method="post" class="add-secret-form">
     <?php wp_nonce_field('runthings_secrets_add', 'runthings_secrets_add_nonce'); ?>
     <div>
         <label for="secret"><?php _e('Secret:', 'runthings-secrets'); ?></label>
