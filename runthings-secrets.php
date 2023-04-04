@@ -30,20 +30,40 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Plugin
 {
-    public function __construct()
+    const VERSION = '0.5.0';
+
+    protected static $single_instance = null;
+
+    protected function __construct()
     {
-        add_action('init', [$this, 'init']);
-        add_action('plugins_loaded', [$this, 'load_textdomain']);
+    }
 
-        add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
+    public static function get_instance()
+    {
+        if (self::$single_instance === null) {
+            self::$single_instance = new self();
+        }
 
-        include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
-        include plugin_dir_path(__FILE__) . 'runthings-secrets-view-secret.php';
-        include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
+        return self::$single_instance;
+    }
+
+    public function hooks()
+    {
+        add_action('init', [$this, 'init'], ~PHP_INT_MAX);
     }
 
     public function init()
     {
+        $this->load_textdomain();
+
+        add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
+
+        add_action('init', [$this, 'schedule_clear_expired_secrets']);
+        add_action('runthings_secrets_clear_expired_secrets', array($this, 'clear_expired_secrets'));
+
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-view-secret.php';
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
     }
 
     public function activate()
@@ -54,22 +74,45 @@ class runthings_secrets_Plugin
 
     public function deactivate()
     {
-        // delete table(s)
+        $this->deactivate_scheduled_tasks();
     }
-
-    public function uninstall()
-    {
-    }
-
+    
     public function load_textdomain()
     {
         load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
-    public function add_settings_link($links) {
+    public function add_settings_link($links)
+    {
         $settings_link = '<a href="options-general.php?page=runthings-secrets">' . __('Settings', 'runthings-secrets') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
+    }
+
+    public function clear_expired_secrets()
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'runthings_secrets';
+
+        $current_time = current_time('timestamp');
+
+        // calculate the expiration time (24 hours ago)
+        $expiration_time = $current_time - (24 * 60 * 60);
+
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM $table_name WHERE expiration_time <= %d",
+                $expiration_time
+            )
+        );
+    }
+
+    public function schedule_clear_expired_secrets()
+    {
+        if (!wp_next_scheduled('runthings_secrets_clear_expired_secrets')) {
+            wp_schedule_event(time(), 'daily', 'runthings_secrets_clear_expired_secrets');
+        }
     }
 
     private function activate_database()
@@ -92,6 +135,8 @@ class runthings_secrets_Plugin
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+
+        add_option('runthings_secrets_db_version', self::VERSION);
     }
 
     private function activate_options()
@@ -100,8 +145,56 @@ class runthings_secrets_Plugin
         add_option('runthings_secrets_stats_total_secrets', 0);
         add_option('runthings_secrets_stats_total_views', 0);
     }
+
+    private function deactivate_scheduled_tasks()
+    {
+        $tasks = array('runthings_secrets_clear_expired_secrets');
+        foreach ($tasks as $task) {
+            wp_clear_scheduled_hook($task);
+        }
+    }
 }
 
-$runthings_secrets = new runthings_secrets_Plugin();
+if (!function_exists('runthings_secrets_uninstall')) {
+    function runthings_secrets_uninstall()
+    {
+        // delete plugin options
+        $options = array(
+            'runthings_secrets_db_version', 
+            'runthings_secrets_view_page', 
+            'runthings_secrets_add_page', 
+            'runthings_secrets_recaptcha_enabled', 
+            'runthings_secrets_recaptcha_public_key', 
+            'runthings_secrets_recaptcha_private_key', 
+            'runthings_secrets_enqueue_form_styles', 
+            'runthings_secrets_stats_total_secrets',
+            'runthings_secrets_stats_total_views',
+        );
+        foreach ($options as $option) {
+            delete_option($option);
+        }
 
-register_activation_hook(__FILE__, array($runthings_secrets, 'activate'));
+        // drop all plugin tables
+        global $wpdb;
+        $tables = array(
+            'runthings_secrets'
+        );
+        foreach ($tables as $table) {
+            $wpdb->query('DROP TABLE IF EXISTS ' . $wpdb->prefix . $table);
+        }
+    }
+}
+
+if (!function_exists('runthings_secrets')) {
+	function runthings_secrets() {
+		return runthings_secrets_Plugin::get_instance();
+	}
+}
+
+// start
+add_action('plugins_loaded', array(runthings_secrets(), 'hooks'));
+
+// activation and deactivation hooks
+register_activation_hook(__FILE__, array(runthings_secrets(), 'activate'));
+register_deactivation_hook(__FILE__, array(runthings_secrets(), 'deactivate'));
+register_uninstall_hook(__FILE__, 'runthings_secrets_uninstall');
