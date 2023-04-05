@@ -61,9 +61,8 @@ class runthings_secrets_Plugin
         add_action('init', [$this, 'schedule_clear_expired_secrets']);
         add_action('runthings_secrets_clear_expired_secrets', array($this, 'clear_expired_secrets'));
 
-        include plugin_dir_path(__FILE__) . 'runthings-secrets-add-secret.php';
-        include plugin_dir_path(__FILE__) . 'runthings-secrets-view-secret.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
+        include plugin_dir_path(__FILE__) . 'runthings-secrets-integration.php';
     }
 
     public function activate()

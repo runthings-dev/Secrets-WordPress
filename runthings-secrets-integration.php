@@ -1,0 +1,41 @@
+<?php
+/*
+Secrets by runthings.dev
+
+Copyright 2023 Matthew Harris
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License, version 3, as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+if (!defined('WPINC')) {
+    die;
+}
+
+class runthings_secrets_Integration
+{
+    public function __construct()
+    {
+        // include renderers
+        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-add-secret.php';
+        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-view-secret.php';
+
+        // create shortcode, pass renders
+        include plugin_dir_path(__FILE__) . 'integration/shortcode/runthings-secrets-shortcodes.php';
+        new runthings_secrets_Shortcodes_Integration($runthings_secrets_view_secret, $runthings_secrets_add_secret);
+
+        // create block, pass renders
+        // create elementor, pass renders
+    }
+}
+
+new runthings_secrets_Integration();
