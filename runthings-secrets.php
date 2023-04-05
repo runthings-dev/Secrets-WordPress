@@ -1,14 +1,17 @@
 <?php
+/**
+ * Plugin Name: Secrets
+ * Plugin URI: https://runthings.dev
+ * Description: Share secrets securely
+ * Version: 0.5.0
+ * Author: Matthew Harris, runthings.dev
+ * Author URI: https://runthings.dev/
+ * License: GPLv3 or later
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * Requires at least: 5.8
+ * Requires PHP: 7.0
+ */
 /*
-Plugin Name: Secrets
-Plugin URI: https://runthings.dev
-Description: Share secrets securely
-Version: 0.5.0
-Author: Matthew Harris, runthings.dev
-Author URI: https://runthings.dev/
-License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
 Copyright 2023 Matthew Harris
 
 This program is free software; you can redistribute it and/or modify
