@@ -98,6 +98,4 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             update_option('runthings_secrets_stats_total_views', ++$total_count);
         }
     }
-
-    $runthings_secrets_view_secret = new runthings_secrets_View_Secret();
 }

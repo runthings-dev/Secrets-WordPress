@@ -163,6 +163,4 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             update_option('runthings_secrets_stats_total_secrets', ++$total_count);
         }
     }
-
-    $runthings_secrets_add_secret = new runthings_secrets_Add_Secret();
 }

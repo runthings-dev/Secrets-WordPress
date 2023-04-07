@@ -25,19 +25,23 @@ class runthings_secrets_Integration
 {
     public function __construct()
     {
-        // include renderers
+        // create renderers
         include plugin_dir_path(__FILE__) . 'render/runthings-secrets-add-secret.php';
         include plugin_dir_path(__FILE__) . 'render/runthings-secrets-view-secret.php';
 
-        // create shortcode, pass renders
-        include plugin_dir_path(__FILE__) . 'integration/shortcode/runthings-secrets-shortcodes.php';
-        new runthings_secrets_Shortcodes_Integration($runthings_secrets_view_secret, $runthings_secrets_add_secret);
+        $add_secret = new runthings_secrets_Add_Secret();
+        $view_secret = new runthings_secrets_View_Secret();
 
-        // create block, pass renders
+        // integrate shortcodes
+        include plugin_dir_path(__FILE__) . 'integration/shortcode/runthings-secrets-shortcodes.php';
+        new runthings_secrets_Shortcodes_Integration($view_secret, $add_secret);
+
+        // integrate blocks
         include plugin_dir_path(__FILE__) . 'integration/block-editor/runthings-secrets-blocks.php';
-        new runthings_secrets_Blocks_Integration($runthings_secrets_view_secret, $runthings_secrets_add_secret);
+        new runthings_secrets_Blocks_Integration($view_secret, $add_secret);
         
-        // create elementor, pass renders
+        // integrate elementor widgets
+        // todo
     }
 }
 
