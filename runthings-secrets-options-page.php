@@ -36,9 +36,10 @@ class runthings_secrets_Options_Page
     public function admin_notices()
     {
         $add_secret_page = get_option('runthings_secrets_add_page');
+        $created_secret_page = get_option('runthings_secrets_created_page');
         $view_secret_page = get_option('runthings_secrets_view_page');
-        if (empty($add_secret_page) || empty($view_secret_page)) {
-            $message = __('Please set the "Add Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets');
+        if (empty($add_secret_page) || empty($created_secret_page) || empty($view_secret_page)) {
+            $message = __('Please set the "Add Secret Page", "Created Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets');
             printf('<div class="notice notice-warning"><p>%s</p></div>', sprintf($message, admin_url('options-general.php?page=runthings-secrets')));
         }
     }
@@ -89,6 +90,14 @@ class runthings_secrets_Options_Page
             'runthings_secrets_add_page',
             __('Add Secret Page', 'runthings-secrets'),
             [$this, 'add_page_callback'],
+            'runthings-secrets',
+            'runthings_secrets_pages_section'
+        );
+
+        add_settings_field(
+            'runthings_secrets_created_page',
+            __('Secret Created Page', 'runthings-secrets'),
+            [$this, 'created_page_callback'],
             'runthings-secrets',
             'runthings_secrets_pages_section'
         );
@@ -165,6 +174,12 @@ class runthings_secrets_Options_Page
         register_setting(
             'runthings-secrets-settings',
             'runthings_secrets_add_page',
+            'intval'
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_created_page',
             'intval'
         );
 
@@ -256,6 +271,19 @@ class runthings_secrets_Options_Page
         $pages = get_pages();
         foreach ($pages as $page) {
             $selected = ($add_page_id == $page->ID) ? 'selected="selected"' : '';
+            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+        }
+        echo '</select>';
+    }
+
+    public function created_page_callback()
+    {
+        $created_page_id = get_option('runthings_secrets_created_page');
+        echo '<select name="runthings_secrets_created_page" class="runthings-secrets-select2">';
+        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        $pages = get_pages();
+        foreach ($pages as $page) {
+            $selected = ($created_page_id == $page->ID) ? 'selected="selected"' : '';
             echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
         }
         echo '</select>';

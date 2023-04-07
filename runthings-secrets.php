@@ -164,8 +164,9 @@ if (!function_exists('runthings_secrets_uninstall')) {
         $options = array(
             'runthings_secrets_db_version',
             'runthings_secrets_first_run_completed',
-            'runthings_secrets_view_page',
             'runthings_secrets_add_page',
+            'runthings_secrets_created_page',
+            'runthings_secrets_view_page',
             'runthings_secrets_recaptcha_enabled',
             'runthings_secrets_recaptcha_public_key',
             'runthings_secrets_recaptcha_private_key',
