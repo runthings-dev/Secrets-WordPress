@@ -132,6 +132,14 @@ class runthings_secrets_Options_Page
             'runthings_secrets_spam_protection_section'
         );
 
+        add_settings_field(
+            'runthings_secrets_recaptcha_score',
+            __('reCAPTCHA v3 Score', 'runthings-secrets'),
+            [$this, 'recaptcha_score_callback'],
+            'runthings-secrets',
+            'runthings_secrets_spam_protection_section'
+        );
+
         add_settings_section(
             'runthings_secrets_advanced_section',
             __('Advanced', 'runthings-secrets'),
@@ -186,6 +194,16 @@ class runthings_secrets_Options_Page
 
         register_setting(
             'runthings-secrets-settings',
+            'runthings_secrets_recaptcha_score',
+            array(
+                'type' => 'float',
+                'default' => 0.5,
+                'sanitize_callback' => [$this, 'validate_float']
+            )
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
             'runthings_secrets_enqueue_form_styles',
             array(
                 'type' => 'boolean',
@@ -216,6 +234,13 @@ class runthings_secrets_Options_Page
     {
         $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
         echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_private_key" value="' . esc_attr($recaptcha_private_key) . '" />';
+    }
+
+    public function recaptcha_score_callback()
+    {
+        $recaptcha_score = get_option('runthings_secrets_recaptcha_score', 0.5);
+        echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_score" value="' . esc_attr($recaptcha_score) . '" />';
+        echo '<p class="description">' . __('Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, a higher value is more strict.', 'runthings-secrets') . '</p>';
     }
 
     public function pages_section_callback()
@@ -269,7 +294,18 @@ class runthings_secrets_Options_Page
         echo '<p><strong>' . __('Total Secrets Viewed', 'runthings-secrets') . ':</strong> ' . $total_views_count  . '</p>';
     }
 
-    function admin_footer()
+    public function validate_float($input)
+    {
+        $value = floatval($input);
+        if ($value < 0) {
+            $value = 0;
+        } elseif ($value > 1) {
+            $value = 1;
+        }
+        return $value;
+    }
+
+    public function admin_footer()
     {
     ?>
         <script>

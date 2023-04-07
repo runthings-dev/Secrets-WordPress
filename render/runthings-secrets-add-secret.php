@@ -129,7 +129,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             if (!is_wp_error($response)) {
                 $response_body = json_decode(wp_remote_retrieve_body($response), true);
-                if ($response_body['success'] && $response_body['score'] >= 0.5) {
+                $score_threshold = get_option('runthings_secrets_recaptcha_score', 0.5);
+                if ($response_body['success'] && $response_body['score'] >= $score_threshold) {
                     return true;
                 } else {
                     return false;

@@ -142,9 +142,10 @@ class runthings_secrets_Plugin
 
     private function activate_options()
     {
-        add_option('runthings_secrets_enqueue_form_styles', 1);
-        add_option('runthings_secrets_stats_total_secrets', 0);
-        add_option('runthings_secrets_stats_total_views', 0);
+        add_option('runthings_secrets_enqueue_form_styles', 1, '', 'no');
+        add_option('runthings_secrets_stats_total_secrets', 0, '', 'no');
+        add_option('runthings_secrets_stats_total_views', 0, '', 'no');
+        add_option('runthings_secrets_recaptcha_score', 0.5, '', 'no');
     }
 
     private function deactivate_scheduled_tasks()
@@ -163,12 +164,13 @@ if (!function_exists('runthings_secrets_uninstall')) {
         $options = array(
             'runthings_secrets_db_version',
             'runthings_secrets_first_run_completed',
-            'runthings_secrets_view_page', 
-            'runthings_secrets_add_page', 
-            'runthings_secrets_recaptcha_enabled', 
-            'runthings_secrets_recaptcha_public_key', 
-            'runthings_secrets_recaptcha_private_key', 
-            'runthings_secrets_enqueue_form_styles', 
+            'runthings_secrets_view_page',
+            'runthings_secrets_add_page',
+            'runthings_secrets_recaptcha_enabled',
+            'runthings_secrets_recaptcha_public_key',
+            'runthings_secrets_recaptcha_private_key',
+            'runthings_secrets_recaptcha_score',
+            'runthings_secrets_enqueue_form_styles',
             'runthings_secrets_stats_total_secrets',
             'runthings_secrets_stats_total_views',
             'runthings_secrets_encryption_key',
