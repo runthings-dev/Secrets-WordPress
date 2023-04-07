@@ -30,6 +30,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
         {
             include plugin_dir_path(__FILE__) . '../library/runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
+
+            add_action('template_redirect', [$this, 'handle_form_submit']);
         }
 
         public function render()
@@ -43,12 +45,27 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             $this->maybe_add_recaptcha_setup_script();
 
-            if (isset($_POST['secret'])) {
-                $uuid = $this->form_submit_handler();
-                include plugin_dir_path(__FILE__) . '../templates/secret-created.php';
+            return ob_get_clean();
+        }
+
+        public function handle_form_submit()
+        {
+            if (!isset($_POST['secret'])) {
+                return;
             }
 
-            return ob_get_clean();
+            $uuid = $this->create_secret();
+
+            if ($uuid) {
+                $created_page_id = get_option('runthings_secrets_created_page');
+                $created_page_url = get_permalink($created_page_id);
+
+                if ($created_page_url !== false) {
+                    $redirect_url = add_query_arg('secret', $uuid, $created_page_url);
+                    wp_redirect($redirect_url);
+                    exit;
+                }
+            }
         }
 
         public function maybe_enqueue_form_styles()
@@ -91,7 +108,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             }
         }
 
-        private function form_submit_handler()
+        private function create_secret()
         {
             if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
                 return;
