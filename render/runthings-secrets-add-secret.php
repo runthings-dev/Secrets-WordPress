@@ -43,8 +43,6 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             include plugin_dir_path(__FILE__) . '../templates/add-secret-form.php';
 
-            $this->maybe_add_recaptcha_setup_script();
-
             return ob_get_clean();
         }
 
@@ -81,32 +79,23 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
             $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
             $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
-
+        
             if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
-                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key);
-            }
-        }
-
-        public function maybe_add_recaptcha_setup_script()
-        {
-            $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
-            $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
-            $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
-
-            if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
-?>
-                <script>
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute('<?php echo $recaptcha_public_key; ?>', {
-                            action: 'add_secret'
+                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key, [], null, true);
+                
+                wp_add_inline_script(
+                    'google-recaptcha',
+                    'grecaptcha.ready(function() {
+                        grecaptcha.execute("' . $recaptcha_public_key . '", {
+                            action: "add_secret"
                         }).then(function(token) {
-                            document.getElementById('recaptcha_token').value = token;
+                            document.getElementById("recaptcha_token").value = token;
                         });
-                    });
-                </script>
-<?php
+                    });'
+                );
             }
         }
+        
 
         private function create_secret()
         {
