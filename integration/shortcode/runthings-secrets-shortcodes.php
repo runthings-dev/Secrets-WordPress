@@ -23,15 +23,15 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Shortcodes_Integration
 {
-    private $view_renderer;
-    private $created_renderer;
     private $add_renderer;
+    private $created_renderer;
+    private $view_renderer;
 
-    public function __construct($view_renderer, $created_renderer, $add_renderer)
+    public function __construct($add_renderer, $created_renderer, $view_renderer)
     {
-        $this->view_renderer = $view_renderer;
-        $this->created_renderer = $created_renderer;
         $this->add_renderer = $add_renderer;
+        $this->created_renderer = $created_renderer;
+        $this->view_renderer = $view_renderer;
 
         $this->register_shortcodes();
     }
