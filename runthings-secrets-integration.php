@@ -27,14 +27,16 @@ class runthings_secrets_Integration
     {
         // create renderers
         include plugin_dir_path(__FILE__) . 'render/runthings-secrets-add-secret.php';
+        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-secret-created.php';
         include plugin_dir_path(__FILE__) . 'render/runthings-secrets-view-secret.php';
 
         $add_secret = new runthings_secrets_Add_Secret();
+        $secret_created = new runthings_secrets_Secret_Created();
         $view_secret = new runthings_secrets_View_Secret();
 
         // integrate shortcodes
         include plugin_dir_path(__FILE__) . 'integration/shortcode/runthings-secrets-shortcodes.php';
-        new runthings_secrets_Shortcodes_Integration($view_secret, $add_secret);
+        new runthings_secrets_Shortcodes_Integration($view_secret, $secret_created, $add_secret);
 
         // integrate blocks
         include plugin_dir_path(__FILE__) . 'integration/block-editor/runthings-secrets-blocks.php';
