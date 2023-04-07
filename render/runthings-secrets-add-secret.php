@@ -24,6 +24,14 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Add_Secret')) {
     class runthings_secrets_Add_Secret
     {
+        private $manage;
+
+        public function __construct()
+        {
+            include plugin_dir_path(__FILE__) . '../library/runthings-secrets-manage.php';
+            $this->manage = new runthings_secrets_Manage();
+        }
+
         public function render()
         {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
@@ -105,32 +113,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 }
             }
 
-            // encrypt the secret
-            $encrypted_secret = $secret; // encryption code goes here
-
-            // store the secret in the database table
-            global $wpdb;
-            $table_name = $wpdb->prefix . 'runthings_secrets';
-
-            $uuid = wp_generate_uuid4();
-            $views = 0;
-            $created_at = current_time('mysql');
-
-            $wpdb->insert(
-                $table_name,
-                array(
-                    'uuid' => $uuid,
-                    'secret' => $encrypted_secret,
-                    'max_views' => $max_views,
-                    'views' => $views,
-                    'expiration' => $expiration,
-                    'created_at' => $created_at
-                )
-            );
-
-            $this->incremement_global_secrets_total_stat();
-
-            return $uuid;
+            return $this->manage->add_secret($secret, $max_views, $expiration);
         }
 
         private function verify_recaptcha_token()
@@ -154,13 +137,6 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             } else {
                 return false;
             }
-        }
-
-        private function incremement_global_secrets_total_stat()
-        {
-            $total_count = get_option('runthings_secrets_stats_total_secrets', 0);
-
-            update_option('runthings_secrets_stats_total_secrets', ++$total_count);
         }
     }
 }
