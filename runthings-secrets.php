@@ -161,7 +161,8 @@ if (!function_exists('runthings_secrets_uninstall')) {
     {
         // delete plugin options
         $options = array(
-            'runthings_secrets_db_version', 
+            'runthings_secrets_db_version',
+            'runthings_secrets_first_run_completed',
             'runthings_secrets_view_page', 
             'runthings_secrets_add_page', 
             'runthings_secrets_recaptcha_enabled', 
@@ -170,6 +171,7 @@ if (!function_exists('runthings_secrets_uninstall')) {
             'runthings_secrets_enqueue_form_styles', 
             'runthings_secrets_stats_total_secrets',
             'runthings_secrets_stats_total_views',
+            'runthings_secrets_encryption_key',
         );
         foreach ($options as $option) {
             delete_option($option);

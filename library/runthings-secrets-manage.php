@@ -24,6 +24,14 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Manage')) {
     class runthings_secrets_Manage
     {
+        private $crypt;
+
+        public function __construct()
+        {
+            include plugin_dir_path(__FILE__) . './runthings-secrets-sodium-encryption.php';
+            $this->crypt = new runthings_secrets_Sodium_Encryption();
+        }
+
         public function get_secret($uuid)
         {
             global $wpdb;
@@ -63,10 +71,9 @@ if (!class_exists('runthings_secrets_Manage')) {
 
                     $this->incremement_global_views_total_stat();
 
-                    // Decrypt and display the secret to the user.
-                    // Not needed right now as not doing anything
-                    // $decrypted_secret = $secret->secret; // Your decryption code goes here.
-                    // echo '<p>Your secret is: ' . $decrypted_secret . '</p>';
+                    // decrypt and display the secret to the user
+                    $secret->secret = $this->crypt->decrypt($secret->secret);
+
                 }
             } else {
                 // TODO make proper class for the view secret object
@@ -82,7 +89,7 @@ if (!class_exists('runthings_secrets_Manage')) {
         public function add_secret($secret, $max_views, $expiration)
         {
             // encrypt the secret
-            $encrypted_secret = $secret; // encryption code goes here
+            $encrypted_secret = $this->crypt->encrypt($secret);
 
             // store the secret in the database table
             global $wpdb;
