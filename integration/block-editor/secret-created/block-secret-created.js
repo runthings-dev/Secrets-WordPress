@@ -15,7 +15,7 @@
           createElement(
             "h3",
             null,
-            __("Created secret form will be shown here.", "runthings-secrets")
+            __("The 'created secret' layout will be shown here.", "runthings-secrets")
           )
         );
       },
