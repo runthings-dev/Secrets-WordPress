@@ -24,11 +24,13 @@ if (!defined('WPINC')) {
 class runthings_secrets_Blocks_Integration
 {
     private $view_renderer;
+    private $created_renderer;
     private $add_renderer;
 
-    public function __construct($view_renderer, $add_renderer)
+    public function __construct($view_renderer, $created_renderer, $add_renderer)
     {
         $this->view_renderer = $view_renderer;
+        $this->created_renderer = $created_renderer;
         $this->add_renderer = $add_renderer;
 
         add_action('init', [$this, 'register_blocks']);
@@ -50,6 +52,13 @@ class runthings_secrets_Blocks_Integration
         );
 
         register_block_type(
+            plugin_dir_path(__FILE__) . 'secret-created/block.json',
+            array(
+                'render_callback' => array($this->created_renderer, "render"),
+            )
+        );
+
+        register_block_type(
             plugin_dir_path(__FILE__) . 'add-secret/block.json',
             array(
                 'render_callback' => array($this->add_renderer, "render"),
@@ -65,6 +74,14 @@ class runthings_secrets_Blocks_Integration
             array('wp-blocks', 'wp-editor'),
             filemtime(plugin_dir_path(__FILE__) . 'view-secret/block-view-secret.js')
         );
+
+        wp_enqueue_script(
+            'runthings-secrets-block-created',
+            plugins_url('secret-created/block-secret-created.js', __FILE__),
+            array('wp-blocks', 'wp-editor'),
+            filemtime(plugin_dir_path(__FILE__) . 'secret-created/block-secret-created.js')
+        );
+
         wp_enqueue_script(
             'runthings-secrets-block-add',
             plugins_url('add-secret/block-add-secret.js', __FILE__),

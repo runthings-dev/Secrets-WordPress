@@ -40,8 +40,8 @@ class runthings_secrets_Integration
 
         // integrate blocks
         include plugin_dir_path(__FILE__) . 'integration/block-editor/runthings-secrets-blocks.php';
-        new runthings_secrets_Blocks_Integration($view_secret, $add_secret);
-        
+        new runthings_secrets_Blocks_Integration($view_secret, $secret_created, $add_secret);
+
         // integrate elementor widgets
         // todo
     }

@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "runthings-secrets/secret-created",
+    "title": "Secret Created",
+    "category": "common",
+    "icon": "lock",
+    "description": "Display the newly created secret.",
+    "keywords": ["secret", "add"],
+    "supports": {
+        "html": false
+    },
+    "textdomain": "runthings-secrets",
+    "editorScript": "runthings-secrets-block-created"
+}
