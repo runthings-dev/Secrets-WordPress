@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "runthings-secrets/view-secret",
+    "title": "View Secret",
+    "category": "common",
+    "icon": "visibility",
+    "description": "Display the secret content.",
+    "keywords": ["secret", "view"],
+    "supports": {
+        "html": false
+    },
+    "textdomain": "runthings-secrets",
+    "editorScript": "runthings-secrets-block-view"
+}

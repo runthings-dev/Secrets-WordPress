@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "runthings-secrets/add-secret",
+    "title": "Add Secret",
+    "category": "common",
+    "icon": "lock",
+    "description": "Add a secret.",
+    "keywords": ["secret", "add"],
+    "supports": {
+        "html": false
+    },
+    "textdomain": "runthings-secrets",
+    "editorScript": "runthings-secrets-block-add"
+}
