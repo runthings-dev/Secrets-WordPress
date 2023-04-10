@@ -30,18 +30,11 @@ class runthings_secrets_Options_Page
     public function __construct()
     {
         add_action('admin_notices', [$this, 'admin_notices']);
+        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);       
+        add_action('admin_init', [$this, 'delete_all_secrets_check']);
         add_action('admin_menu', [$this, 'options_page']);
         add_action('admin_init', [$this, 'settings_init']);
-
-        add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_footer', [$this, 'admin_footer']);
-
-        if (
-            isset($_GET['page']) && $_GET['page'] === 'runthings-secrets'
-            && isset($_GET['action']) && $_GET['action'] === 'delete_all_secrets'
-        ) {
-            add_action('admin_init', [$this, 'delete_all_secrets']);
-        }
 
         $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
     }
@@ -63,7 +56,14 @@ class runthings_secrets_Options_Page
         wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
     }
 
-    public function delete_all_secrets()
+    public function delete_all_secrets_check() {
+        if (isset($_GET['page']) && $_GET['page'] === 'runthings-secrets' 
+            && isset($_GET['action']) && $_GET['action'] === 'delete_all_secrets') {
+            $this->delete_all_secrets();
+        }
+    }
+
+    private function delete_all_secrets()
     {
         if (current_user_can('manage_options')) {
             global $wpdb;
