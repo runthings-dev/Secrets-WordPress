@@ -66,7 +66,7 @@ Note: Changing the encryption key will break the decryption of any existing
 secrets, making them unreadable.
 
 # Changelog
-0.5.0 - 25th August 2021
+0.5.0 - 29th March 2023
   - Initial release
 
 # Background 
