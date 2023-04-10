@@ -38,7 +38,7 @@ class runthings_secrets_Shortcodes_Integration
 
     private function register_shortcodes()
     {
-        add_shortcode('runthings_secrets', [$this, 'add_secret_shortcode']);
+        add_shortcode('runthings_secrets_add', [$this, 'add_secret_shortcode']);
         add_shortcode('runthings_secrets_created', [$this, 'secret_created_shortcode']);
         add_shortcode('runthings_secrets_view', [$this, 'view_secret_shortcode']);
     }
