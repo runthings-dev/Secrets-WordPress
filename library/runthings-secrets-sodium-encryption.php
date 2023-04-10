@@ -86,7 +86,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
 
             $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
             $ciphertext = sodium_crypto_secretbox($plaintext, $nonce, $this->key);
-            return base64_encode($nonce . $ciphertext);
+            return $this->base64url_encode($nonce . $ciphertext);
         }
 
         public function decrypt($ciphertext_base64)
@@ -95,7 +95,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
                 return $ciphertext_base64;
             }
 
-            $decoded = base64_decode($ciphertext_base64);
+            $decoded = $this->base64url_decode($ciphertext_base64);
             $nonce = substr($decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
             $ciphertext = substr($decoded, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
 
@@ -123,6 +123,16 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             }
 
             return base64_decode($encryption_key);
+        }
+
+        private function base64url_encode($data)
+        {
+            return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+        }
+
+        private function base64url_decode($data)
+        {
+            return base64_decode(strtr($data, '-_', '+/') . str_repeat('=', 3 - (3 + strlen($data)) % 4));
         }
     }
 }
