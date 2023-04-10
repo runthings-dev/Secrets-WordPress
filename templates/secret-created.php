@@ -7,7 +7,7 @@ $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret;
 <div class="url-container">
     <input type="text" id="viewing-url" value="<?php echo esc_attr($viewing_url); ?>" readonly>
     <button id="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 4h2a2 2 0 012 2v4M8 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-2" />
             <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
             <path d="M21 14H11" />
@@ -21,7 +21,9 @@ $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret;
     }
     #viewing-url {
         flex-grow: 1;
-        padding: 5px;
+        line-height: 2.5;
+        padding: 0 8px;
+        border: 2px dashed #2c2c2c;
         cursor: pointer;
     }
 
