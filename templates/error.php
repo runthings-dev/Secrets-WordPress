@@ -1,0 +1,1 @@
+<p><strong><?php _e('ERROR:', 'runthings-secrets'); ?></strong> <?php echo $error_message; ?></p>

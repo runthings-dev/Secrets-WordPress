@@ -39,7 +39,12 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
             ob_start();
 
-            include plugin_dir_path(__FILE__) . '../templates/view-secret.php';
+            if ($secret->is_error) {
+                $error_message = $secret->error_message;
+                include plugin_dir_path(__FILE__) . '../templates/error.php';
+            } else {
+                include plugin_dir_path(__FILE__) . '../templates/view-secret.php';
+            }
 
             return ob_get_clean();
         }
