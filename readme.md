@@ -42,8 +42,8 @@ Download and contribute issues at:
 https://github.com/rtpHarry/Secrets-Wordpress
 
 # Encryption
-
-An encryption key is automatically generated and used to secure your secrets. 
+As long as your server supports the PHP encryption library, Sodium, an 
+encryption key is automatically generated and used to secure your secrets. 
 
 However, you can set a custom encryption key in your `wp-config.php` file by 
 adding a `define` statement. 
