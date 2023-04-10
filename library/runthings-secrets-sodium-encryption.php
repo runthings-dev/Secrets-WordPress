@@ -40,7 +40,8 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
                     add_action('admin_notices', [$this, 'key_not_defined_notice']);
                 } else {
                     add_option('runthings_secrets_first_run_completed', true, '', 'no');
-                    $this->generate_and_store_key();
+                    $key = $this->generate_key();
+                    $this->store_key($key);
                 }
             }
 
@@ -119,10 +120,15 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             return $plaintext;
         }
 
-        private function generate_and_store_key()
+        public function generate_key()
         {
             $key = sodium_crypto_secretbox_keygen();
-            update_option('runthings_secrets_encryption_key', base64_encode($key));
+            return base64_encode($key);
+        }
+        
+        private function store_key($key)
+        {
+            update_option('runthings_secrets_encryption_key', $key);
         }
 
         private function get_encryption_key()
