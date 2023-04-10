@@ -32,6 +32,7 @@ class runthings_secrets_Options_Page
         add_action('admin_notices', [$this, 'admin_notices']);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_init', [$this, 'delete_all_secrets_check']);
+        add_action('admin_init', [$this, 'regenerate_internal_encryption_key_check']);
         add_action('admin_menu', [$this, 'options_page']);
         add_action('admin_init', [$this, 'settings_init']);
         add_action('admin_footer', [$this, 'admin_footer']);
@@ -77,6 +78,31 @@ class runthings_secrets_Options_Page
     }
 
     public function deleted_secrets_notice()
+    {
+        $message = __('All secrets have been deleted.', 'runthings-secrets');
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
+    }
+
+
+    public function regenerate_internal_encryption_key_check()
+    {
+        if (
+            isset($_GET['page']) && $_GET['page'] === 'runthings-secrets'
+            && isset($_GET['action']) && $_GET['action'] === 'regenerate_internal_encryption_key'
+        ) {
+            $this->regenerate_internal_encryption_key();
+        }
+    }
+
+    private function regenerate_internal_encryption_key()
+    {
+        if (current_user_can('manage_options')) {
+            $this->crypt->generate_and_store_key();
+            add_action('admin_notices', [$this, 'regenerate_internal_encryption_key_notice']);
+        }
+    }
+
+    public function regenerate_internal_encryption_key_notice()
     {
         $message = __('All secrets have been deleted.', 'runthings-secrets');
         printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
@@ -188,15 +214,23 @@ class runthings_secrets_Options_Page
                 [$this, 'encryption_key_section_callback'],
                 'runthings-secrets'
             );
-        }
 
-        add_settings_field(
-            'runthings_secrets_encryption_key',
-            __('Encryption Key', 'runthings-secrets'),
-            [$this, 'encryption_key_callback'],
-            'runthings-secrets',
-            'runthings_secrets_encryption_key_section'
-        );
+            add_settings_field(
+                'runthings_secrets_encryption_key',
+                __('Encryption Key', 'runthings-secrets'),
+                [$this, 'encryption_key_callback'],
+                'runthings-secrets',
+                'runthings_secrets_encryption_key_section'
+            );
+
+            add_settings_field(
+                'runthings_secrets_internal_encryption_key',
+                __('Internal Encryption Key', 'runthings-secrets'),
+                [$this, 'internal_encryption_key_callback'],
+                'runthings-secrets',
+                'runthings_secrets_encryption_key_section'
+            );
+        }
 
         add_settings_section(
             'runthings_secrets_advanced_section',
@@ -391,6 +425,14 @@ class runthings_secrets_Options_Page
         <input type="text" readonly="readonly" value="define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', '<?php echo $new_key; ?>');" onclick="this.select();" style="width: 100%;">
         <p class="description"><?php _e('Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
     <?php
+    }
+
+    public function internal_encryption_key_callback()
+    {
+        $url = admin_url('options-general.php?page=runthings-secrets&action=regenerate_internal_encryption_key');
+        $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
+        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Key', 'runthings-secrets') . '</a>';
+        echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
     }
 
     public function stats_section_callback()
