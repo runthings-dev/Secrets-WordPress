@@ -29,7 +29,7 @@ if (!class_exists('runthings_secrets_Manage')) {
         public function __construct()
         {
             include plugin_dir_path(__FILE__) . './runthings-secrets-sodium-encryption.php';
-            $this->crypt = new runthings_secrets_Sodium_Encryption();
+            $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
         }
 
         public function get_secret($uuid)

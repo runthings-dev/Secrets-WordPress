@@ -26,7 +26,9 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
     {
         private $key;
 
-        public function __construct()
+        protected static $single_instance = null;
+
+        protected function __construct()
         {
             if (!$this->is_sodium_enabled()) {
                 add_action('admin_notices', [$this, 'sodium_not_enabled_notice']);
@@ -43,6 +45,15 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             }
 
             $this->key = $this->get_encryption_key();
+        }
+
+        public static function get_instance()
+        {
+            if (self::$single_instance === null) {
+                self::$single_instance = new self();
+            }
+    
+            return self::$single_instance;
         }
 
         public function is_sodium_enabled()
