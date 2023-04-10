@@ -44,6 +44,9 @@ So far I'm using ChatGTP Plus, with a mixture of GTP 3.5 and 4.
 This plugin is licenced under GPL 3, and is free to use on personal and 
 commercial projects.
 
+# Thanks
+SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-copy
+
 # Author
 Built by Matthew Harris of runthings.dev, copyright 2023.
 
