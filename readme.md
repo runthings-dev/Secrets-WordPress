@@ -7,6 +7,15 @@ password in a chat log, or email thread.
 Set the maximum views / expiration date, so that the secret doesn't lurk around
 forever.
 
+# Features
+  - Selection of pages for 'Add Secret,' 'Secret Created,' and 'View Secret'
+  - Spam protection with reCAPTCHA v3 support and score threshold
+  - Integrate into your site using shortcodes, or WordPress Block Editor blocks
+  - Optionally enqueue form styles
+  - Encryption of secrets when stored in the database
+  - Overridable templates
+  - Translatable
+
 # Usage
 Install the plugin and activate it.
 
