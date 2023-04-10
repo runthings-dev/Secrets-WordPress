@@ -356,10 +356,13 @@ class runthings_secrets_Options_Page
     {
         $total_views_count = get_option('runthings_secrets_stats_total_views', 0);
         $total_secrets_count = get_option('runthings_secrets_stats_total_secrets', 0);
+        $secrets_in_database = $this->get_secrets_in_database();
 
         echo '<p><strong>' . __('Total Secrets Created', 'runthings-secrets') . ':</strong> ' . $total_secrets_count  . '</p>';
         echo '<p><strong>' . __('Total Secrets Viewed', 'runthings-secrets') . ':</strong> ' . $total_views_count  . '</p>';
+        echo '<p><strong>' . __('Total Secrets Currently in the Database', 'runthings-secrets') . ':</strong> ' . $secrets_in_database  . '</p>';
     }
+
 
     public function validate_float($input)
     {
@@ -375,12 +378,37 @@ class runthings_secrets_Options_Page
     public function admin_footer()
     {
     ?>
+        <style>
+            .wp-core-ui .button.delete-all-secrets {
+                background-color: #e03c3c;
+                border-color: #dc3232;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .wp-core-ui .button.delete-all-secrets:hover,
+            .wp-core-ui .button.delete-all-secrets:focus {
+                background-color: #c03232;
+                border-color: #a82828;
+                color: #fff;
+            }
+        </style>
         <script>
             jQuery(document).ready(function($) {
                 $('.runthings-secrets-select2').select2();
             });
         </script>
 <?php
+    }
+
+    private function get_secrets_in_database()
+    {
+        global $wpdb;
+        $secrets_table = $wpdb->prefix . 'runthings_secrets';
+
+        $current_secrets_count = $wpdb->get_var("SELECT COUNT(*) FROM $secrets_table");
+
+        return $current_secrets_count;
     }
 }
 
