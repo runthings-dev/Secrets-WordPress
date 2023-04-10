@@ -35,6 +35,30 @@ Download and contribute issues at:
 
 https://github.com/rtpHarry/Secrets-Wordpress
 
+# Encryption
+
+An encryption key is automatically generated and used to secure your secrets. 
+
+However, you can set a custom encryption key in your `wp-config.php` file by 
+adding a `define` statement. 
+
+This approach is more secure as it allows you to bring the key value from an 
+environment variable or a third-party key storage service.
+
+To set a custom encryption key in `wp-config.php`, add the following line:
+
+```php
+define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', 'your_custom_encryption_key');
+```
+
+Replace `your_custom_encryption_key` with your generated encryption key.
+
+You can generate a new key in the options page of the plugin, which is under
+Admin > Settings > RunThings Secrets
+
+Note: Changing the encryption key will break the decryption of any existing 
+secrets, making them unreadable.
+
 # Changelog
 0.5.0 - 25th August 2021
   - Initial release
