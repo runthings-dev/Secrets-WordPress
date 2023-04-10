@@ -104,7 +104,7 @@ class runthings_secrets_Options_Page
 
     public function regenerate_internal_encryption_key_notice()
     {
-        $message = __('All secrets have been deleted.', 'runthings-secrets');
+        $message = __('Internal encryption key has been regenerated. Consider using the delete all secrets feature to clear out old secrets which are no longer decipherable.', 'runthings-secrets');
         printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
     }
 
