@@ -19,16 +19,22 @@ forever.
 # Usage
 Install the plugin and activate it.
 
-Create a page for adding secrets, and a page for viewing the secrets.
+Create pages for creating and displaying the secrets.
 
-On the adding secrets page, add the [runthings_secrets] shortcode.
+On an add secrets page, add the [runthings_secrets_add] shortcode, or block.
 
-On the viewing page, add the [runthings_secrets_view] shortcode.
+On a secrets created page, add the [runthings_secrets_created] shortcode, or
+block.
 
-In the plugin options page, assign the viewing page.
+On a viewing page, add the [runthings_secrets_view] shortcode, or block.
 
-** Not yet developed ** - for now just edit the link url in 
-`templates/secret-created.php`
+In the plugin options page, under Admin > Settings > RunThings Secrets, assign
+the pages.
+
+Optionally, set up the reCAPTCHA v3 keys.
+
+Optionally, set up your own encryption key in `wp-config.php` (see the 
+encryption section below for full details).
 
 # Download
 Download and contribute issues at:
