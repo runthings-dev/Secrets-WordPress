@@ -386,7 +386,7 @@ class runthings_secrets_Options_Page
         $new_key = $this->crypt->generate_key();
     ?>
         <input type="text" readonly="readonly" value="define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', '<?php echo $new_key; ?>');" onclick="this.select();" style="width: 100%;">
-        <p class="description"><?php _e('Note: Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
+        <p class="description"><?php _e('Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
     <?php
     }
 
