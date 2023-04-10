@@ -21,8 +21,12 @@ if (!defined('WPINC')) {
     die;
 }
 
+include plugin_dir_path(__FILE__) . './library/runthings-secrets-sodium-encryption.php';
+
 class runthings_secrets_Options_Page
 {
+    private $crypt;
+
     public function __construct()
     {
         add_action('admin_notices', [$this, 'admin_notices']);
@@ -31,6 +35,8 @@ class runthings_secrets_Options_Page
 
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_footer', [$this, 'admin_footer']);
+
+        $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
     }
 
     public function admin_notices()
@@ -147,6 +153,23 @@ class runthings_secrets_Options_Page
             [$this, 'recaptcha_score_callback'],
             'runthings-secrets',
             'runthings_secrets_spam_protection_section'
+        );
+
+        if ($this->crypt->is_sodium_enabled()) {
+            add_settings_section(
+                'runthings_secrets_encryption_key_section',
+                __('Encryption Key', 'runthings-secrets'),
+                [$this, 'encryption_key_section_callback'],
+                'runthings-secrets'
+            );
+        }
+
+        add_settings_field(
+            'runthings_secrets_encryption_key',
+            __('Encryption Key', 'runthings-secrets'),
+            [$this, 'encryption_key_callback'],
+            'runthings-secrets',
+            'runthings_secrets_encryption_key_section'
         );
 
         add_settings_section(
@@ -311,6 +334,22 @@ class runthings_secrets_Options_Page
         $enqueue_stylesheet = get_option('runthings_secrets_enqueue_form_styles', 1);
         echo '<input type="checkbox" name="runthings_secrets_enqueue_form_styles" value="1" ' . checked(1, $enqueue_stylesheet, false) . ' />';
         echo '<span class="description"> ' . __('Enqueue the stylesheet for the \'add secret\' form.', 'runthings-secrets') . '</span>';
+    }
+
+    public function encryption_key_section_callback()
+    {
+        _e('A default encyption key has been generated for you. Add the snippet below to your wp-config.php file to use your own encryption key.', 'runthings-secrets');
+        echo " <strong>" . __('Important','runthings-secrets') . ":</strong> ";
+        _e('If you change the encryption key, any existing secrets will become unreadable.', 'runthings-secrets');
+    }
+
+    public function encryption_key_callback()
+    {
+        $new_key = $this->crypt->generate_key();
+    ?>
+        <input type="text" readonly="readonly" value="define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', '<?php echo $new_key; ?>');" onclick="this.select();" style="width: 100%;">
+        <p><?php _e('Note: Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
+    <?php
     }
 
     public function stats_section_callback()
