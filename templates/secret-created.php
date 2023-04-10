@@ -35,6 +35,9 @@ $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret;
         border: none;
         cursor: pointer;
     }
+    button#copy-to-clipboard svg {
+        width: 30px;
+    }
 </style>
 <script>
     document.getElementById('copy-to-clipboard').addEventListener('click', function() {
