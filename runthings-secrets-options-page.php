@@ -36,6 +36,13 @@ class runthings_secrets_Options_Page
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_footer', [$this, 'admin_footer']);
 
+        if (
+            isset($_GET['page']) && $_GET['page'] === 'runthings-secrets'
+            && isset($_GET['action']) && $_GET['action'] === 'delete_all_secrets'
+        ) {
+            add_action('admin_init', [$this, 'delete_all_secrets']);
+        }
+
         $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
     }
 
@@ -54,6 +61,22 @@ class runthings_secrets_Options_Page
     {
         wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13');
         wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
+    }
+
+    public function delete_all_secrets()
+    {
+        if (current_user_can('manage_options')) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'runthings_secrets';
+            $wpdb->query("DELETE FROM {$table_name}");
+            add_action('admin_notices', [$this, 'deleted_secrets_notice']);
+        }
+    }
+
+    public function deleted_secrets_notice()
+    {
+        $message = __('All secrets have been deleted.', 'runthings-secrets');
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
     }
 
     public function options_page()
@@ -183,6 +206,14 @@ class runthings_secrets_Options_Page
             'runthings_secrets_enqueue_form_styles',
             __('Enqueue Form Styles', 'runthings-secrets'),
             [$this, 'enqueue_stylesheet_callback'],
+            'runthings-secrets',
+            'runthings_secrets_advanced_section'
+        );
+
+        add_settings_field(
+            'runthings_secrets_delete_all_secrets',
+            __('Delete All Secrets', 'runthings-secrets'),
+            [$this, 'delete_all_secrets_callback'],
             'runthings-secrets',
             'runthings_secrets_advanced_section'
         );
@@ -336,10 +367,17 @@ class runthings_secrets_Options_Page
         echo '<span class="description"> ' . __('Enqueue the stylesheet for the \'add secret\' form.', 'runthings-secrets') . '</span>';
     }
 
+    public function delete_all_secrets_callback()
+    {
+        $url = admin_url('options-general.php?page=runthings-secrets&action=delete_all_secrets');
+        $confirm_message = __('Are you sure you want to delete all secrets? This action cannot be undone.', 'runthings-secrets');
+        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
+    }
+
     public function encryption_key_section_callback()
     {
         _e('A default encyption key has been generated for you. Add the snippet below to your wp-config.php file to use your own encryption key.', 'runthings-secrets');
-        echo " <strong>" . __('Important','runthings-secrets') . ":</strong> ";
+        echo " <strong>" . __('Important', 'runthings-secrets') . ":</strong> ";
         _e('If you change the encryption key, any existing secrets will become unreadable.', 'runthings-secrets');
     }
 
