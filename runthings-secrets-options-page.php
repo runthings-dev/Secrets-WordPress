@@ -413,9 +413,9 @@ class runthings_secrets_Options_Page
 
     public function encryption_key_section_callback()
     {
-        _e('A default encyption key has been generated for you. Add the snippet below to your wp-config.php file to use your own encryption key.', 'runthings-secrets');
-        echo " <strong>" . __('Important', 'runthings-secrets') . ":</strong> ";
-        _e('If you change the encryption key, any existing secrets will become unreadable.', 'runthings-secrets');
+        echo "<p>" . __('The plugin has generated a default internal encryption key automatically, and stored it as a WordPress option.', 'runthings-secrets') . "</p>";
+        echo "<p>" . __('You can optionally override this using the snippet below in your wp-config.php. This lets you store the key in an environment variable, or 3rd-party key storage service.', 'runthings-secrets') . "</p>";
+        echo "<p><strong>" . __('Important', 'runthings-secrets') . ":</strong> " . __('If you change the encryption key, any existing secrets will become unreadable. You should then use the "Delete All Secrets" feature to clear out the database, or users will see garbled text when they view their secrets.', 'runthings-secrets') . "</p>";
     }
 
     public function encryption_key_callback()
@@ -431,7 +431,7 @@ class runthings_secrets_Options_Page
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=regenerate_internal_encryption_key');
         $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Key', 'runthings-secrets') . '</a>';
+        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
         echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
     }
 
