@@ -82,11 +82,8 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
 
         public function key_not_defined_notice()
         {
-        ?>
-            <div class="notice notice-warning">
-                <p><?php _e('An encryption key is not defined. Generate a new key in the options page.', 'runthings-secrets'); ?></p>
-            </div>
-<?php
+            $message = __('An encryption key is not defined. Generate a new key in the <a href="%s">options page</a>, under Encryption Key.', 'runthings-secrets');
+            printf('<div class="notice notice-warning"><p>%s</p></div>', sprintf($message, admin_url('options-general.php?page=runthings-secrets')));
         }
 
         public function encrypt($plaintext)
