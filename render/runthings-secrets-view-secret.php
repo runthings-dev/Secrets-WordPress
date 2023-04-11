@@ -37,13 +37,15 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
             $secret = $this->manage->get_secret($uuid);
 
+            $templates = new runthings_secrets_Template_Loader();
+
             ob_start();
 
             if ($secret->is_error) {
                 $error_message = $secret->error_message;
-                include plugin_dir_path(__FILE__) . '../templates/error.php';
+                $templates->get_template_part('error');
             } else {
-                include plugin_dir_path(__FILE__) . '../templates/view-secret.php';
+                $templates->get_template_part('view-secret');
             }
 
             return ob_get_clean();

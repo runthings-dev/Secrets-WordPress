@@ -28,13 +28,15 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
         {
             $secret = isset($_GET['secret']) ? $_GET['secret'] : '';
 
+            $templates = new runthings_secrets_Template_Loader();
+
             ob_start();
 
             if (empty($secret) || !$this->is_valid_guid($secret)) {
                 $error_message = __("Invalid secret id", 'runthings-secrets');
-                include plugin_dir_path(__FILE__) . '../templates/error.php';
+                $templates->get_template_part('error');
             } else {
-                include plugin_dir_path(__FILE__) . '../templates/secret-created.php';
+                $templates->get_template_part('secret-created');
             }
 
             return ob_get_clean();

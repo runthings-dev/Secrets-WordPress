@@ -31,6 +31,7 @@ if (!defined('WPINC')) {
     die;
 }
 
+
 class runthings_secrets_Plugin
 {
     const VERSION = '0.5.0';
@@ -41,6 +42,7 @@ class runthings_secrets_Plugin
     {
         include plugin_dir_path(__FILE__) . 'runthings-secrets-options-page.php';
         include plugin_dir_path(__FILE__) . 'runthings-secrets-integration.php';
+        include plugin_dir_path(__FILE__) . 'library/runthings-secrets-template-loader.php';
     }
 
     public static function get_instance()

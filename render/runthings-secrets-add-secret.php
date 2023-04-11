@@ -39,9 +39,11 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
+            $templates = new runthings_secrets_Template_Loader();
+
             ob_start();
 
-            include plugin_dir_path(__FILE__) . '../templates/add-secret-form.php';
+            $templates->get_template_part('add-secret-form');
 
             return ob_get_clean();
         }
