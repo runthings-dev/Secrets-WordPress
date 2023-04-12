@@ -53,9 +53,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             if (!isset($_POST['secret'])) {
                 return;
             }
-
+            
             $uuid = $this->create_secret();
-
+            
             if ($uuid) {
                 $created_page_id = get_option('runthings_secrets_created_page');
                 $created_page_url = get_permalink($created_page_id);
@@ -98,7 +98,6 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             }
         }
         
-
         private function create_secret()
         {
             if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
