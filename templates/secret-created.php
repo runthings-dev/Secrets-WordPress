@@ -31,39 +31,3 @@ $viewing_url = get_permalink($view_page_id) . '?secret=' . $context->secret->uui
 </div>
 <p><?php echo sprintf(__('Expiration date: %s', 'runthings-secrets'), date('Y-m-d', strtotime($context->secret->expiration))); ?></p>
 <p><?php echo sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)); ?></p>
-<style>
-    .url-container {
-        display: flex;
-    }
-    #viewing-url {
-        flex-grow: 1;
-        line-height: 2.5;
-        padding: 0 8px;
-        border: 2px dashed #2c2c2c;
-        cursor: pointer;
-    }
-
-    button#copy-to-clipboard {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-    }
-    button#copy-to-clipboard svg {
-        width: 30px;
-    }
-</style>
-<script>
-    document.getElementById('copy-to-clipboard').addEventListener('click', function() {
-        const viewingUrlInput = document.getElementById('viewing-url');
-        viewingUrlInput.select();
-        viewingUrlInput.setSelectionRange(0, 99999); // For mobile devices
-        document.execCommand('copy');
-    });
-
-    document.getElementById('viewing-url').addEventListener('click', function() {
-        this.select();
-    });
-</script>
