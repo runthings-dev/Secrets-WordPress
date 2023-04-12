@@ -28,7 +28,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
         public function __construct()
         {
-            include plugin_dir_path(__FILE__) . '../library/runthings-secrets-manage.php';
+            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
         }
 

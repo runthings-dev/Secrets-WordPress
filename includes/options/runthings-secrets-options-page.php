@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-include plugin_dir_path(__FILE__) . './library/runthings-secrets-sodium-encryption.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-sodium-encryption.php';
 
 class runthings_secrets_Options_Page
 {

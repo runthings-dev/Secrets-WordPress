@@ -26,20 +26,20 @@ class runthings_secrets_Integration
     public function __construct()
     {
         // create renderers
-        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-add-secret.php';
-        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-secret-created.php';
-        include plugin_dir_path(__FILE__) . 'render/runthings-secrets-view-secret.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-add-secret.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-secret-created.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-view-secret.php';
 
         $add_secret = new runthings_secrets_Add_Secret();
         $secret_created = new runthings_secrets_Secret_Created();
         $view_secret = new runthings_secrets_View_Secret();
 
         // integrate shortcodes
-        include plugin_dir_path(__FILE__) . 'integration/shortcode/runthings-secrets-shortcodes.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/shortcode/runthings-secrets-shortcodes.php';
         new runthings_secrets_Shortcodes_Integration($add_secret, $secret_created, $view_secret);
 
         // integrate blocks
-        include plugin_dir_path(__FILE__) . 'integration/block-editor/runthings-secrets-blocks.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/block-editor/runthings-secrets-blocks.php';
         new runthings_secrets_Blocks_Integration($add_secret, $secret_created, $view_secret);
 
         // integrate elementor widgets

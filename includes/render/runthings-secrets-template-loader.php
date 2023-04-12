@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
 	die;
 }
 
-include plugin_dir_path(__FILE__) . '../vendor/gamajo-template-loader/class-gamajo-template-loader.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
 
 if (!class_exists('runthings_secrets_Template_Loader')) {
 	class runthings_secrets_Template_Loader extends Gamajo_Template_Loader
