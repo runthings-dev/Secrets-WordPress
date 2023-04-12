@@ -42,10 +42,21 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             ob_start();
 
             if ($secret->is_error) {
-                $error_message = $secret->error_message;
-                $templates->get_template_part('error');
+                $data = array(
+                    "error_message" => $secret->error_message
+                );
+
+                $templates
+                    ->set_template_data($data, 'context')
+                    ->get_template_part('error');
             } else {
-                $templates->get_template_part('view-secret');
+                $data = array(
+                    "secret" => $secret
+                );
+
+                $templates
+                    ->set_template_data($data, 'context')
+                    ->get_template_part('view-secret');
             }
 
             return ob_get_clean();

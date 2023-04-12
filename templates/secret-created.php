@@ -15,7 +15,7 @@
 
 // Generate the viewing URL.
 $view_page_id = get_option('runthings_secrets_view_page');
-$viewing_url = get_permalink($view_page_id) . '?secret=' . $secret;
+$viewing_url = get_permalink($view_page_id) . '?secret=' . $context->secret->uuid;
 ?>
 <p><?php _e('Your secret sharing URL:', 'runthings-secrets'); ?></p>
 <div class="url-container">
@@ -29,6 +29,8 @@ $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret;
         </svg>
     </button>
 </div>
+<p><?php echo sprintf(__('Expiration date: %s', 'runthings-secrets'), date('Y-m-d', strtotime($context->secret->expiration))); ?></p>
+<p><?php echo sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)); ?></p>
 <style>
     .url-container {
         display: flex;

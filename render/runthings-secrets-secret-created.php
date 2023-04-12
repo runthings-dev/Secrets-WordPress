@@ -24,30 +24,42 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Secret_Created')) {
     class runthings_secrets_Secret_Created
     {
+        private $manage;
+
+        public function __construct()
+        {
+            include plugin_dir_path(__FILE__) . '../library/runthings-secrets-manage.php';
+            $this->manage = new runthings_secrets_Manage();
+        }
+
         public function render()
         {
-            $secret = isset($_GET['secret']) ? $_GET['secret'] : '';
+            $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
+            $secret = $this->manage->get_secret($uuid);
 
             $templates = new runthings_secrets_Template_Loader();
 
             ob_start();
 
-            if (empty($secret) || !$this->is_valid_guid($secret)) {
-                $error_message = __("Invalid secret id", 'runthings-secrets');
-                $templates->get_template_part('error');
+            if ($secret->is_error) {
+                $data = array(
+                    "error_message" => __("Invalid secret id", 'runthings-secrets')
+                );
+
+                $templates
+                    ->set_template_data($data, 'context')
+                    ->get_template_part('error');
             } else {
-                $templates->get_template_part('secret-created');
+                $data = array(
+                    "secret" => $secret
+                );
+
+                $templates
+                    ->set_template_data($data, 'context')
+                    ->get_template_part('secret-created');
             }
 
             return ob_get_clean();
-        }
-
-        private function is_valid_guid($guid)
-        {
-            if (preg_match('/^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i', $guid)) {
-                return true;
-            }
-            return false;
         }
     }
 }
