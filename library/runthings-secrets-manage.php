@@ -34,6 +34,16 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         public function get_secret($uuid)
         {
+            return $this->get_secret_data($uuid);
+        }
+
+        public function get_secret_meta($uuid)
+        {
+            return $this->get_secret_data($uuid, 'created');
+        }
+
+        private function get_secret_data($uuid, $context = 'view')
+        {
             global $wpdb;
 
             $table_name = $wpdb->prefix . 'runthings_secrets';
@@ -62,18 +72,23 @@ if (!class_exists('runthings_secrets_Manage')) {
                     $secret->is_error = false;
                     $secret->error_message = "";
 
-                    // Increment the views count.
-                    $wpdb->update(
-                        $table_name,
-                        array('views' => $secret->views + 1),
-                        array('id' => $secret->id)
-                    );
+                    if ($context == 'view') {
+                        // Increment the views count.
+                        $wpdb->update(
+                            $table_name,
+                            array('views' => $secret->views + 1),
+                            array('id' => $secret->id)
+                        );
 
-                    $this->incremement_global_views_total_stat();
+                        $this->incremement_global_views_total_stat();
 
-                    // decrypt and display the secret to the user
-                    $secret->secret = $this->crypt->decrypt($secret->secret);
-
+                        // decrypt and display the secret to the user
+                        $secret->secret = $this->crypt->decrypt($secret->secret);
+                    } else {
+                        // $context is meta only, so clear out the secret value
+                        $secret->secret = null;
+                    }
+                    
                 }
             } else {
                 // TODO make proper class for the view secret object

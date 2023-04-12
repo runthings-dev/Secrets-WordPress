@@ -35,7 +35,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
         public function render()
         {
             $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
-            $secret = $this->manage->get_secret($uuid);
+            $secret = $this->manage->get_secret_meta($uuid);
 
             $templates = new runthings_secrets_Template_Loader();
 
@@ -43,7 +43,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             if ($secret->is_error) {
                 $data = array(
-                    "error_message" => __("Invalid secret id", 'runthings-secrets')
+                    "error_message" => $secret->error_message
                 );
 
                 $templates
