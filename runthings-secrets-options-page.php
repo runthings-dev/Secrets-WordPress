@@ -440,10 +440,24 @@ class runthings_secrets_Options_Page
         $total_views_count = get_option('runthings_secrets_stats_total_views', 0);
         $total_secrets_count = get_option('runthings_secrets_stats_total_secrets', 0);
         $secrets_in_database = $this->get_secrets_in_database();
-
-        echo '<p><strong>' . __('Total Secrets Created', 'runthings-secrets') . ':</strong> ' . $total_secrets_count  . '</p>';
-        echo '<p><strong>' . __('Total Secrets Viewed', 'runthings-secrets') . ':</strong> ' . $total_views_count  . '</p>';
-        echo '<p><strong>' . __('Total Secrets Currently in the Database', 'runthings-secrets') . ':</strong> ' . $secrets_in_database  . '</p>';
+    ?>
+        <table class="form-table" role="presentation">
+            <tbody>
+                <tr>
+                    <th scope="row"><?php _e('Total Secrets Created', 'runthings-secrets'); ?></th>
+                    <td><?php echo $total_secrets_count; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Total Secrets Viewed', 'runthings-secrets'); ?></th>
+                    <td><?php echo $total_views_count; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e('Secrets In Database', 'runthings-secrets') ?></th>
+                    <td><?php echo $secrets_in_database; ?></td>
+                </tr>
+            </tbody>
+        </table>
+    <?php
     }
 
 
