@@ -72,15 +72,15 @@ class runthings_secrets_Options_Page
     {
     ?>
         <style>
-            .wp-core-ui .button.delete-all-secrets {
+            .wp-core-ui .button.danger-button {
                 background-color: #e03c3c;
                 border-color: #dc3232;
                 color: #fff;
                 text-decoration: none;
             }
 
-            .wp-core-ui .button.delete-all-secrets:hover,
-            .wp-core-ui .button.delete-all-secrets:focus {
+            .wp-core-ui .button.danger-button:hover,
+            .wp-core-ui .button.danger-button:focus {
                 background-color: #c03232;
                 border-color: #a82828;
                 color: #fff;

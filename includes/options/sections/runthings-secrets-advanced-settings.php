@@ -105,6 +105,6 @@ class runthings_secrets_Advanced_Settings
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=delete_all_secrets');
         $confirm_message = __('Are you sure you want to delete all secrets? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
+        echo '<a href="' . $url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
     }
 }

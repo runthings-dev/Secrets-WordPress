@@ -117,7 +117,7 @@ class runthings_secrets_Encryption_Settings
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=regenerate_internal_encryption_key');
         $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
+        echo '<a href="' . $url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
         echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
     }
 
