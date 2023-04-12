@@ -116,6 +116,19 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             return $plaintext;
         }
 
+        public function get_key_method()
+        {
+            if (defined('RUNTHINGS_SECRETS_ENCRYPTION_KEY')) {
+                $key_method = __('define() method', 'runthings-secrets');
+            } else if(get_option('runthings_secrets_encryption_key')) {
+                $key_method = __('wp_option key', 'runthings-secrets');
+            } else {
+                $key_method = __('ERROR: No key found', 'runthings-secrets');
+            }
+
+            return $key_method;
+        }
+
         public function generate_and_store_key()
         {
             $key = $this->generate_key();

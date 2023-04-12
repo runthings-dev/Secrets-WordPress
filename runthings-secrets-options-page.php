@@ -230,6 +230,14 @@ class runthings_secrets_Options_Page
                 'runthings-secrets',
                 'runthings_secrets_encryption_key_section'
             );
+
+            add_settings_field(
+                'runthings_secrets_encryption_key_method',
+                __('Current Encryption Method', 'runthings-secrets'),
+                [$this, 'encryption_key_method_callback'],
+                'runthings-secrets',
+                'runthings_secrets_encryption_key_section'
+            );
         }
 
         add_settings_section(
@@ -433,6 +441,11 @@ class runthings_secrets_Options_Page
         $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
         echo '<a href="' . $url . '" class="button delete-all-secrets" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
         echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
+    }
+
+    public function encryption_key_method_callback()
+    {
+        echo $this->crypt->get_key_method();
     }
 
     public function stats_section_callback()
