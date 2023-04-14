@@ -44,9 +44,9 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             ob_start();
 
-            if ($secret->is_error) {
+            if (is_wp_error($secret)) {
                 $data = array(
-                    "error_message" => $secret->error_message
+                    "error_message" => $secret->get_error_message()
                 );
 
                 $templates

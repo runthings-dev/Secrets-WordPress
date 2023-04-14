@@ -55,47 +55,43 @@ if (!class_exists('runthings_secrets_Manage')) {
                 )
             );
 
-            if ($secret) {
-                // Check if the secret has expired or reached its maximum number of views.
-                if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
-                    // set error state
-                    $secret->is_error = true;
-                    $secret->error_message = __("This secret has expired or reached its maximum number of views.", 'runthings-secrets');
+            if (!$secret) {
+                return new WP_Error(
+                    'invalid_secret_url',
+                    __("Invalid secret sharing URL.", 'runthings-secrets')
+                );
+            }
+            
+            // Check if the secret has expired or reached its maximum number of views.
+            if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
+                // Delete the secret from the database.
+                $wpdb->delete(
+                    $table_name,
+                    array('id' => $secret->id)
+                );
 
-                    // Delete the secret from the database.
-                    $wpdb->delete(
+                // set error state
+                return new WP_Error(
+                    'secret_expired',
+                    __("This secret has expired or reached its maximum number of views.", 'runthings-secrets')
+                );
+            } else {
+                if ($context == 'view') {
+                    // Increment the views count.
+                    $wpdb->update(
                         $table_name,
+                        array('views' => $secret->views + 1),
                         array('id' => $secret->id)
                     );
+
+                    $this->incremement_global_views_total_stat();
+
+                    // decrypt and display the secret to the user
+                    $secret->secret = $this->crypt->decrypt($secret->secret);
                 } else {
-                    // set error state
-                    $secret->is_error = false;
-                    $secret->error_message = "";
-
-                    if ($context == 'view') {
-                        // Increment the views count.
-                        $wpdb->update(
-                            $table_name,
-                            array('views' => $secret->views + 1),
-                            array('id' => $secret->id)
-                        );
-
-                        $this->incremement_global_views_total_stat();
-
-                        // decrypt and display the secret to the user
-                        $secret->secret = $this->crypt->decrypt($secret->secret);
-                    } else {
-                        // $context is meta only, so clear out the secret value
-                        $secret->secret = null;
-                    }
-                    
+                    // $context is meta only, so clear out the secret value
+                    $secret->secret = null;
                 }
-            } else {
-                // TODO make proper class for the view secret object
-                $secret = new stdClass();
-
-                $secret->is_error = true;
-                $secret->error_message = __("Invalid secret sharing URL.", 'runthings-secrets');
             }
 
             return $secret;
