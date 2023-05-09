@@ -61,7 +61,7 @@ if (!class_exists('runthings_secrets_Manage')) {
                     __("Invalid secret sharing URL.", 'runthings-secrets')
                 );
             }
-            
+
             // Check if the secret has expired or reached its maximum number of views.
             if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
                 // Delete the secret from the database.
@@ -94,6 +94,9 @@ if (!class_exists('runthings_secrets_Manage')) {
                 }
             }
 
+            $secret->days_left = $this->get_days_left($secret->expiration);
+            $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
+
             return $secret;
         }
 
@@ -124,6 +127,26 @@ if (!class_exists('runthings_secrets_Manage')) {
             $this->incremement_global_secrets_total_stat();
 
             return $uuid;
+        }
+
+        private function get_days_left($expiration_date)
+        {
+            $current_date = new DateTime(current_time('mysql'));
+            $expiration = new DateTime($expiration_date);
+
+            $interval = $current_date->diff($expiration);
+            $days_left = $interval->format('%r%a');
+
+            $pluralized_days = sprintf(_n('%s day', '%s days', $days_left, 'runthings-secrets'), $days_left);
+
+            return $pluralized_days;
+        }
+
+        private function get_views_left($views_difference)
+        {
+            $pluralized_views = sprintf(_n('%s view', '%s views', $views_difference, 'runthings-secrets'), $views_difference);
+
+            return $pluralized_views;
         }
 
         private function incremement_global_secrets_total_stat()

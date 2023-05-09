@@ -1,17 +1,18 @@
-document
-  .getElementById("copy-to-clipboard")
-  .addEventListener("click", function () {
-    const viewingUrlInput = document.getElementById("viewing-url");
+const copyToClipboardButtons = document.querySelectorAll('.copy-to-clipboard');
+
+copyToClipboardButtons.forEach((button) => {
+  button.addEventListener('click', function () {
+    const viewingUrlInput = button.previousElementSibling;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       const textToCopy = viewingUrlInput.value;
       navigator.clipboard
         .writeText(textToCopy)
         .then(() => {
-          console.log("Text copied to clipboard");
+          console.log('Text copied to clipboard');
         })
         .catch((err) => {
-          console.error("Failed to copy text: ", err);
+          console.error('Failed to copy text: ', err);
         });
     } else {
       // Fallback for older browsers
@@ -19,18 +20,25 @@ document
       viewingUrlInput.setSelectionRange(0, 99999); // For mobile devices
 
       try {
-        const successful = document.execCommand("copy");
+        const successful = document.execCommand('copy');
         if (successful) {
-          console.log("Text copied to clipboard");
+          console.log('Text copied to clipboard');
         } else {
-          console.error("Failed to copy text");
+          console.error('Failed to copy text');
         }
       } catch (err) {
-        console.error("Failed to copy text: ", err);
+        console.error('Failed to copy text: ', err);
       }
     }
   });
+});
 
-document.getElementById("viewing-url").addEventListener("click", function () {
-  this.select();
+const viewingUrlInputs = document.querySelectorAll(
+  '.viewing-url, .viewing-snippet'
+);
+
+viewingUrlInputs.forEach((input) => {
+  input.addEventListener('click', function () {
+    this.select();
+  });
 });
