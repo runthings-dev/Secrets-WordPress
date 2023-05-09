@@ -14,7 +14,12 @@
  * @version 1.0.0
  */
 
-$viewing_snippet = "Get it from {$context->viewing_url} (valid for {$context->secret->days_left} / {$context->secret->views_left}).";
+$viewing_snippet = sprintf(
+    __("Get it from %1\$s (valid for %2\$s / %3\$s).", 'runthings-secrets'),
+    $context->viewing_url,
+    $context->secret->days_left,
+    $context->secret->views_left
+);
 ?>
 <p><?php _e('Your secret sharing link:', 'runthings-secrets'); ?></p>
 <div class="url-container">
