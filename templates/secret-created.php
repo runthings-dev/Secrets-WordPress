@@ -22,7 +22,7 @@ $viewing_snippet = sprintf(
 );
 ?>
 <p><?php _e('Your secret sharing link:', 'runthings-secrets'); ?></p>
-<div class="url-container">
+<div class="data-container">
     <input type="text" class="viewing-url" value="<?php echo esc_attr($context->viewing_url); ?>" readonly>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -34,7 +34,7 @@ $viewing_snippet = sprintf(
     </button>
 </div>
 <p><?php _e('Your secret sharing snippet:', 'runthings-secrets'); ?></p>
-<div class="url-container">
+<div class="data-container">
     <textarea class="viewing-snippet" rows="2" readonly><?php echo esc_html($viewing_snippet); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
