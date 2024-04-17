@@ -40,32 +40,43 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             $uuid = isset($_GET['secret']) ? sanitize_text_field($_GET['secret']) : null;
             $secret = $this->manage->get_secret_meta($uuid);
 
+            if (is_wp_error($secret)) {
+                return $this->handle_error($secret);
+            }
+
             // Generate the viewing URL.
             $view_page_id = get_option('runthings_secrets_view_page');
             $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret->uuid;
 
-            $templates = new runthings_secrets_Template_Loader();
+            $template = new runthings_secrets_Template_Loader();
 
             ob_start();
 
-            if (is_wp_error($secret)) {
-                $data = array(
-                    "error_message" => $secret->get_error_message()
-                );
+            $data = array(
+                "secret" => $secret,
+                "viewing_url" => $viewing_url
+            );
 
-                $templates
-                    ->set_template_data($data, 'context')
-                    ->get_template_part('error');
-            } else {
-                $data = array(
-                    "secret" => $secret,
-                    "viewing_url" => $viewing_url
-                );
+            $template
+                ->set_template_data($data, 'context')
+                ->get_template_part('secret-created');
 
-                $templates
-                    ->set_template_data($data, 'context')
-                    ->get_template_part('secret-created');
-            }
+            return ob_get_clean();
+        }
+
+        private function handle_error($error)
+        {
+            $template = new runthings_secrets_Template_Loader();
+
+            ob_start();
+
+            $data = array(
+                "error_message" => $error->get_error_message()
+            );
+
+            $template
+                ->set_template_data($data, 'context')
+                ->get_template_part('error');
 
             return ob_get_clean();
         }

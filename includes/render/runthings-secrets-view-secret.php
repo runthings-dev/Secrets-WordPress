@@ -40,27 +40,38 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             $uuid = isset($_GET['secret']) ? sanitize_text_field($_GET['secret']) : null;
             $secret = $this->manage->get_secret($uuid);
 
-            $templates = new runthings_secrets_Template_Loader();
+            if (is_wp_error($secret)) {
+                return $this->handle_error($secret);
+            }
+
+            $template = new runthings_secrets_Template_Loader();
 
             ob_start();
 
-            if (is_wp_error($secret)) {
-                $data = array(
-                    "error_message" => $secret->get_error_message()
-                );
+            $data = array(
+                "secret" => $secret
+            );
 
-                $templates
-                    ->set_template_data($data, 'context')
-                    ->get_template_part('error');
-            } else {
-                $data = array(
-                    "secret" => $secret
-                );
+            $template
+                ->set_template_data($data, 'context')
+                ->get_template_part('view-secret');
 
-                $templates
-                    ->set_template_data($data, 'context')
-                    ->get_template_part('view-secret');
-            }
+            return ob_get_clean();
+        }
+
+        public function handle_error($error)
+        {
+            $template = new runthings_secrets_Template_Loader();
+
+            ob_start();
+
+            $data = array(
+                "error_message" => $error->get_error_message()
+            );
+
+            $template
+                ->set_template_data($data, 'context')
+                ->get_template_part('error');
 
             return ob_get_clean();
         }
