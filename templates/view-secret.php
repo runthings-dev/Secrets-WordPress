@@ -15,8 +15,8 @@
  */
 ?>
 <p><?php _e('Your secret is:', 'runthings-secrets'); ?></p>
-<div class="data-container">
-    <textarea class="view-secret" rows="2" readonly><?php echo esc_html($context->secret->secret); ?></textarea>
+<div class="rs-data-container">
+    <textarea class="view-secret rs-data-item" rows="2" readonly><?php echo esc_html($context->secret->secret); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 4h2a2 2 0 012 2v4M8 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-2" />
