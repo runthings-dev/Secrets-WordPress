@@ -36,7 +36,7 @@ copyToClipboardButtons.forEach((button) => {
 const dataItemInputs = document.querySelectorAll('.rs-data-item');
 
 dataItemInputs.forEach((input) => {
-  input.addEventListener('click', function () {
-    this.select();
+  input.addEventListener('click', (event) => {
+    event.target.select();
   });
 });
