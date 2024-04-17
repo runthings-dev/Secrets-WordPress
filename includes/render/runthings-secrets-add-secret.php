@@ -2,7 +2,7 @@
 /*
 Secrets by runthings.dev
 
-Copyright 2023 Matthew Harris
+Copyright 2023-2024 Matthew Harris
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 3, as
@@ -53,9 +53,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             if (!isset($_POST['secret'])) {
                 return;
             }
-            
+
             $uuid = $this->create_secret();
-            
+
             if ($uuid) {
                 $created_page_id = get_option('runthings_secrets_created_page');
                 $created_page_url = get_permalink($created_page_id);
@@ -81,10 +81,10 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
             $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
             $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
-        
+
             if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
                 wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key, [], null, true);
-                
+
                 wp_add_inline_script(
                     'google-recaptcha',
                     'grecaptcha.ready(function() {
@@ -97,7 +97,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 );
             }
         }
-        
+
         private function create_secret()
         {
             if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {

@@ -2,7 +2,7 @@
 /*
 Secrets by runthings.dev
 
-Copyright 2023 Matthew Harris
+Copyright 2023-2024 Matthew Harris
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 3, as

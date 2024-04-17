@@ -87,6 +87,6 @@ commercial projects.
 SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-copy
 
 # Author
-Built by Matthew Harris of runthings.dev, copyright 2023.
+Built by Matthew Harris of runthings.dev, copyright 2023-2024.
 
 https://runthings.dev/

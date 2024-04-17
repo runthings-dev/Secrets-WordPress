@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Secrets
  * Plugin URI: https://runthings.dev
@@ -12,7 +13,7 @@
  * Requires PHP: 7.0
  */
 /*
-Copyright 2023 Matthew Harris
+Copyright 2023-2024 Matthew Harris
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 3, as
@@ -81,7 +82,7 @@ class runthings_secrets_Plugin
     {
         $this->deactivate_scheduled_tasks();
     }
-    
+
     public function load_textdomain()
     {
         load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
@@ -196,9 +197,10 @@ if (!function_exists('runthings_secrets_uninstall')) {
 }
 
 if (!function_exists('runthings_secrets')) {
-	function runthings_secrets() {
-		return runthings_secrets_Plugin::get_instance();
-	}
+    function runthings_secrets()
+    {
+        return runthings_secrets_Plugin::get_instance();
+    }
 }
 
 // start
