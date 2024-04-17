@@ -31,10 +31,10 @@ class runthings_secrets_Advanced_Settings
 
     public function delete_all_secrets_check()
     {
-        if (
-            isset($_GET['page']) && $_GET['page'] === 'runthings-secrets'
-            && isset($_GET['action']) && $_GET['action'] === 'delete_all_secrets'
-        ) {
+        $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : null;
+        $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
+
+        if ($page === 'runthings-secrets' && $action === 'delete_all_secrets') {
             $this->delete_all_secrets();
         }
     }

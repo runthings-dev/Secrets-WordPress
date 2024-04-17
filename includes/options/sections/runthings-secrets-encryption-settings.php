@@ -41,10 +41,10 @@ class runthings_secrets_Encryption_Settings
 
     public function regenerate_internal_encryption_key_check()
     {
-        if (
-            isset($_GET['page']) && $_GET['page'] === 'runthings-secrets'
-            && isset($_GET['action']) && $_GET['action'] === 'regenerate_internal_encryption_key'
-        ) {
+        $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : null;
+        $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
+
+        if ($page === 'runthings-secrets' && $action === 'regenerate_internal_encryption_key') {
             $this->regenerate_internal_encryption_key();
         }
     }

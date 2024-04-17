@@ -37,7 +37,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 
-            $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
+            $uuid = isset($_GET['secret']) ? sanitize_text_field($_GET['secret']) : null;
             $secret = $this->manage->get_secret_meta($uuid);
 
             // Generate the viewing URL.
