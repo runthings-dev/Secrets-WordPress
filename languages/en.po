@@ -1,18 +1,323 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2023-05-09 23:55+0100\n"
-"PO-Revision-Date: 2023-05-09 23:55+0100\n"
-"Last-Translator: \n"
+"Project-Id-Version: Runthings Secrets\n"
+"POT-Creation-Date: 2024-04-17 23:50+0100\n"
+"PO-Revision-Date: 2024-04-17 23:57+0100\n"
+"Last-Translator: Matthew Harris <matthew@rtpdesign.co.uk>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;esc_attr__;esc_html__;esc_attr_e;"
+"esc_html_e;_ex:1,2c;_n_noop:1,2;_nx_noop:1,3c\n"
 "X-Poedit-SearchPath-0: includes\n"
 "X-Poedit-SearchPath-1: js\n"
 "X-Poedit-SearchPath-2: templates\n"
 "X-Poedit-SearchPath-3: runthings-secrets.php\n"
+
+#: includes/integration/block-editor/add-secret/block-add-secret.js:18
+msgid "The 'add secret' form will be shown here."
+msgstr ""
+
+#: includes/integration/block-editor/secret-created/block-secret-created.js:18
+msgid "The 'created secret' layout will be shown here."
+msgstr ""
+
+#: includes/integration/block-editor/view-secret/block-view-secret.js:18
+msgid "The 'view secret' layout will be shown here."
+msgstr ""
+
+#: includes/options/runthings-secrets-options-page.php:47
+#: includes/options/runthings-secrets-options-page.php:48
+msgid "RunThings Secrets"
+msgstr ""
+
+#: includes/options/runthings-secrets-options-page.php:59
+msgid "RunThings Secrets Settings"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:54
+msgid "All secrets have been deleted."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:62
+msgid "Advanced"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:69
+msgid "Enqueue Form Styles"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:77
+#: includes/options/sections/runthings-secrets-advanced-settings.php:108
+msgid "Delete All Secrets"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:101
+msgid "Enqueue the stylesheet for the 'add secret' form."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-advanced-settings.php:107
+msgid ""
+"Are you sure you want to delete all secrets? This action cannot be undone."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:62
+msgid ""
+"Internal encryption key has been regenerated. Consider using the delete all "
+"secrets feature to clear out old secrets which are no longer decipherable."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:70
+#: includes/options/sections/runthings-secrets-encryption-settings.php:77
+msgid "Encryption Key"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:85
+msgid "Internal Encryption Key"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:93
+msgid "Current Encryption Method"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:102
+msgid ""
+"The plugin has generated a default internal encryption key automatically, "
+"and stored it as a WordPress option."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:103
+msgid ""
+"You can optionally override this using the snippet below in your wp-config."
+"php. This lets you store the key in an environment variable, or 3rd-party "
+"key storage service."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:104
+msgid "Important"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:104
+msgid ""
+"If you change the encryption key, any existing secrets will become "
+"unreadable. You should then use the \"Delete All Secrets\" feature to clear "
+"out the database, or users will see garbled text when they view their "
+"secrets."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:112
+msgid "Refresh the page to generate another key."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:119
+msgid ""
+"Are you sure you want to regenerate the internal encryption key? This action "
+"cannot be undone."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:120
+msgid "Regenerate Internal Key"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-encryption-settings.php:121
+msgid ""
+"The internal encryption key is used if you haven't specified one using the "
+"define() method above."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:40
+#, php-format
+msgid ""
+"Please set the \"Add Secret Page\", \"Created Secret Page\" and \"View "
+"Secret Page\" options in the <a href=\"%s\">RunThings Secrets settings</a>."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:55
+msgid "Secret Pages"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:62
+msgid "Add Secret Page"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:70
+msgid "Secret Created Page"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:78
+msgid "View Secret Page"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:105
+msgid "Select the WordPress pages to use for adding and viewing secrets."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-pages-settings.php:112
+#: includes/options/sections/runthings-secrets-pages-settings.php:125
+#: includes/options/sections/runthings-secrets-pages-settings.php:138
+msgid "(no page selected)"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:35
+msgid "Spam Protection"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:42
+msgid "Enable reCAPTCHA v3"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:50
+msgid "reCAPTCHA v3 Public Key"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:58
+msgid "reCAPTCHA v3 Private Key"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:66
+msgid "reCAPTCHA v3 Score"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:103
+msgid "Protect your secrets from spam by enabling reCAPTCHA v3."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:104
+msgid ""
+"Get your reCAPTCHA v3 keys <a target=\"_blank\" href=\"https://www.google."
+"com/recaptcha/admin/create\">here</a>."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:129
+msgid ""
+"Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, "
+"a higher value is more strict."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-stats-settings.php:35
+msgid "Statistics"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-stats-settings.php:50
+msgid "Total Secrets Created"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-stats-settings.php:54
+msgid "Total Secrets Viewed"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-stats-settings.php:58
+msgid "Secrets In Database"
+msgstr ""
+
+#: includes/runthings-secrets-manage.php:50
+msgid "Invalid UUID format."
+msgstr ""
+
+#: includes/runthings-secrets-manage.php:68
+msgid "Invalid secret sharing URL."
+msgstr ""
+
+#: includes/runthings-secrets-manage.php:83
+msgid "This secret has expired or reached its maximum number of views."
+msgstr ""
+
+#: includes/runthings-secrets-manage.php:150
+#, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/runthings-secrets-manage.php:157
+#, php-format
+msgid "%s view"
+msgid_plural "%s views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/runthings-secrets-sodium-encryption.php:78
+msgid ""
+"The Sodium library is not enabled on your hosting platform. Secrets saved "
+"will not be encrypted."
+msgstr ""
+
+#: includes/runthings-secrets-sodium-encryption.php:85
+#, php-format
+msgid ""
+"An encryption key is not defined. Generate a new key in the <a "
+"href=\"%s\">options page</a>, under Encryption Key."
+msgstr ""
+
+#: includes/runthings-secrets-sodium-encryption.php:122
+msgid "Using define() method"
+msgstr ""
+
+#: includes/runthings-secrets-sodium-encryption.php:124
+msgid "Internal encryption key"
+msgstr ""
+
+#: includes/runthings-secrets-sodium-encryption.php:126
+msgid "ERROR: No key found"
+msgstr ""
+
+#: runthings-secrets.php:92
+msgid "Settings"
+msgstr ""
+
+#: templates/add-secret-form.php:22
+msgid "Secret:"
+msgstr ""
+
+#: templates/add-secret-form.php:26
+msgid "Expiration date:"
+msgstr ""
+
+#: templates/add-secret-form.php:30
+msgid "Maximum number of views:"
+msgstr ""
+
+#: templates/add-secret-form.php:35
+msgid "Submit"
+msgstr ""
+
+#: templates/error.php:16
+msgid "ERROR:"
+msgstr ""
+
+#: templates/secret-created.php:18
+#, php-format
+msgid "Get it from %1$s (valid for %2$s / %3$s)."
+msgstr ""
+
+#: templates/secret-created.php:24
+msgid "Your secret sharing link:"
+msgstr ""
+
+#: templates/secret-created.php:27 templates/secret-created.php:39
+#: templates/view-secret.php:20
+msgid "Copy to clipboard"
+msgstr ""
+
+#: templates/secret-created.php:36
+msgid "Your secret sharing snippet:"
+msgstr ""
+
+#: templates/secret-created.php:48 templates/view-secret.php:29
+#, php-format
+msgid "Expiration date: %s"
+msgstr ""
+
+#: templates/secret-created.php:49 templates/view-secret.php:30
+#, php-format
+msgid "Views left: %s"
+msgstr ""
+
+#: templates/view-secret.php:17
+msgid "Your secret is:"
+msgstr ""
