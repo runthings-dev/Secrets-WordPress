@@ -44,6 +44,13 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         private function get_secret_data($uuid, $context = 'view')
         {
+            if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $uuid)) {
+                return new WP_Error(
+                    'invalid_uuid_format',
+                    __("Invalid UUID format.", 'runthings-secrets')
+                );
+            }
+
             global $wpdb;
 
             $table_name = $wpdb->prefix . 'runthings_secrets';
