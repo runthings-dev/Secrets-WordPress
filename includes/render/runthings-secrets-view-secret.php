@@ -34,6 +34,9 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
         public function render()
         {
+            add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
+            add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+
             $uuid = isset($_GET['secret']) ? $_GET['secret'] : null;
             $secret = $this->manage->get_secret($uuid);
 
@@ -60,6 +63,18 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             }
 
             return ob_get_clean();
+        }
+
+        public function enqueue_styles()
+        {
+            $style_url = plugins_url('/runthings-secrets/css/runthings-secrets.css');
+            wp_enqueue_style('runthings-secrets-styles', $style_url, array(), null, 'all');
+        }
+
+        public function enqueue_scripts()
+        {
+            $script_url = plugins_url('/runthings-secrets/js/runthings-secrets.js');
+            wp_enqueue_script('runthings-secrets-script', $script_url, array(), null, true);
         }
     }
 }

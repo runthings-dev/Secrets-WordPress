@@ -34,7 +34,7 @@ copyToClipboardButtons.forEach((button) => {
 });
 
 const viewingUrlInputs = document.querySelectorAll(
-  '.viewing-url, .viewing-snippet'
+  '.viewing-url, .viewing-snippet, .view-secret'
 );
 
 viewingUrlInputs.forEach((input) => {
