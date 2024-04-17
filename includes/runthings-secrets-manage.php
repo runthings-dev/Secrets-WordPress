@@ -132,7 +132,10 @@ if (!class_exists('runthings_secrets_Manage')) {
         private function get_days_left($expiration_date)
         {
             $current_date = new DateTime(current_time('mysql'));
+
+            // create DateTime object for the expiration date and add one day to include the end day fully
             $expiration = new DateTime($expiration_date);
+            $expiration->modify('+1 day');
 
             $interval = $current_date->diff($expiration);
             $days_left = $interval->format('%r%a');
