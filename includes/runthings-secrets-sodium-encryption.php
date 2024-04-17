@@ -110,7 +110,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             $plaintext = sodium_crypto_secretbox_open($ciphertext, $nonce, $this->key);
 
             if ($plaintext === false) {
-                return __('', 'runthings-secrets');
+                return '';
             }
 
             return $plaintext;
