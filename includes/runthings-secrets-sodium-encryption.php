@@ -52,7 +52,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             if (self::$single_instance === null) {
                 self::$single_instance = new self();
             }
-    
+
             return self::$single_instance;
         }
 
@@ -77,7 +77,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             <div class="notice notice-warning">
                 <p><?php _e('The Sodium library is not enabled on your hosting platform. Secrets saved will not be encrypted.', 'runthings-secrets'); ?></p>
             </div>
-        <?php
+<?php
         }
 
         public function key_not_defined_notice()
@@ -120,7 +120,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
         {
             if (defined('RUNTHINGS_SECRETS_ENCRYPTION_KEY')) {
                 $key_method = __('Using define() method', 'runthings-secrets');
-            } else if(get_option('runthings_secrets_encryption_key')) {
+            } else if (get_option('runthings_secrets_encryption_key')) {
                 $key_method = __('Internal encryption key', 'runthings-secrets');
             } else {
                 $key_method = __('ERROR: No key found', 'runthings-secrets');
@@ -140,7 +140,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             $key = sodium_crypto_secretbox_keygen();
             return base64_encode($key);
         }
-        
+
         private function store_key($key)
         {
             update_option('runthings_secrets_encryption_key', $key);
