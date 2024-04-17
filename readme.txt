@@ -43,10 +43,6 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 = 0.5.0 - 29th March 2023 =
   * Initial release
 
-== Upgrade Notice ==
-
-// Add upgrade notices here, if applicable.
-
 == Frequently Asked Questions ==
 
 // Add FAQ here, if applicable.
