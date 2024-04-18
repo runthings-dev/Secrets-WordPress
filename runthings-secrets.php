@@ -2,9 +2,9 @@
 
 /**
  * Plugin Name: Secrets
- * Plugin URI: https://runthings.dev
+ * Plugin URI: https://runthings.dev/
  * Description: Share secrets securely
- * Version: 0.5.0
+ * Version: 1.0.0
  * Author: Matthew Harris, runthings.dev
  * Author URI: https://runthings.dev/
  * License: GPLv3 or later
@@ -37,7 +37,7 @@ define('RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES', plugin_dir_path(__FILE__) . "inc
 
 class runthings_secrets_Plugin
 {
-    const VERSION = '0.5.0';
+    const VERSION = '1.0.0';
 
     protected static $single_instance = null;
 
