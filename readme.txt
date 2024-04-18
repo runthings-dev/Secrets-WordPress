@@ -39,7 +39,11 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 
 == Screenshots ==
 
-// Add screenshots of your plugin here, if applicable.
+1. Add Secret
+2. Secret Created 
+3. View Secret
+4. Settings
+5. Advanced Settings and Statistics
 
 == Changelog ==
 
