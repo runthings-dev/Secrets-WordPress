@@ -56,10 +56,6 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 = 0.5.0 - 29th March 2023 =
 * Internal release
 
-== Frequently Asked Questions ==
-
-// Add FAQ here, if applicable.
-
 == Encryption ==
 
 As long as your server supports the PHP encryption library, Sodium, an encryption key is automatically generated and used to secure your secrets. However, you can set a custom encryption key in your `wp-config.php` file by adding a `define` statement.
