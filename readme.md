@@ -27,12 +27,12 @@ Install the plugin and activate it.
 
 Create pages for creating and displaying the secrets.
 
-On an add secrets page, add the [runthings_secrets_add] shortcode, or block.
+On an add secrets page, add the `[runthings_secrets_add]` shortcode, or block.
 
-On a secrets created page, add the [runthings_secrets_created] shortcode, or
+On a secrets created page, add the `[runthings_secrets_created]` shortcode, or
 block.
 
-On a viewing page, add the [runthings_secrets_view] shortcode, or block.
+On a viewing page, add the `[runthings_secrets_view]` shortcode, or block.
 
 In the plugin options page, under Admin > Settings > RunThings Secrets, assign
 the pages.
