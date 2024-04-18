@@ -76,4 +76,4 @@ Note: Changing the encryption key will break the decryption of any existing secr
 
 It was inspired by sites like https://pwpush.com and https://github.com/unicalabs/agrippa.
 
-I'm developing this for two reasons; one to have it in the WordPress ecosystem, so that it can be easily branded and integrated into sites,
+I'm developing this to have it in the WordPress ecosystem, so that it can be easily branded and integrated into sites.

@@ -89,13 +89,10 @@ secrets, making them unreadable.
 # Background
 
 It was inspired by sites like https://pwpush.com and
-https://github.com/unicalabs/agrippa
+https://github.com/unicalabs/agrippa.
 
-I'm developing this for two reasons; one to have it in the WordPress ecosystem,
-so that it can be easily branded and integrated into sites, and two, as an
-experiment, to lean as much as I can on AI to write bits of the code.
-
-So far I'm using ChatGTP Plus, with a mixture of GTP 3.5 and 4.
+I'm developing this to have it in the WordPress ecosystem,
+so that it can be easily branded and integrated into sites.
 
 # Licence
 
