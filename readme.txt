@@ -15,6 +15,9 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 
 = Features =
 
+  * Limit by views and expiration date
+  * Copy to clipboard button
+  * Copy plain link, or with instructions and expiration terms
   * Selection of pages for 'Add Secret,' 'Secret Created,' and 'View Secret'
   * Spam protection with reCAPTCHA v3 support and score threshold
   * Integrate into your site using shortcodes or WordPress Block Editor blocks
