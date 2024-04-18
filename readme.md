@@ -75,9 +75,16 @@ secrets, making them unreadable.
 
 # Changelog
 
-0.5.0 - 29th March 2023
+## 1.0.0 - 18th April 2024
 
-- Initial release
+- Initial public release
+- Security review
+- Improved default styling
+- Copy to clipboard feature added to view secret page
+
+## 0.5.0 - 29th March 2023
+
+- Internal release
 
 # Background
 
