@@ -1,42 +1,51 @@
 const copyToClipboardButtons = document.querySelectorAll('.copy-to-clipboard');
 
 copyToClipboardButtons.forEach((button) => {
-  button.addEventListener('click', function () {
+  const tooltip = tippy(button, {
+    content: 'Copy to clipboard',
+    trigger: 'mouseenter focus', // Trigger on hover and focus
+    hideOnClick: false,
+    interactive: true,
+    duration: [250, 0],
+    onShow(instance) {
+      instance.setProps({ duration: [250, 0] });
+    },
+  });
+
+  button.addEventListener('click', function (event) {
+    event.preventDefault();
     const dataItemInput = button.previousElementSibling;
+    dataItemInput.select();
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      const textToCopy = dataItemInput.value;
       navigator.clipboard
-        .writeText(textToCopy)
-        .then(() => {
-          console.log('Text copied to clipboard');
-        })
+        .writeText(dataItemInput.value)
+        .then(() => handleCopySuccess())
         .catch((err) => {
           console.error('Failed to copy text: ', err);
         });
     } else {
       // Fallback for older browsers
-      dataItemInput.select();
-      dataItemInput.setSelectionRange(0, 99999); // For mobile devices
-
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-          console.log('Text copied to clipboard');
-        } else {
-          console.error('Failed to copy text');
-        }
-      } catch (err) {
-        console.error('Failed to copy text: ', err);
-      }
+      document.execCommand('copy')
+        ? handleCopySuccess()
+        : console.error('Failed to copy text');
     }
   });
+
+  function handleCopySuccess() {
+    tooltip.setContent('Copied!');
+    tooltip.show();
+    setTimeout(() => {
+      tooltip.hide();
+      tooltip.setContent('Copy to clipboard');
+    }, 2000);
+  }
 });
 
 const dataItemInputs = document.querySelectorAll('.rs-data-item');
 
 dataItemInputs.forEach((input) => {
-  input.addEventListener('click', (event) => {
-    event.target.select();
+  input.addEventListener('mousedown', (event) => {
+    event.preventDefault(); // Prevent focus
   });
 });

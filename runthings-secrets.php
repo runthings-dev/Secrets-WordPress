@@ -34,6 +34,7 @@ if (!defined('WPINC')) {
 
 define('RUNTHINGS_SECRETS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES', plugin_dir_path(__FILE__) . "includes/");
+define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
 class runthings_secrets_Plugin
 {

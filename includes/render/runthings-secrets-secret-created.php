@@ -83,14 +83,23 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
         public function enqueue_styles()
         {
-            $style_url = plugins_url('/runthings-secrets/css/runthings-secrets.css');
+            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy.css';
+            wp_enqueue_style('tippy', $tippy_url, array(), null, 'all');
+
+            $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/runthings-secrets.css';
             wp_enqueue_style('runthings-secrets-styles', $style_url, array(), null, 'all');
         }
 
         public function enqueue_scripts()
         {
-            $script_url = plugins_url('/runthings-secrets/js/runthings-secrets.js');
-            wp_enqueue_script('runthings-secrets-script', $script_url, array(), null, true);
+            $popper_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/popper.min.js';
+            wp_enqueue_script('popper', $popper_url, array(), null, true);
+
+            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy-bundle.umd.min.js';
+            wp_enqueue_script('tippy', $tippy_url, array('popper'), null, true);
+
+            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
+            wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), null, true);
         }
     }
 }
