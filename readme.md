@@ -11,7 +11,7 @@ forever.
 # Features
 
 - Limit by views and expiration date
-- Copy to clipboard button
+- Copy to clipboard button, with tooltip
 - Copy plain link, or with instructions and expiration terms
 - Selection of pages for 'Add Secret,' 'Secret Created,' and 'View Secret'
 - Spam protection with reCAPTCHA v3 support and score threshold
@@ -41,6 +41,10 @@ Optionally, set up the reCAPTCHA v3 keys.
 
 Optionally, set up your own encryption key in `wp-config.php` (see the
 encryption section below for full details).
+
+It's recommended to run the site on https. It will still work on http, but the
+modern copy to clipboard api requires https to work. Running on http will use a
+deprecated api, and give a slightly degraded experience.
 
 # Download
 
@@ -74,6 +78,10 @@ Note: Changing the encryption key will break the decryption of any existing
 secrets, making them unreadable.
 
 # Changelog
+
+## 1.1.0 - 23rd April 2024
+
+- Implement tooltips on copy to clipboard buttons
 
 ## 1.0.0 - 18th April 2024
 

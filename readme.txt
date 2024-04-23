@@ -16,7 +16,7 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 = Features =
 
   * Limit by views and expiration date
-  * Copy to clipboard button
+  * Copy to clipboard button, with tooltip
   * Copy plain link, or with instructions and expiration terms
   * Selection of pages for 'Add Secret,' 'Secret Created,' and 'View Secret'
   * Spam protection with reCAPTCHA v3 support and score threshold
@@ -36,6 +36,7 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 6. In the plugin options page, under Admin > Settings > RunThings Secrets, assign the pages.
 7. Optionally, set up the reCAPTCHA v3 keys.
 8. Optionally, set up your own encryption key in `wp-config.php` (see the encryption section below for full details).
+9. It's recommended to run the site on https. It will still work on http, but the modern copy to clipboard api requires https to work. Running on http will use a deprecated api, and give a slightly degraded experience.
 
 == Screenshots ==
 
@@ -46,6 +47,9 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 5. Advanced Settings and Statistics
 
 == Changelog ==
+
+= 1.1.0 - 23rd April 2024 =
+* Implement tooltips on copy to clipboard buttons
 
 = 1.0.0 - 18th April 2024 =
 * Initial public release
