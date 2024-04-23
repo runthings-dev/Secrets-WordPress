@@ -34,6 +34,9 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
         public function render()
         {
+            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
+            new runthings_secrets_Rate_Limit();
+
             add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 
