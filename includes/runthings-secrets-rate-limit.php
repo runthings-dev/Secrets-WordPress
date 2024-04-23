@@ -38,7 +38,11 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
             $attempts = get_transient($transient_key);
 
             if ($attempts >= 3) {
-                wp_die('Too many requests. Please try again later.', '429 Too Many Requests', 429);
+                wp_die(
+                    __('Too many requests. Please try again later.', 'runthings-secrets'),
+                    __('429 Too Many Requests', 'runthings-secrets'),
+                    429
+                );
             } else {
                 $new_attempts = $attempts ? $attempts + 1 : 1;
                 set_transient($transient_key, $new_attempts, MINUTE_IN_SECONDS);
