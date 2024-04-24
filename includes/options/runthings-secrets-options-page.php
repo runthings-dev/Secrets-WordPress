@@ -23,6 +23,7 @@ if (!defined('WPINC')) {
 
 include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-pages-settings.php';
 include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-spam-protection-settings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-rate-limit-settings.php';
 include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-advanced-settings.php';
 include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-stats-settings.php';
 include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-encryption-settings.php';
@@ -33,6 +34,7 @@ class runthings_secrets_Options_Page
     {
         $pages_settings = new runthings_secrets_Pages_Settings();
         $spam_protection_settings = new runthings_secrets_Spam_Protection_Settings();
+        $rate_limit_settings = new runthings_secrets_Rate_Limit_Settings();
         $advanced_settings = new runthings_secrets_Advanced_Settings();
         $encryption_settings = new runthings_secrets_Encryption_Settings();
         $stats_settings = new runthings_secrets_Stats_Settings();

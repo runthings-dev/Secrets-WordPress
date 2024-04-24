@@ -177,6 +177,8 @@ if (!function_exists('runthings_secrets_uninstall')) {
             'runthings_secrets_recaptcha_public_key',
             'runthings_secrets_recaptcha_private_key',
             'runthings_secrets_recaptcha_score',
+            'runthings_secrets_rate_limit_enabled',
+            'runthings_secrets_rate_limit_tries',
             'runthings_secrets_enqueue_form_styles',
             'runthings_secrets_stats_total_secrets',
             'runthings_secrets_stats_total_views',

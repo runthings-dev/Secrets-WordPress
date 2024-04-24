@@ -31,13 +31,20 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
 
         private function check_rate_limit()
         {
+            $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enable', 1);
+            $max_attempts = get_option('runthings_secrets_rate_limit_tries', 10);
+
+            if (!$rate_limit_enabled) {
+                return;
+            }
+
             $user_ip = $_SERVER['REMOTE_ADDR'];
             $salt = wp_salt('nonce');
             $hashed_ip = hash('sha256', $user_ip . $salt);
             $transient_key = 'runthings_secrets_view_attempts_' . $hashed_ip;
             $attempts = get_transient($transient_key);
 
-            if ($attempts >= 3) {
+            if ($attempts >= $max_attempts) {
                 wp_die(
                     __('Too many requests. Please try again later.', 'runthings-secrets'),
                     __('429 Too Many Requests', 'runthings-secrets'),
