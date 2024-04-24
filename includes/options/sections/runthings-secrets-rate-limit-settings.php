@@ -75,7 +75,7 @@ class runthings_secrets_Rate_Limit_Settings
     {
         $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enabled', 1);
         echo '<input type="checkbox" id="runthings_secrets_rate_limit_enabled" name="runthings_secrets_rate_limit_enabled" value="1"' . checked(1, $rate_limit_enabled, false) . '/>';
-        echo '<label for="runthings_secrets_rate_limit_enabledd">' . __('Enable rate limiting', 'runthings-secrets') . '</label>';
+        echo '<label for="runthings_secrets_rate_limit_enabled">' . __('Enable rate limiting', 'runthings-secrets') . '</label>';
     }
 
     public function rate_limit_tries_callback()
