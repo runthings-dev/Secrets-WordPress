@@ -24,6 +24,8 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Rate_Limit')) {
     class runthings_secrets_Rate_Limit
     {
+        private $allowed_renderers = ['view', 'created', 'add'];
+
         public function __construct()
         {
             add_action('runthings_secrets_check_rate_limit', [$this, 'handle_action'], 10, 1);
@@ -31,29 +33,35 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
 
         public function handle_action($renderer)
         {
-            if (did_action('runthings_secrets_check_rate_limit')) {
-                $this->check_rate_limit($renderer);
-            } else {
+            if (!in_array($renderer, $this->allowed_renderers)) {
+                wp_die(
+                    __('Invalid renderer specified.', 'runthings-secrets'),
+                    __('Invalid Request', 'runthings-secrets'),
+                    403
+                );
+            }
+
+            if (!did_action('runthings_secrets_check_rate_limit')) {
                 wp_die(
                     __('This function is restricted to specific hook calls.', 'runthings-secrets'),
                     __('Invalid Access', 'runthings-secrets'),
                     403
                 );
             }
+
+            $this->check_rate_limit($renderer);
         }
 
         private function check_rate_limit($renderer)
         {
-            if (null === $renderer) {
-                $renderer = 'view';
-            }
-
             $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enable', 1);
-            $max_attempts = get_option('runthings_secrets_rate_limit_tries', 10);
 
             if (!$rate_limit_enabled) {
                 return;
             }
+
+            $option_name = 'runthings_secrets_rate_limit_tries_' . $renderer;
+            $max_attempts = get_option($option_name, 10);
 
             $user_ip = $_SERVER['REMOTE_ADDR'];
             $salt = wp_salt('nonce');

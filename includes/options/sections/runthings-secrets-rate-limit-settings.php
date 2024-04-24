@@ -45,30 +45,39 @@ class runthings_secrets_Rate_Limit_Settings
             'runthings_secrets_rate_limit_section'
         );
 
-        add_settings_field(
-            'runthings_secrets_rate_limit_tries',
-            __('Maximum View Requests per Minute', 'runthings-secrets'),
-            [$this, 'rate_limit_tries_callback'],
-            'runthings-secrets',
-            'runthings_secrets_rate_limit_section'
-        );
-
         register_setting(
             'runthings-secrets-settings',
             'runthings_secrets_rate_limit_enabled',
             'boolval'
         );
 
+        $this->add_rate_limit_setting('add', __('Maximum Add Secret Requests per Minute', 'runthings-secrets'));
+        $this->add_rate_limit_setting('created', __('Maximum Secret Created Requests per Minute', 'runthings-secrets'));
+        $this->add_rate_limit_setting('view', __('Maximum View Secret Requests per Minute', 'runthings-secrets'));
+    }
+
+    private function add_rate_limit_setting($renderer, $label)
+    {
+        $option_name = 'runthings_secrets_rate_limit_tries_' . $renderer;
+        add_settings_field(
+            $option_name,
+            $label,
+            [$this, 'rate_limit_tries_callback'],
+            'runthings-secrets',
+            'runthings_secrets_rate_limit_section',
+            ['renderer' => $renderer]
+        );
+
         register_setting(
             'runthings-secrets-settings',
-            'runthings_secrets_rate_limit_tries',
+            $option_name,
             'intval'
         );
     }
 
     public function rate_limit_section_callback()
     {
-        echo '<p>' . __('Configure the rate limiting for viewing secrets.', 'runthings-secrets') . '</p>';
+        echo '<p>' . __('Configure the rate limiting for different operations within the plugin.', 'runthings-secrets') . '</p>';
     }
 
     public function rate_limit_enable_callback()
@@ -78,10 +87,11 @@ class runthings_secrets_Rate_Limit_Settings
         echo '<label for="runthings_secrets_rate_limit_enabled">' . __('Enable rate limiting', 'runthings-secrets') . '</label>';
     }
 
-    public function rate_limit_tries_callback()
+    public function rate_limit_tries_callback($args)
     {
-        $rate_limit_tries = get_option('runthings_secrets_rate_limit_tries', 10);
-        echo '<input type="number" id="runthings_secrets_rate_limit_tries" name="runthings_secrets_rate_limit_tries" value="' . esc_attr($rate_limit_tries) . '" min="1" />';
+        $option_name = 'runthings_secrets_rate_limit_tries_' . $args['renderer'];
+        $rate_limit_tries = get_option($option_name, 10);
+        echo '<input type="number" id="' . esc_attr($option_name) . '" name="' . esc_attr($option_name) . '" value="' . esc_attr($rate_limit_tries) . '" min="1" />';
         echo '<p class="description">' . __('Number of attempts allowed per minute from a single IP address.', 'runthings-secrets') . '</p>';
     }
 }
