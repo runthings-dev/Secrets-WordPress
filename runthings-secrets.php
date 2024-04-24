@@ -45,6 +45,7 @@ class runthings_secrets_Plugin
     protected function __construct()
     {
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/runthings-secrets-integration.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-template-loader.php';
     }

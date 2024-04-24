@@ -34,8 +34,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
         public function render()
         {
-            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
-            new runthings_secrets_Rate_Limit();
+            do_action('runthings_secrets_check_rate_limit', 'view');
 
             add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
@@ -98,6 +97,19 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
             wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), null, true);
+        }
+
+        private function check_rate_limit()
+        {
+            $pass = apply_filters('runthings_secrets_check_rate_limit', true, 'view');
+
+            if (!$pass) {
+                wp_die(
+                    __('Too many requests. Please try again later.', 'runthings-secrets'),
+                    __('429 Too Many Requests', 'runthings-secrets'),
+                    429
+                );
+            }
         }
     }
 }

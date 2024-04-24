@@ -26,11 +26,28 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
     {
         public function __construct()
         {
-            $this->check_rate_limit();
+            add_action('runthings_secrets_check_rate_limit', [$this, 'handle_action'], 10, 1);
         }
 
-        private function check_rate_limit()
+        public function handle_action($renderer)
         {
+            if (did_action('runthings_secrets_check_rate_limit')) {
+                $this->check_rate_limit($renderer);
+            } else {
+                wp_die(
+                    __('This function is restricted to specific hook calls.', 'runthings-secrets'),
+                    __('Invalid Access', 'runthings-secrets'),
+                    403
+                );
+            }
+        }
+
+        private function check_rate_limit($renderer)
+        {
+            if (null === $renderer) {
+                $renderer = 'view';
+            }
+
             $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enable', 1);
             $max_attempts = get_option('runthings_secrets_rate_limit_tries', 10);
 
@@ -41,7 +58,7 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
             $user_ip = $_SERVER['REMOTE_ADDR'];
             $salt = wp_salt('nonce');
             $hashed_ip = hash('sha256', $user_ip . $salt);
-            $transient_key = 'runthings_secrets_view_attempts_' . $hashed_ip;
+            $transient_key = 'runthings_secrets_' . $renderer . '_attempts_' . $hashed_ip;
             $attempts = get_transient($transient_key);
 
             if ($attempts >= $max_attempts) {
@@ -56,4 +73,6 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
             }
         }
     }
+
+    new runthings_secrets_Rate_Limit();
 }
