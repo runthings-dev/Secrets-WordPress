@@ -98,18 +98,5 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
             wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), null, true);
         }
-
-        private function check_rate_limit()
-        {
-            $pass = apply_filters('runthings_secrets_check_rate_limit', true, 'view');
-
-            if (!$pass) {
-                wp_die(
-                    __('Too many requests. Please try again later.', 'runthings-secrets'),
-                    __('429 Too Many Requests', 'runthings-secrets'),
-                    429
-                );
-            }
-        }
     }
 }

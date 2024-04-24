@@ -34,6 +34,8 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
         public function render()
         {
+            do_action('runthings_secrets_check_rate_limit', 'created');
+
             add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 
