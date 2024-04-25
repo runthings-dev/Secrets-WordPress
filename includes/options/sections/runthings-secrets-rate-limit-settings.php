@@ -90,7 +90,19 @@ class runthings_secrets_Rate_Limit_Settings
     public function rate_limit_tries_callback($args)
     {
         $option_name = 'runthings_secrets_rate_limit_tries_' . $args['renderer'];
-        $rate_limit_tries = get_option($option_name, 10);
+
+        switch ($args['renderer']) {
+            case 'add':
+                $default_value = 25;
+                break;
+            case 'created':
+            case 'view':
+            default:
+                $default_value = 10;
+                break;
+        }
+
+        $rate_limit_tries = get_option($option_name, $default_value);
         echo '<input type="number" id="' . esc_attr($option_name) . '" name="' . esc_attr($option_name) . '" value="' . esc_attr($rate_limit_tries) . '" min="1" />';
         echo '<p class="description">' . __('Number of attempts allowed per minute from a single IP address.', 'runthings-secrets') . '</p>';
     }
