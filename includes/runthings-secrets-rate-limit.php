@@ -31,6 +31,9 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
             add_action('runthings_secrets_check_rate_limit', [$this, 'handle_action'], 10, 1);
         }
 
+        /**
+         * Hook handler to check if the rate limit can be checked
+         */
         public function handle_action($renderer)
         {
             if (!in_array($renderer, $this->allowed_renderers)) {
@@ -52,11 +55,19 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
             $this->check_rate_limit($renderer);
         }
 
+        /**
+         * Check if the request should be rate limited
+         */
         private function check_rate_limit($renderer)
         {
             $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enable', 1);
 
             if (!$rate_limit_enabled) {
+                return;
+            }
+
+            $exemption_enabled = get_option('runthings_secrets_rate_limit_exemption_enabled', 0);
+            if ($exemption_enabled && is_user_logged_in() && $this->is_user_role_exempt()) {
                 return;
             }
 
@@ -79,6 +90,25 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
                 $new_attempts = $attempts ? $attempts + 1 : 1;
                 set_transient($transient_key, $new_attempts, MINUTE_IN_SECONDS);
             }
+        }
+
+        /**
+         * Check if the current user's role is one of the exempt roles.
+         */
+        private function is_user_role_exempt()
+        {
+            $exempt_roles = get_option('runthings_secrets_rate_limit_exemption_roles', []);
+            if (empty($exempt_roles)) {
+                return false;
+            }
+
+            $current_user = wp_get_current_user();
+            foreach ($current_user->roles as $role) {
+                if (in_array($role, $exempt_roles)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
