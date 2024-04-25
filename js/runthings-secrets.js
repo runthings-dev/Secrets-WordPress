@@ -2,7 +2,7 @@ const copyToClipboardButtons = document.querySelectorAll('.copy-to-clipboard');
 
 copyToClipboardButtons.forEach((button) => {
   const tooltip = tippy(button, {
-    content: 'Copy to clipboard',
+    content: runthings_secrets.i18n.copyToClipboard,
     trigger: 'mouseenter focus', // Trigger on hover and focus
     hideOnClick: false,
     interactive: true,
@@ -33,11 +33,11 @@ copyToClipboardButtons.forEach((button) => {
   });
 
   function handleCopySuccess() {
-    tooltip.setContent('Copied!');
+    tooltip.setContent(runthings_secrets.i18n.copied);
     tooltip.show();
     setTimeout(() => {
       tooltip.hide();
-      tooltip.setContent('Copy to clipboard');
+      tooltip.setContent(runthings_secrets.i18n.copyToClipboard);
     }, 2000);
   }
 });

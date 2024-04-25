@@ -102,6 +102,15 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
             wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), null, true);
+
+            $script_options = array(
+                'i18n' => array(
+                    'copyToClipboard' => __('Copy to clipboard', 'runthings-secrets'),
+                    'copied' => __('Copied!', 'runthings-secrets')
+                )
+            );
+
+            wp_localize_script('runthings-secrets-script', 'runthings_secrets', $script_options);
         }
     }
 }
