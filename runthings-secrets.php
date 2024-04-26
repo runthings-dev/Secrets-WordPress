@@ -45,9 +45,10 @@ class runthings_secrets_Plugin
     protected function __construct()
     {
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/runthings-secrets-integration.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-template-loader.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-template-checker.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-template-loader.php';
     }
 
     public static function get_instance()
@@ -67,6 +68,8 @@ class runthings_secrets_Plugin
     public function init()
     {
         $this->load_textdomain();
+
+        new runthings_secrets_Template_Checker();
 
         add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
         add_filter('runthings_secrets_copy_to_clipboard_icon', [$this, 'get_copy_to_clipboard_icon'], 10, 2);
