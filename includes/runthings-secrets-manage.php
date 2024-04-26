@@ -45,66 +45,67 @@ if (!class_exists('runthings_secrets_Manage')) {
         private function get_secret_data($uuid, $context = 'view')
         {
             if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $uuid)) {
-                return new WP_Error(
-                    'invalid_uuid_format',
-                    __("Invalid UUID format.", 'runthings-secrets')
-                );
+                return new WP_Error('invalid_uuid_format', __("Invalid UUID format.", 'runthings-secrets'));
             }
 
             global $wpdb;
-
             $table_name = $wpdb->prefix . 'runthings_secrets';
-
-            $secret = $wpdb->get_row(
-                $wpdb->prepare(
-                    "SELECT * FROM $table_name WHERE uuid = %s",
-                    $uuid
-                )
-            );
+            $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE uuid = %s", $uuid));
 
             if (!$secret) {
-                return new WP_Error(
-                    'invalid_secret_url',
-                    __("Invalid secret sharing URL.", 'runthings-secrets')
-                );
+                return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
             }
 
             // Check if the secret has expired or reached its maximum number of views.
-            if ($secret->expiration < current_time('mysql') || $secret->views > $secret->max_views) {
-                // Delete the secret from the database.
-                $wpdb->delete(
-                    $table_name,
-                    array('id' => $secret->id)
-                );
-
-                // set error state
-                return new WP_Error(
-                    'secret_expired',
-                    __("This secret has expired or reached its maximum number of views.", 'runthings-secrets')
-                );
+            if ($this->has_expired_or_maxed_out($secret)) {
+                $this->handle_expired_secret($secret);
+                return new WP_Error('secret_expired', __("This secret has expired or reached its maximum number of views.", 'runthings-secrets'));
             } else {
-                if ($context == 'view') {
-                    // Increment the views count.
-                    $wpdb->update(
-                        $table_name,
-                        array('views' => $secret->views + 1),
-                        array('id' => $secret->id)
-                    );
-
-                    $this->incremement_global_views_total_stat();
-
-                    // decrypt and display the secret to the user
-                    $secret->secret = $this->crypt->decrypt($secret->secret);
-                } else {
-                    // $context is meta only, so clear out the secret value
-                    $secret->secret = null;
-                }
+                $this->update_secret_views($secret, $context);
+                $this->apply_secret_value($secret, $context);
             }
 
             $secret->days_left = $this->get_days_left($secret->expiration);
             $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
-
             return $secret;
+        }
+
+        private function has_expired_or_maxed_out($secret)
+        {
+            return $secret->expiration < current_time('mysql') || $secret->views > $secret->max_views;
+        }
+
+        private function handle_expired_secret($secret)
+        {
+            global $wpdb;
+            $wpdb->delete($wpdb->prefix . 'runthings_secrets', ['id' => $secret->id]);
+        }
+
+        private function update_secret_views($secret, $context)
+        {
+            if ($context != 'view') {
+                return;
+            }
+
+            global $wpdb;
+            $wpdb->update(
+                $wpdb->prefix . 'runthings_secrets',
+                ['views' => $secret->views + 1],
+                ['id' => $secret->id]
+            );
+
+            $this->incremement_global_views_total_stat();
+        }
+
+        private function apply_secret_value($secret, $context)
+        {
+            if ($context == 'view') {
+                // decrypt and display the secret to the user
+                $secret->secret = $this->crypt->decrypt($secret->secret);
+            } else {
+                // Clear out the secret value if context is meta only
+                $secret->secret = null;
+            }
         }
 
         public function add_secret($secret, $max_views, $expiration)
