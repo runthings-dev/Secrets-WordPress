@@ -65,6 +65,8 @@ if (!class_exists('runthings_secrets_Manage')) {
                 $this->apply_secret_value($secret, $context);
             }
 
+            $secret->formatted_expiration_gmt = $this->format_expiration_date_gmt($secret->expiration);
+            $secret->formatted_expiration = $this->format_expiration_date_local($secret->expiration);
             $secret->days_left = $this->get_days_left($secret->expiration);
             $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
             return $secret;
@@ -106,6 +108,22 @@ if (!class_exists('runthings_secrets_Manage')) {
                 // Clear out the secret value if context is meta only
                 $secret->secret = null;
             }
+        }
+
+        private function format_expiration_date_gmt($expiration)
+        {
+            $timestamp = strtotime($expiration);
+            return gmdate('Y-m-d', $timestamp);
+        }
+
+        private function format_expiration_date_local($expiration)
+        {
+            $timestamp = strtotime($expiration);
+            $timezone = get_option('timezone_string') ? new DateTimeZone(get_option('timezone_string')) : new DateTimeZone('UTC');
+            $date = new DateTime();
+            $date->setTimestamp($timestamp);
+            $date->setTimezone($timezone);
+            return $date->format('Y-m-d');
         }
 
         public function add_secret($secret, $max_views, $expiration)
