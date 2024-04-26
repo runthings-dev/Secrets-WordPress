@@ -45,5 +45,5 @@ $viewing_snippet = sprintf(
         </svg>
     </button>
 </div>
-<p><?php echo sprintf(__('Expiration date: %s', 'runthings-secrets'), date('Y-m-d', strtotime($context->secret->expiration))); ?></p>
+<p><?php echo sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration); ?></p>
 <p><?php echo sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)); ?></p>
