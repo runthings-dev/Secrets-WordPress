@@ -128,9 +128,10 @@ class runthings_secrets_Plugin
         // calculate the expiration time (24 hours ago)
         $expiration_time = $current_time - (24 * 60 * 60);
 
+        // WPCS: unprepared SQL OK.
         $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM $table_name WHERE expiration_time <= %d",
+                "DELETE FROM `{$table_name}` WHERE expiration_time <= %d",
                 $expiration_time
             )
         );
