@@ -69,10 +69,27 @@ class runthings_secrets_Plugin
         $this->load_textdomain();
 
         add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
+        add_filter('runthings_secrets_copy_to_clipboard_icon', [$this, 'get_copy_to_clipboard_icon'], 10, 2);
 
         add_action('init', [$this, 'schedule_clear_expired_secrets']);
         add_action('runthings_secrets_clear_expired_secrets', array($this, 'clear_expired_secrets'));
     }
+
+    public function get_copy_to_clipboard_icon($context, $embed = true)
+    {
+        $asset_path = plugin_dir_path(__FILE__) . 'assets/copy-icon.svg';
+        $asset_output = '';
+
+        if ($embed) {
+            $asset_output = file_get_contents($asset_path);
+        } else {
+            $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
+            $asset_output = '<img src="' . esc_url($asset_url) . '" alt="Copy to clipboard" />';
+        }
+
+        return apply_filters('runthings_secrets_copy_to_clipboard_icon_output', $asset_output, $context, $embed);
+    }
+
 
     public function activate()
     {

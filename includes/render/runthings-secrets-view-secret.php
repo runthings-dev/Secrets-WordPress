@@ -46,12 +46,15 @@ if (!class_exists('runthings_secrets_View_Secret')) {
                 return $this->handle_error($secret);
             }
 
+            $copy_icon = apply_filters('runthings_secrets_copy_to_clipboard_icon', 'link-icon', true);
+
             $template = new runthings_secrets_Template_Loader();
 
             ob_start();
 
             $data = array(
-                "secret" => $secret
+                "secret" => $secret,
+                "copy_to_clipboard_icon" => $copy_icon,
             );
 
             $template
