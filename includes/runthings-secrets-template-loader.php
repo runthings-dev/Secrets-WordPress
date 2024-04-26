@@ -26,7 +26,6 @@ include RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gama
 if (!class_exists('runthings_secrets_Template_Loader')) {
 	class runthings_secrets_Template_Loader extends Gamajo_Template_Loader
 	{
-
 		/**
 		 * Prefix for filter names.
 		 *
