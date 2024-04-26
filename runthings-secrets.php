@@ -87,7 +87,7 @@ class runthings_secrets_Plugin
             $asset_output = file_get_contents($asset_path);
         } else {
             $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
-            $asset_output = '<img src="' . esc_url($asset_url) . '" alt="Copy to clipboard" />';
+            $asset_output = '<img src="' . esc_url($asset_url) . '" alt="" />';
         }
 
         return apply_filters('runthings_secrets_copy_to_clipboard_icon_output', $asset_output, $context, $embed);
