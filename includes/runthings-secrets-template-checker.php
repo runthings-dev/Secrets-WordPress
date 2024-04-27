@@ -87,28 +87,27 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
         }
 
         /**
-         * Retrieve metadata from a file. Based on WP Core's get_file_data function.
+         * Retrieve metadata from a file. Based on WP Core's get_file_data function, taken from WooCommerce
          *
-         * @since  2.1.1
+         * @since  1.2.0
          * @param  string $file Path to the file.
          * @return string
          */
         private function get_file_version($file)
         {
-
-            // Avoid notices if file does not exist.
             if (!file_exists($file)) {
                 return '';
             }
 
-            // We don't need to write to the file, so just open for reading.
-            $fp = fopen($file, 'r'); // @codingStandardsIgnoreLine.
+            $response = wp_remote_get($file);
+            if (is_wp_error($response)) {
+                return '';
+            }
 
-            // Pull only the first 8kiB of the file in.
-            $file_data = fread($fp, 8192); // @codingStandardsIgnoreLine.
-
-            // PHP will close file handle, but we are good citizens.
-            fclose($fp); // @codingStandardsIgnoreLine.
+            $file_data = wp_remote_retrieve_body($response);
+            if (empty($file_data)) {
+                return '';
+            }
 
             // Make sure we catch CR-only line endings.
             $file_data = str_replace("\r", "\n", $file_data);

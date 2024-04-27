@@ -84,7 +84,11 @@ class runthings_secrets_Plugin
         $asset_output = '';
 
         if ($embed) {
-            $asset_output = file_get_contents($asset_path);
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            WP_Filesystem();
+            global $wp_filesystem;
+
+            $asset_output = $wp_filesystem->get_contents($asset_path);
         } else {
             $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
             $asset_output = '<img src="' . esc_url($asset_url) . '" alt="" />';
