@@ -7,8 +7,7 @@ Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A plugin for securely sharing secrets such as passwords. Generate a secret URL and share it with someone instead of leaving a password in a chat log or email thread.
-
+Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 == Description ==
 
 RunThings Secrets is a WordPress plugin that allows you to securely share secrets such as passwords. Create a secret URL, and share it with someone instead of leaving a password in a chat log or email thread. Set the maximum views and expiration date, so that the secret doesn't lurk around forever.
