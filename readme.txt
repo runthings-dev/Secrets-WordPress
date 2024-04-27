@@ -1,6 +1,6 @@
 === RunThings Secrets ===
 Contributors: rtpHarry
-Tags: secrets, passwords, encryption, secure sharing, shortcode, block
+Tags: secrets, passwords, encryption, secure sharing, block
 Requires at least: 6.2
 Tested up to: 6.5
 Requires PHP: 7.2
