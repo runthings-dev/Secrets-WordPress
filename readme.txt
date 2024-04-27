@@ -1,8 +1,8 @@
 === RunThings Secrets ===
 Contributors: rtpHarry
 Tags: secrets, passwords, encryption, secure sharing, shortcode, block
-Requires at least: 5.0
-Tested up to: 5.8
+Requires at least: 6.2
+Tested up to: 6.5
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
