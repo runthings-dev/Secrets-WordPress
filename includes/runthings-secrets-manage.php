@@ -50,7 +50,7 @@ if (!class_exists('runthings_secrets_Manage')) {
 
             global $wpdb;
             $table_name = $wpdb->prefix . 'runthings_secrets';
-            $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE uuid = %s", $uuid));
+            $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $uuid));
 
             if (!$secret) {
                 return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));

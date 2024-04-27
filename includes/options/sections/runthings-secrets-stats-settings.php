@@ -68,7 +68,9 @@ class runthings_secrets_Stats_Settings
         global $wpdb;
         $secrets_table = $wpdb->prefix . 'runthings_secrets';
 
-        $current_secrets_count = $wpdb->get_var("SELECT COUNT(*) FROM $secrets_table");
+        $current_secrets_count = $wpdb->get_var(
+            $wpdb->prepare("SELECT COUNT(*) FROM %i", $secrets_table)
+        );
 
         return $current_secrets_count;
     }

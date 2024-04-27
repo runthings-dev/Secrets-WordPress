@@ -44,7 +44,9 @@ class runthings_secrets_Advanced_Settings
         if (current_user_can('manage_options')) {
             global $wpdb;
             $table_name = $wpdb->prefix . 'runthings_secrets';
-            $wpdb->query("DELETE FROM {$table_name}");
+            $wpdb->query(
+                $wpdb->prepare("DELETE FROM %i", $table_name)
+            );
             add_action('admin_notices', [$this, 'deleted_secrets_notice']);
         }
     }

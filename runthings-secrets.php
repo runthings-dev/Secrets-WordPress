@@ -128,10 +128,10 @@ class runthings_secrets_Plugin
         // calculate the expiration time (24 hours ago)
         $expiration = $current_time - (24 * 60 * 60);
 
-        // WPCS: unprepared SQL OK.
         $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM `{$table_name}` WHERE expiration <= %d",
+                "DELETE FROM %i WHERE expiration <= %d",
+                $table_name,
                 $expiration
             )
         );
@@ -151,16 +151,16 @@ class runthings_secrets_Plugin
         $table_name = $wpdb->prefix . 'runthings_secrets';
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE $table_name (
-          id int(11) NOT NULL AUTO_INCREMENT,
-          uuid varchar(255) NOT NULL,
-          secret text NOT NULL,
-          max_views int(11) NOT NULL,
-          views int(11) NOT NULL,
-          expiration datetime NOT NULL,
-          created_at datetime NOT NULL,
-          PRIMARY KEY  (id)
-        ) $charset_collate;";
+        $sql = $wpdb->prepare("CREATE TABLE %i (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            uuid varchar(255) NOT NULL,
+            secret text NOT NULL,
+            max_views int(11) NOT NULL,
+            views int(11) NOT NULL,
+            expiration datetime NOT NULL,
+            created_at datetime NOT NULL,
+            PRIMARY KEY  (id)
+          ) %s;", $table_name, $charset_collate);
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
@@ -220,7 +220,9 @@ if (!function_exists('runthings_secrets_uninstall')) {
             'runthings_secrets'
         );
         foreach ($tables as $table) {
-            $wpdb->query('DROP TABLE IF EXISTS ' . $wpdb->prefix . $table);
+            $wpdb->query(
+                $wpdb->prepare('DROP TABLE IF EXISTS %i', $wpdb->prefix . $table)
+            );
         }
     }
 }
