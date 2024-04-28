@@ -50,10 +50,19 @@ if (!class_exists('runthings_secrets_Manage')) {
 
             global $wpdb;
             $table_name = $wpdb->prefix . 'runthings_secrets';
-            $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $uuid));
 
+            $cache_key = 'secret_' . $uuid;
+            $cache_group = 'runthings_secrets';
+
+            $secret = wp_cache_get($cache_key, $cache_group);
             if (!$secret) {
-                return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
+                $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $uuid));
+
+                if (!$secret) {
+                    return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
+                }
+
+                wp_cache_set($cache_key, $secret, $cache_group);
             }
 
             // Check if the secret has expired or reached its maximum number of views.
@@ -69,6 +78,7 @@ if (!class_exists('runthings_secrets_Manage')) {
             $secret->formatted_expiration = $this->format_expiration_date_local($secret->expiration);
             $secret->days_left = $this->get_days_left($secret->expiration);
             $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
+
             return $secret;
         }
 
@@ -80,7 +90,11 @@ if (!class_exists('runthings_secrets_Manage')) {
         private function handle_expired_secret($secret)
         {
             global $wpdb;
-            $wpdb->delete($wpdb->prefix . 'runthings_secrets', ['id' => $secret->id]);
+            $result = $wpdb->delete($wpdb->prefix . 'runthings_secrets', ['id' => $secret->id]);
+
+            if ($result) {
+                wp_cache_delete('secret_' . $secret->uuid, 'runthings_secrets');
+            }
         }
 
         private function update_secret_views($secret, $context)
@@ -89,12 +103,31 @@ if (!class_exists('runthings_secrets_Manage')) {
                 return;
             }
 
+            $cache_key = 'secret_' . $secret->uuid;
+            $cache_group = 'runthings_secrets';
+
+            $cached_secret = wp_cache_get($cache_key, $cache_group);
+            if (!$cached_secret) {
+                // If not cached, assume the passed $secret is up-to-date and cache it
+                wp_cache_set($cache_key, $secret, $cache_group);
+            } else {
+                // Use the cached secret to ensure we're working with the most current data
+                $secret = $cached_secret;
+            }
+
             global $wpdb;
+
+            $new_views = $secret->views + 1;
+
             $wpdb->update(
                 $wpdb->prefix . 'runthings_secrets',
-                ['views' => $secret->views + 1],
+                ['views' => $new_views],
                 ['id' => $secret->id]
             );
+
+            // Update the secret object and re-cache it
+            $secret->views = $new_views;
+            wp_cache_set($cache_key, $secret, $cache_group);
 
             $this->increment_global_views_total_stat();
         }
