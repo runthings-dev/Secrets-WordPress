@@ -96,7 +96,7 @@ if (!class_exists('runthings_secrets_Manage')) {
                 ['id' => $secret->id]
             );
 
-            $this->incremement_global_views_total_stat();
+            $this->increment_global_views_total_stat();
         }
 
         private function apply_secret_value($secret, $context)
@@ -153,7 +153,7 @@ if (!class_exists('runthings_secrets_Manage')) {
             if ($inserted) {
                 wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
 
-                $this->incremement_global_secrets_total_stat();
+                $this->increment_global_secrets_total_stat();
             }
 
             return $uuid;
@@ -182,14 +182,14 @@ if (!class_exists('runthings_secrets_Manage')) {
             return $pluralized_views;
         }
 
-        private function incremement_global_secrets_total_stat()
+        private function increment_global_secrets_total_stat()
         {
             $total_count = get_option('runthings_secrets_stats_total_secrets', 0);
 
             update_option('runthings_secrets_stats_total_secrets', ++$total_count);
         }
 
-        private function incremement_global_views_total_stat()
+        private function increment_global_views_total_stat()
         {
             $total_count = get_option('runthings_secrets_stats_total_views', 0);
 
