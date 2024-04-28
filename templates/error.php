@@ -14,4 +14,4 @@
  * @version 1.1.0
  */
 ?>
-<p><strong><?php esc_html_e('ERROR:', 'runthings-secrets'); ?></strong> <?php esc_html_e($context->error_message); ?></p>
+<p><strong><?php esc_html_e('ERROR:', 'runthings-secrets'); ?></strong> <?php echo esc_html($context->error_message); ?></p>
