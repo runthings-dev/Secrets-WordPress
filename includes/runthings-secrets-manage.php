@@ -56,7 +56,10 @@ if (!class_exists('runthings_secrets_Manage')) {
 
             $secret = wp_cache_get($cache_key, $cache_group);
             if (!$secret) {
+                // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+                // Direct query is required as only way to access custom table data
                 $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $uuid));
+                // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
                 if (!$secret) {
                     return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
@@ -90,7 +93,11 @@ if (!class_exists('runthings_secrets_Manage')) {
         private function handle_expired_secret($secret)
         {
             global $wpdb;
+
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // Direct query is required as only way to delete custom table data
             $result = $wpdb->delete($wpdb->prefix . 'runthings_secrets', ['id' => $secret->id]);
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
             if ($result) {
                 wp_cache_delete('secret_' . $secret->uuid, 'runthings_secrets');
@@ -119,11 +126,14 @@ if (!class_exists('runthings_secrets_Manage')) {
 
             $new_views = $secret->views + 1;
 
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // Direct query is required as only way to access custom table data
             $wpdb->update(
                 $wpdb->prefix . 'runthings_secrets',
                 ['views' => $new_views],
                 ['id' => $secret->id]
             );
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
             // Update the secret object and re-cache it
             $secret->views = $new_views;
@@ -171,6 +181,8 @@ if (!class_exists('runthings_secrets_Manage')) {
             $uuid = wp_generate_uuid4();
             $created_at = current_time('mysql');
 
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // Direct query is required as only way to insert custom table data
             $inserted = $wpdb->insert(
                 $table_name,
                 array(
@@ -182,6 +194,7 @@ if (!class_exists('runthings_secrets_Manage')) {
                     'created_at' => $created_at
                 )
             );
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
             if ($inserted) {
                 wp_cache_delete('runthings_secrets_count', 'runthings_secrets');

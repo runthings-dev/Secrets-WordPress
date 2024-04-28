@@ -111,6 +111,8 @@ class runthings_secrets_Plugin
 
         $expiration = $current_time - DAY_IN_SECONDS;
 
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+        // Direct query is required as $wpdb->delete() does not support deleting rows based on a condition
         $rows_deleted = $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM %i WHERE expiration <= %d",
@@ -118,6 +120,7 @@ class runthings_secrets_Plugin
                 $expiration
             )
         );
+        // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
         if ($rows_deleted > 0) {
             wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
@@ -207,9 +210,18 @@ if (!function_exists('runthings_secrets_uninstall')) {
             'runthings_secrets'
         );
         foreach ($tables as $table) {
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+            // Nothing to cache as its a drop table query
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.SchemaChange
+            // Schema change is required to drop tables
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // Direct query is required as only way to remove custom tables
             $wpdb->query(
                 $wpdb->prepare('DROP TABLE IF EXISTS %i', $wpdb->prefix . $table)
             );
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.SchemaChange
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.NoCaching
         }
     }
 }

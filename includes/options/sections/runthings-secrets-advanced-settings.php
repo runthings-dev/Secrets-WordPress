@@ -50,9 +50,12 @@ class runthings_secrets_Advanced_Settings
 
             $table_name = $wpdb->prefix . 'runthings_secrets';
 
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+            // Direct query is required as $wpdb->delete() does not support deleting all rows
             $rows_deleted = $wpdb->query(
                 $wpdb->prepare("DELETE FROM %i", $table_name)
             );
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
             if ($rows_deleted > 0) {
                 wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
