@@ -72,21 +72,24 @@ class runthings_secrets_Blocks_Integration
             'runthings-secrets-block-add',
             plugins_url('add-secret/block-add-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            filemtime(plugin_dir_path(__FILE__) . 'add-secret/block-add-secret.js')
+            filemtime(plugin_dir_path(__FILE__) . 'add-secret/block-add-secret.js'),
+            false, // not $in_footer as block editor needs early access to the script
         );
 
         wp_enqueue_script(
             'runthings-secrets-block-created',
             plugins_url('secret-created/block-secret-created.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            filemtime(plugin_dir_path(__FILE__) . 'secret-created/block-secret-created.js')
+            filemtime(plugin_dir_path(__FILE__) . 'secret-created/block-secret-created.js'),
+            false, // not $in_footer as block editor needs early access to the script
         );
 
         wp_enqueue_script(
             'runthings-secrets-block-view',
             plugins_url('view-secret/block-view-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            filemtime(plugin_dir_path(__FILE__) . 'view-secret/block-view-secret.js')
+            filemtime(plugin_dir_path(__FILE__) . 'view-secret/block-view-secret.js'),
+            false, // not $in_footer as block editor needs early access to the script
         );
     }
 }
