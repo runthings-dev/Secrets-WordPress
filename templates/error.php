@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying any error messages.
  *
@@ -10,7 +11,7 @@
  * When this occurs the version of the template file will be bumped and the 
  * readme will list any important changes.
  *
- * @version 1.0.0
+ * @version 1.1.0
  */
 ?>
 <p><strong><?php esc_html_e('ERROR:', 'runthings-secrets'); ?></strong> <?php esc_html_e($context->error_message); ?></p>
