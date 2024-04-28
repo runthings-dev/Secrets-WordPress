@@ -41,11 +41,21 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $templates = new runthings_secrets_Template_Loader();
+            $default_expiration = date('Y-m-d', strtotime('+7 days'));
+            $default_max_views = 5;
+
+            $template = new runthings_secrets_Template_Loader();
 
             ob_start();
 
-            $templates->get_template_part('add-secret-form');
+            $data = array(
+                "default_expiration" => $default_expiration,
+                "default_max_views" => $default_max_views,
+            );
+
+            $template
+                ->set_template_data($data, 'context')
+                ->get_template_part('add-secret-form');
 
             return ob_get_clean();
         }
