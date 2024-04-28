@@ -52,6 +52,10 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
         public function handle_form_submit()
         {
+            if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
+                return;
+            }
+
             if (!isset($_POST['secret'])) {
                 return;
             }
@@ -102,14 +106,12 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
         private function create_secret()
         {
-            if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
-                return;
-            }
-
-            // validate form inputs
+            // phpcs:disable WordPress.Security.NonceVerification.Missing
+            // Nonce already checked in handle_form_submit()
             $secret = sanitize_textarea_field($_POST['secret']);
             $expiration = sanitize_text_field($_POST['expiration']);
             $max_views = intval($_POST['max_views']);
+            // phpcs:enable WordPress.Security.NonceVerification.Missing
 
             $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
             $recaptcha_public_key = get_option('runthings_secrets_recaptcha_public_key');
@@ -128,7 +130,12 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
         private function verify_recaptcha_token()
         {
             $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
+
+            // phpcs:disable WordPress.Security.NonceVerification.Missing
+            // Nonce already checked in handle_form_submit()
             $recaptcha_token = $_POST['recaptcha_token'];
+            // phpcs:enable WordPress.Security.NonceVerification.Missing
+
             $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
                 'body' => array(
                     'secret' => $recaptcha_private_key,

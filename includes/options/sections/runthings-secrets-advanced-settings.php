@@ -35,6 +35,10 @@ class runthings_secrets_Advanced_Settings
         $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
 
         if ($page === 'runthings-secrets' && $action === 'delete_all_secrets') {
+            if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'delete_all_secrets_action')) {
+                wp_die('Security check failed');
+            }
+
             $this->delete_all_secrets();
         }
     }
@@ -106,7 +110,8 @@ class runthings_secrets_Advanced_Settings
     public function delete_all_secrets_callback()
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=delete_all_secrets');
+        $nonce_url = wp_nonce_url($url, 'delete_all_secrets_action');
         $confirm_message = __('Are you sure you want to delete all secrets? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
+        echo '<a href="' . $nonce_url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
     }
 }

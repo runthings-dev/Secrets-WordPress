@@ -45,6 +45,10 @@ class runthings_secrets_Encryption_Settings
         $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
 
         if ($page === 'runthings-secrets' && $action === 'regenerate_internal_encryption_key') {
+            if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'regenerate_key_action')) {
+                wp_die('Security check failed');
+            }
+
             $this->regenerate_internal_encryption_key();
         }
     }
@@ -116,8 +120,9 @@ class runthings_secrets_Encryption_Settings
     public function internal_encryption_key_callback()
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=regenerate_internal_encryption_key');
+        $nonce_url = wp_nonce_url($url, 'regenerate_key_action');
         $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
+        echo '<a href="' . $nonce_url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
         echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
     }
 
