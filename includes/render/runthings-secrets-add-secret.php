@@ -24,10 +24,13 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Add_Secret')) {
     class runthings_secrets_Add_Secret
     {
+        private $plugin_version;
         private $manage;
 
-        public function __construct()
+        public function __construct($plugin_version)
         {
+            $this->plugin_version = $plugin_version;
+
             include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
 
@@ -88,7 +91,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
         {
             if (get_option('runthings_secrets_enqueue_form_styles', 1) == 1) {
                 $style_url = plugins_url('/runthings-secrets/css/add-secret-form.css');
-                wp_enqueue_style('add-secret-form-styles', $style_url, array(), null, 'all');
+                wp_enqueue_style('add-secret-form-styles', $style_url, array(), $this->plugin_version, 'all');
             }
         }
 
@@ -99,7 +102,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
 
             if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
-                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key, [], null, true);
+                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key, [], $this->plugin_version, true);
 
                 wp_add_inline_script(
                     'google-recaptcha',

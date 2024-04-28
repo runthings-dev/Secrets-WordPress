@@ -23,16 +23,20 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Integration
 {
-    public function __construct()
+    private $plugin_version;
+
+    public function __construct($plugin_version)
     {
+        $this->plugin_version = $plugin_version;
+
         // create renderers
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-add-secret.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-secret-created.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'render/runthings-secrets-view-secret.php';
 
-        $add_secret = new runthings_secrets_Add_Secret();
-        $secret_created = new runthings_secrets_Secret_Created();
-        $view_secret = new runthings_secrets_View_Secret();
+        $add_secret = new runthings_secrets_Add_Secret($this->plugin_version);
+        $secret_created = new runthings_secrets_Secret_Created($this->plugin_version);
+        $view_secret = new runthings_secrets_View_Secret($this->plugin_version);
 
         // integrate shortcodes
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/shortcode/runthings-secrets-shortcodes.php';
@@ -46,5 +50,3 @@ class runthings_secrets_Integration
         // todo
     }
 }
-
-new runthings_secrets_Integration();

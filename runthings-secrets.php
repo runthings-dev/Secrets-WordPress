@@ -44,8 +44,11 @@ class runthings_secrets_Plugin
 
     protected function __construct()
     {
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/runthings-secrets-integration.php';
+        new runthings_secrets_Integration(self::VERSION);
+
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
+
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-copy-to-clipboard-icon.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-template-checker.php';
