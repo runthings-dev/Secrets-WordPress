@@ -25,14 +25,14 @@ $viewing_snippet = sprintf(
 <div class="rs-data-container">
     <input type="text" class="viewing-url rs-data-item" value="<?php echo esc_url($context->viewing_url); ?>" readonly>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
-        <?php echo $context->copy_to_clipboard_link_icon; ?>
+        <?php echo wp_kses($context->copy_to_clipboard_link_icon, $context->copy_to_clipboard_link_icon_allowed_html); ?>
     </button>
 </div>
 <p><?php esc_html_e('Your secret sharing snippet:', 'runthings-secrets'); ?></p>
 <div class="rs-data-container">
     <textarea class="viewing-snippet rs-data-item" rows="2" readonly><?php echo esc_html($viewing_snippet); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
-        <?php echo $context->copy_to_clipboard_snippet_icon; ?>
+        <?php echo wp_kses($context->copy_to_clipboard_snippet_icon, $context->copy_to_clipboard_snippet_icon_allowed_html); ?>
     </button>
 </div>
 <p><?php echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration)); ?></p>

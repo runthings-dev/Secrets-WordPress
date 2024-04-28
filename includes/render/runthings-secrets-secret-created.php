@@ -55,8 +55,11 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             $view_page_id = get_option('runthings_secrets_view_page');
             $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret->uuid;
 
-            $copy_link_icon = apply_filters('runthings_secrets_copy_to_clipboard_icon', 'link-icon', true);
-            $copy_snippet_icon = apply_filters('runthings_secrets_copy_to_clipboard_icon', 'snippet-icon', true);
+            $copy_link_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('link-icon', true);
+            $copy_link_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('link-icon');
+
+            $copy_snippet_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('snippet-icon', true);
+            $copy_snippet_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('snippet-icon');
 
             $template = new runthings_secrets_Template_Loader();
 
@@ -66,7 +69,9 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
                 "secret" => $secret,
                 "viewing_url" => $viewing_url,
                 "copy_to_clipboard_link_icon" => $copy_link_icon,
+                "copy_to_clipboard_link_icon_allowed_html" => $copy_link_icon_allowed_html,
                 "copy_to_clipboard_snippet_icon" => $copy_snippet_icon,
+                "copy_to_clipboard_snippet_icon_allowed_html" => $copy_snippet_icon_allowed_html
             );
 
             $template

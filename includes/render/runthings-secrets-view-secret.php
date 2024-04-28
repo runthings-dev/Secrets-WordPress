@@ -51,7 +51,8 @@ if (!class_exists('runthings_secrets_View_Secret')) {
                 return $this->handle_error($secret);
             }
 
-            $copy_icon = apply_filters('runthings_secrets_copy_to_clipboard_icon', 'link-icon', true);
+            $copy_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('link-icon', true);
+            $copy_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('link-icon');
 
             $template = new runthings_secrets_Template_Loader();
 
@@ -60,6 +61,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             $data = array(
                 "secret" => $secret,
                 "copy_to_clipboard_icon" => $copy_icon,
+                "copy_to_clipboard_icon_allowed_html" => $copy_icon_allowed_html,
             );
 
             $template

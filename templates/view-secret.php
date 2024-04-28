@@ -18,7 +18,7 @@
 <div class="rs-data-container">
     <textarea class="view-secret rs-data-item" rows="2" readonly><?php echo esc_html($context->secret->secret); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
-        <?php echo $context->copy_to_clipboard_icon; ?>
+        <?php echo wp_kses($context->copy_to_clipboard_icon, $context->copy_to_clipboard_icon_allowed_html); ?>
     </button>
 </div>
 <p><?php echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration)); ?></p>
