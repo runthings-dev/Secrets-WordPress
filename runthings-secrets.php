@@ -129,8 +129,7 @@ class runthings_secrets_Plugin
 
         $current_time = current_time('timestamp');
 
-        // calculate the expiration time (24 hours ago)
-        $expiration = $current_time - (24 * 60 * 60);
+        $expiration = $current_time - DAY_IN_SECONDS;
 
         $wpdb->query(
             $wpdb->prepare(
