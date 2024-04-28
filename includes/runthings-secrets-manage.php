@@ -138,7 +138,7 @@ if (!class_exists('runthings_secrets_Manage')) {
             $uuid = wp_generate_uuid4();
             $created_at = current_time('mysql');
 
-            $wpdb->insert(
+            $inserted = $wpdb->insert(
                 $table_name,
                 array(
                     'uuid' => $uuid,
@@ -150,7 +150,11 @@ if (!class_exists('runthings_secrets_Manage')) {
                 )
             );
 
-            $this->incremement_global_secrets_total_stat();
+            if ($inserted) {
+                wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
+
+                $this->incremement_global_secrets_total_stat();
+            }
 
             return $uuid;
         }

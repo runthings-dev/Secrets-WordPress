@@ -47,10 +47,17 @@ class runthings_secrets_Advanced_Settings
     {
         if (current_user_can('manage_options')) {
             global $wpdb;
+
             $table_name = $wpdb->prefix . 'runthings_secrets';
-            $wpdb->query(
+
+            $rows_deleted = $wpdb->query(
                 $wpdb->prepare("DELETE FROM %i", $table_name)
             );
+
+            if ($rows_deleted > 0) {
+                wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
+            }
+
             add_action('admin_notices', [$this, 'deleted_secrets_notice']);
         }
     }

@@ -67,10 +67,18 @@ class runthings_secrets_Stats_Settings
     {
         global $wpdb;
         $secrets_table = $wpdb->prefix . 'runthings_secrets';
+        $cache_key = 'runthings_secrets_count';
+        $cache_group = 'runthings_secrets';
 
-        $current_secrets_count = $wpdb->get_var(
-            $wpdb->prepare("SELECT COUNT(*) FROM %i", $secrets_table)
-        );
+        $current_secrets_count = wp_cache_get($cache_key, $cache_group);
+
+        if ($current_secrets_count === false) {
+            $current_secrets_count = $wpdb->get_var(
+                $wpdb->prepare("SELECT COUNT(*) FROM %i", $secrets_table)
+            );
+
+            wp_cache_set($cache_key, $current_secrets_count, $cache_group);
+        }
 
         return $current_secrets_count;
     }

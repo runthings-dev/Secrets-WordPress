@@ -131,13 +131,17 @@ class runthings_secrets_Plugin
 
         $expiration = $current_time - DAY_IN_SECONDS;
 
-        $wpdb->query(
+        $rows_deleted = $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM %i WHERE expiration <= %d",
                 $table_name,
                 $expiration
             )
         );
+
+        if ($rows_deleted > 0) {
+            wp_cache_delete('runthings_secrets_count', 'runthings_secrets');
+        }
     }
 
     public function schedule_clear_expired_secrets()
