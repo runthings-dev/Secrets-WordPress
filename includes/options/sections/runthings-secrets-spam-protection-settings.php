@@ -100,8 +100,16 @@ class runthings_secrets_Spam_Protection_Settings
 
     public function spam_protection_section_callback()
     {
-        echo '<p>' . __('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
-        echo '<p>' . __('Get your reCAPTCHA v3 keys <a target="_blank" href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets') . '</p>';
+        echo '<p>' . esc_html__('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
+        echo '<p>' . wp_kses(
+            __('Get your reCAPTCHA v3 keys <a target="_blank" href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets'),
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'target' => array()
+                )
+            )
+        ) . '</p>';
     }
 
     public function recaptcha_enabled_callback()
@@ -126,7 +134,7 @@ class runthings_secrets_Spam_Protection_Settings
     {
         $recaptcha_score = get_option('runthings_secrets_recaptcha_score', 0.5);
         echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_score" value="' . esc_attr($recaptcha_score) . '" />';
-        echo '<p class="description">' . __('Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, a higher value is more strict.', 'runthings-secrets') . '</p>';
+        echo '<p class="description">' . esc_html__('Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, a higher value is more strict.', 'runthings-secrets') . '</p>';
     }
 
     public function validate_float($input)

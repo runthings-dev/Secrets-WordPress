@@ -15,25 +15,25 @@
  */
 
 $viewing_snippet = sprintf(
-    __("Get it from %1\$s (valid for %2\$s / %3\$s).", 'runthings-secrets'),
-    $context->viewing_url,
-    $context->secret->days_left,
-    $context->secret->views_left
+    esc_html__("Get it from %1\$s (valid for %2\$s / %3\$s).", 'runthings-secrets'),
+    esc_url($context->viewing_url),
+    esc_html($context->secret->days_left),
+    esc_html($context->secret->views_left)
 );
 ?>
-<p><?php _e('Your secret sharing link:', 'runthings-secrets'); ?></p>
+<p><?php esc_html_e('Your secret sharing link:', 'runthings-secrets'); ?></p>
 <div class="rs-data-container">
-    <input type="text" class="viewing-url rs-data-item" value="<?php echo esc_attr($context->viewing_url); ?>" readonly>
+    <input type="text" class="viewing-url rs-data-item" value="<?php echo esc_url($context->viewing_url); ?>" readonly>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <?php echo $context->copy_to_clipboard_link_icon; ?>
     </button>
 </div>
-<p><?php _e('Your secret sharing snippet:', 'runthings-secrets'); ?></p>
+<p><?php esc_html_e('Your secret sharing snippet:', 'runthings-secrets'); ?></p>
 <div class="rs-data-container">
     <textarea class="viewing-snippet rs-data-item" rows="2" readonly><?php echo esc_html($viewing_snippet); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <?php echo $context->copy_to_clipboard_snippet_icon; ?>
     </button>
 </div>
-<p><?php echo sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration); ?></p>
-<p><?php echo sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)); ?></p>
+<p><?php echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration)); ?></p>
+<p><?php echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views))); ?></p>

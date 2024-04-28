@@ -73,18 +73,24 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
 
         public function sodium_not_enabled_notice()
         {
-?>
-            <div class="notice notice-warning">
-                <p><?php _e('The Sodium library is not enabled on your hosting platform. Secrets saved will not be encrypted.', 'runthings-secrets'); ?></p>
-            </div>
-<?php
+            echo '<div class="notice notice-warning">';
+            echo '<p>' . esc_html__('The Sodium library is not enabled on your hosting platform. Secrets saved will not be encrypted.', 'runthings-secrets') . '</p>';
+            echo '</div>';
         }
+
 
         public function key_not_defined_notice()
         {
-            $message = __('An encryption key is not defined. Generate a new key in the <a href="%s">options page</a>, under Encryption Key.', 'runthings-secrets');
-            printf('<div class="notice notice-warning"><p>%s</p></div>', sprintf($message, admin_url('options-general.php?page=runthings-secrets')));
+            $options_page_url = admin_url('options-general.php?page=runthings-secrets');
+            echo '<div class="notice notice-warning"><p>' . sprintf(
+                wp_kses(
+                    __('An encryption key is not defined. Generate a new key in the <a href="%s">options page</a>, under Encryption Key.', 'runthings-secrets'),
+                    ['a' => ['href' => []]] // Allows only <a> tags with href attributes
+                ),
+                esc_url($options_page_url)
+            ) . '</p></div>';
         }
+
 
         public function encrypt($plaintext)
         {

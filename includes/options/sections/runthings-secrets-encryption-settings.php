@@ -63,8 +63,8 @@ class runthings_secrets_Encryption_Settings
 
     public function regenerate_internal_encryption_key_notice()
     {
-        $message = __('Internal encryption key has been regenerated. Consider using the delete all secrets feature to clear out old secrets which are no longer decipherable.', 'runthings-secrets');
-        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
+        $message = esc_html__('Internal encryption key has been regenerated. Consider using the delete all secrets feature to clear out old secrets which are no longer decipherable.', 'runthings-secrets');
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', esc_html($message));
     }
 
     public function settings_init()
@@ -103,31 +103,35 @@ class runthings_secrets_Encryption_Settings
 
     public function encryption_key_section_callback()
     {
-        echo "<p>" . __('The plugin has generated a default internal encryption key automatically, and stored it as a WordPress option.', 'runthings-secrets') . "</p>";
-        echo "<p>" . __('You can optionally override this using the snippet below in your wp-config.php. This lets you store the key in an environment variable, or 3rd-party key storage service.', 'runthings-secrets') . "</p>";
-        echo "<p><strong>" . __('Important', 'runthings-secrets') . ":</strong> " . __('If you change the encryption key, any existing secrets will become unreadable. You should then use the "Delete All Secrets" feature to clear out the database, or users will see garbled text when they view their secrets.', 'runthings-secrets') . "</p>";
+        echo "<p>" . esc_html(__('The plugin has generated a default internal encryption key automatically, and stored it as a WordPress option.', 'runthings-secrets')) . "</p>";
+        echo "<p>" . esc_html(__('You can optionally override this using the snippet below in your wp-config.php. This lets you store the key in an environment variable, or 3rd-party key storage service.', 'runthings-secrets')) . "</p>";
+        echo "<p><strong>" . esc_html(__('Important', 'runthings-secrets')) . ":</strong> " . esc_html(__('If you change the encryption key, any existing secrets will become unreadable. You should then use the "Delete All Secrets" feature to clear out the database, or users will see garbled text when they view their secrets.', 'runthings-secrets')) . "</p>";
     }
+
 
     public function encryption_key_callback()
     {
         $new_key = $this->crypt->generate_key();
 ?>
-        <input type="text" readonly="readonly" value="define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', '<?php echo $new_key; ?>');" onclick="this.select();" style="width: 100%;">
-        <p class="description"><?php _e('Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
+        <input type="text" readonly="readonly" value="define('RUNTHINGS_SECRETS_ENCRYPTION_KEY', '<?php echo esc_attr($new_key); ?>');" onclick="this.select();" style="width: 100%;">
+        <p class="description"><?php esc_html_e('Refresh the page to generate another key.', 'runthings-secrets'); ?></p>
 <?php
     }
+
 
     public function internal_encryption_key_callback()
     {
         $url = admin_url('options-general.php?page=runthings-secrets&action=regenerate_internal_encryption_key');
         $nonce_url = wp_nonce_url($url, 'regenerate_key_action');
         $confirm_message = __('Are you sure you want to regenerate the internal encryption key? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $nonce_url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Regenerate Internal Key', 'runthings-secrets') . '</a>';
-        echo '<p class="description"> ' . __('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets') . '</p>';
+        echo '<a href="' . esc_url($nonce_url) . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . esc_html(__('Regenerate Internal Key', 'runthings-secrets')) . '</a>';
+        echo '<p class="description"> ' . esc_html(__('The internal encryption key is used if you haven\'t specified one using the define() method above.', 'runthings-secrets')) . '</p>';
     }
+
 
     public function encryption_key_method_callback()
     {
-        echo $this->crypt->get_key_method();
+        $key_method = $this->crypt->get_key_method();
+        echo esc_html($key_method);
     }
 }

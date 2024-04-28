@@ -47,16 +47,16 @@ class runthings_secrets_Stats_Settings
         <table class="form-table" role="presentation">
             <tbody>
                 <tr>
-                    <th scope="row"><?php _e('Total Secrets Created', 'runthings-secrets'); ?></th>
-                    <td><?php echo $total_secrets_count; ?></td>
+                    <th scope="row"><?php esc_html_e('Total Secrets Created', 'runthings-secrets'); ?></th>
+                    <td><?php echo esc_html($total_secrets_count); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php _e('Total Secrets Viewed', 'runthings-secrets'); ?></th>
-                    <td><?php echo $total_views_count; ?></td>
+                    <th scope="row"><?php esc_html_e('Total Secrets Viewed', 'runthings-secrets'); ?></th>
+                    <td><?php echo esc_html($total_views_count); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php _e('Secrets In Database', 'runthings-secrets') ?></th>
-                    <td><?php echo $secrets_in_database; ?></td>
+                    <th scope="row"><?php esc_html_e('Secrets In Database', 'runthings-secrets'); ?></th>
+                    <td><?php echo esc_html($secrets_in_database); ?></td>
                 </tr>
             </tbody>
         </table>

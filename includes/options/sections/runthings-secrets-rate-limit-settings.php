@@ -32,15 +32,15 @@ class runthings_secrets_Rate_Limit_Settings
     {
         add_settings_section(
             'runthings_secrets_rate_limit_section',
-            __('Rate Limit Settings', 'runthings-secrets'),
+            esc_html__('Rate Limit Settings', 'runthings-secrets'),
             [$this, 'rate_limit_section_callback'],
             'runthings-secrets'
         );
 
         $this->add_rate_limits_settings();
-
         $this->add_role_exemption_settings();
     }
+
 
     private function add_rate_limits_settings()
     {
@@ -105,14 +105,14 @@ class runthings_secrets_Rate_Limit_Settings
 
     public function rate_limit_section_callback()
     {
-        echo '<p>' . __('Configure the rate limiting for different operations within the plugin.', 'runthings-secrets') . '</p>';
+        echo '<p>' . esc_html__('Configure the rate limiting for different operations within the plugin.', 'runthings-secrets') . '</p>';
     }
 
     public function rate_limit_enable_callback()
     {
         $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enabled', 1);
-        echo '<input type="checkbox" id="runthings_secrets_rate_limit_enabled" name="runthings_secrets_rate_limit_enabled" value="1"' . checked(1, $rate_limit_enabled, false) . '/>';
-        echo '<label for="runthings_secrets_rate_limit_enabled">' . __('Enable rate limiting', 'runthings-secrets') . '</label>';
+        echo '<input type="checkbox" id="runthings_secrets_rate_limit_enabled" name="runthings_secrets_rate_limit_enabled" value="1" ' . checked(1, $rate_limit_enabled, false) . '/>';
+        echo '<label for="runthings_secrets_rate_limit_enabled">' . esc_html__('Enable rate limiting', 'runthings-secrets') . '</label>';
     }
 
     public function rate_limit_tries_callback($args)
@@ -132,14 +132,14 @@ class runthings_secrets_Rate_Limit_Settings
 
         $rate_limit_tries = get_option($option_name, $default_value);
         echo '<input type="number" id="' . esc_attr($option_name) . '" name="' . esc_attr($option_name) . '" value="' . esc_attr($rate_limit_tries) . '" min="1" />';
-        echo '<p class="description">' . __('Number of attempts allowed per minute from a single IP address.', 'runthings-secrets') . '</p>';
+        echo '<p class="description">' . esc_html__('Number of attempts allowed per minute from a single IP address.', 'runthings-secrets') . '</p>';
     }
 
     public function rate_limit_exemption_enable_callback()
     {
         $exemption_enabled = get_option('runthings_secrets_rate_limit_exemption_enabled', 0);
-        echo '<input type="checkbox" id="runthings_secrets_rate_limit_exemption_enabled" name="runthings_secrets_rate_limit_exemption_enabled" value="1"' . checked(1, $exemption_enabled, false) . '/>';
-        echo '<label for="runthings_secrets_rate_limit_exemption_enabled">' . __('Enable rate limit exemptions for selected roles', 'runthings-secrets') . '</label>';
+        echo '<input type="checkbox" id="runthings_secrets_rate_limit_exemption_enabled" name="runthings_secrets_rate_limit_exemption_enabled" value="1" ' . checked(1, $exemption_enabled, false) . '/>';
+        echo '<label for="runthings_secrets_rate_limit_exemption_enabled">' . esc_html__('Enable rate limit exemptions for selected roles', 'runthings-secrets') . '</label>';
     }
 
     public function rate_limit_exemption_roles_callback()
@@ -150,7 +150,7 @@ class runthings_secrets_Rate_Limit_Settings
 
         foreach ($all_roles as $role_key => $role_info) {
             $checked = in_array($role_key, $exempt_roles) ? 'checked' : '';
-            echo '<input type="checkbox" id="exempt_role_' . esc_attr($role_key) . '" name="runthings_secrets_rate_limit_exemption_roles[]" value="' . esc_attr($role_key) . '" ' . $checked . '/>';
+            echo '<input type="checkbox" id="exempt_role_' . esc_attr($role_key) . '" name="runthings_secrets_rate_limit_exemption_roles[]" value="' . esc_attr($role_key) . '" ' . esc_attr($checked) . '/>';
             echo '<label for="exempt_role_' . esc_attr($role_key) . '">' . esc_html($role_info['name']) . '</label><br />';
         }
     }

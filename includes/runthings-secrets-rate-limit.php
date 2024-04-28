@@ -38,16 +38,16 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
         {
             if (!in_array($renderer, $this->allowed_renderers)) {
                 wp_die(
-                    __('Invalid renderer specified.', 'runthings-secrets'),
-                    __('Invalid Request', 'runthings-secrets'),
+                    esc_html__('Invalid renderer specified.', 'runthings-secrets'),
+                    esc_html__('Invalid Request', 'runthings-secrets'),
                     403
                 );
             }
 
             if (!did_action('runthings_secrets_check_rate_limit')) {
                 wp_die(
-                    __('This function is restricted to specific hook calls.', 'runthings-secrets'),
-                    __('Invalid Access', 'runthings-secrets'),
+                    esc_html__('This function is restricted to specific hook calls.', 'runthings-secrets'),
+                    esc_html__('Invalid Access', 'runthings-secrets'),
                     403
                 );
             }
@@ -82,8 +82,8 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
 
             if ($attempts >= $max_attempts) {
                 wp_die(
-                    __('Too many requests. Please try again later.', 'runthings-secrets'),
-                    __('429 Too Many Requests', 'runthings-secrets'),
+                    esc_html__('Too many requests. Please try again later.', 'runthings-secrets'),
+                    esc_html__('429 Too Many Requests', 'runthings-secrets'),
                     429
                 );
             } else {

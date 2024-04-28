@@ -58,7 +58,7 @@ class runthings_secrets_Options_Page
     {
 ?>
         <div class="wrap">
-            <h1><?php _e('RunThings Secrets Settings', 'runthings-secrets'); ?></h1>
+            <h1><?php esc_html_e('RunThings Secrets Settings', 'runthings-secrets'); ?></h1>
             <form method="post" action="options.php">
                 <?php
                 settings_fields('runthings-secrets-settings');

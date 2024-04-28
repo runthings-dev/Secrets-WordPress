@@ -37,8 +37,14 @@ class runthings_secrets_Pages_Settings
         $created_secret_page = get_option('runthings_secrets_created_page');
         $view_secret_page = get_option('runthings_secrets_view_page');
         if (empty($add_secret_page) || empty($created_secret_page) || empty($view_secret_page)) {
-            $message = __('Please set the "Add Secret Page", "Created Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets');
-            printf('<div class="notice notice-warning"><p>%s</p></div>', sprintf($message, admin_url('options-general.php?page=runthings-secrets')));
+            $settings_page_url = admin_url('options-general.php?page=runthings-secrets');
+            echo '<div class="notice notice-warning"><p>' . sprintf(
+                wp_kses(
+                    __('Please set the "Add Secret Page", "Created Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets'),
+                    ['a' => ['href' => []]] // Allows only <a> tags with href attributes
+                ),
+                esc_url($settings_page_url)
+            ) . '</p></div>';
         }
     }
 
@@ -102,18 +108,18 @@ class runthings_secrets_Pages_Settings
 
     public function pages_section_callback()
     {
-        echo '<p>' . __('Select the WordPress pages to use for adding and viewing secrets.', 'runthings-secrets') . '</p>';
+        echo '<p>' . esc_html__('Select the WordPress pages to use for adding and viewing secrets.', 'runthings-secrets') . '</p>';
     }
 
     public function add_page_callback()
     {
         $add_page_id = get_option('runthings_secrets_add_page');
         echo '<select name="runthings_secrets_add_page" class="runthings-secrets-select2">';
-        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
             $selected = ($add_page_id == $page->ID) ? 'selected="selected"' : '';
-            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+            echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
     }
@@ -122,11 +128,11 @@ class runthings_secrets_Pages_Settings
     {
         $created_page_id = get_option('runthings_secrets_created_page');
         echo '<select name="runthings_secrets_created_page" class="runthings-secrets-select2">';
-        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
             $selected = ($created_page_id == $page->ID) ? 'selected="selected"' : '';
-            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+            echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
     }
@@ -135,11 +141,11 @@ class runthings_secrets_Pages_Settings
     {
         $view_page_id = get_option('runthings_secrets_view_page');
         echo '<select name="runthings_secrets_view_page" class="runthings-secrets-select2">';
-        echo '<option value="">' . __('(no page selected)', 'runthings-secrets') . '</option>';
+        echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
             $selected = ($view_page_id == $page->ID) ? 'selected="selected"' : '';
-            echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+            echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
     }

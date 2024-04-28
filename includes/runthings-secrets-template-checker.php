@@ -70,14 +70,14 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
             if (!empty($outdated_templates)) {
                 add_action('admin_notices', function () use ($outdated_templates) {
                     echo '<div class="notice notice-warning is-dismissible">';
-                    echo '<p>' . __('The following template overrides are out of date. Please update them to the latest versions:', 'runthings-secrets') . '</p>';
+                    echo '<p>' . esc_html__('The following template overrides are out of date. Please update them to the latest versions:', 'runthings-secrets') . '</p>';
                     echo '<ul>';
                     foreach ($outdated_templates as $template_data) {
                         echo '<li>' . sprintf(
-                            __('Template <code>%s</code> is out of date. Your version: <code>%s</code>. Current version: <code>%s</code>.', 'runthings-secrets'),
-                            esc_url($template_data['template']),
-                            esc_html($template_data['user_version']),
-                            esc_html($template_data['current_version'])
+                            esc_html__('Template %1$s is out of date. Your version: %2$s. Current version: %3$s.', 'runthings-secrets'),
+                            '<code>' . esc_html($template_data['template']) . '</code>',
+                            '<code>' . esc_html($template_data['user_version']) . '</code>',
+                            '<code>' . esc_html($template_data['current_version']) . '</code>'
                         ) . '</li>';
                     }
                     echo '</ul>';

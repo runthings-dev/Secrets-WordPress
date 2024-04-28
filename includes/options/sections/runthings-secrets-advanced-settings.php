@@ -58,7 +58,7 @@ class runthings_secrets_Advanced_Settings
     public function deleted_secrets_notice()
     {
         $message = __('All secrets have been deleted.', 'runthings-secrets');
-        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', $message);
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', esc_html($message));
     }
 
     public function settings_init()
@@ -103,8 +103,8 @@ class runthings_secrets_Advanced_Settings
     public function enqueue_stylesheet_callback()
     {
         $enqueue_stylesheet = get_option('runthings_secrets_enqueue_form_styles', 1);
-        echo '<input type="checkbox" name="runthings_secrets_enqueue_form_styles" value="1" ' . checked(1, $enqueue_stylesheet, false) . ' />';
-        echo '<span class="description"> ' . __('Enqueue the stylesheet for the \'add secret\' form.', 'runthings-secrets') . '</span>';
+        echo '<input type="checkbox" name="runthings_secrets_enqueue_form_styles" value="1" ' . esc_attr(checked(1, $enqueue_stylesheet, false)) . ' />';
+        echo '<span class="description"> ' . esc_html__('Enqueue the stylesheet for the \'add secret\' form.', 'runthings-secrets') . '</span>';
     }
 
     public function delete_all_secrets_callback()
@@ -112,6 +112,6 @@ class runthings_secrets_Advanced_Settings
         $url = admin_url('options-general.php?page=runthings-secrets&action=delete_all_secrets');
         $nonce_url = wp_nonce_url($url, 'delete_all_secrets_action');
         $confirm_message = __('Are you sure you want to delete all secrets? This action cannot be undone.', 'runthings-secrets');
-        echo '<a href="' . $nonce_url . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . __('Delete All Secrets', 'runthings-secrets') . '</a>';
+        echo '<a href="' . esc_url($nonce_url) . '" class="button danger-button" onclick="return confirm(\'' . esc_js($confirm_message) . '\');">' . esc_html__('Delete All Secrets', 'runthings-secrets') . '</a>';
     }
 }
