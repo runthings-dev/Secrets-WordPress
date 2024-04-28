@@ -15,6 +15,7 @@
  */
 
 $viewing_snippet = sprintf(
+    /* translators: %1$s: Viewing URL, %2$s: Days left, %3$s: Views left */
     esc_html__("Get it from %1\$s (valid for %2\$s / %3\$s).", 'runthings-secrets'),
     esc_url($context->viewing_url),
     esc_html($context->secret->days_left),
@@ -35,5 +36,11 @@ $viewing_snippet = sprintf(
         <?php echo wp_kses($context->copy_to_clipboard_snippet_icon, $context->copy_to_clipboard_snippet_icon_allowed_html); ?>
     </button>
 </div>
-<p><?php echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration)); ?></p>
-<p><?php echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views))); ?></p>
+<p><?php
+    /* translators: %s: Expiration date */
+    echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration));
+    ?></p>
+<p><?php
+    /* translators: %s: Views left */
+    echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)));
+    ?></p>

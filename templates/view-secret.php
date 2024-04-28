@@ -21,5 +21,11 @@
         <?php echo wp_kses($context->copy_to_clipboard_icon, $context->copy_to_clipboard_icon_allowed_html); ?>
     </button>
 </div>
-<p><?php echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration)); ?></p>
-<p><?php echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views))); ?></p>
+<p><?php
+    /* translators: %s: Expiration date */
+    echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration));
+    ?></p>
+<p><?php
+    /* translators: %s: Views left */
+    echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)));
+    ?></p>

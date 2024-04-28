@@ -40,6 +40,7 @@ class runthings_secrets_Pages_Settings
             $settings_page_url = admin_url('options-general.php?page=runthings-secrets');
             echo '<div class="notice notice-warning"><p>' . sprintf(
                 wp_kses(
+                    /* translators: %s: URL link to the settings page */
                     __('Please set the "Add Secret Page", "Created Secret Page" and "View Secret Page" options in the <a href="%s">RunThings Secrets settings</a>.', 'runthings-secrets'),
                     ['a' => ['href' => []]] // Allows only <a> tags with href attributes
                 ),

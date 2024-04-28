@@ -84,6 +84,7 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             $options_page_url = admin_url('options-general.php?page=runthings-secrets');
             echo '<div class="notice notice-warning"><p>' . sprintf(
                 wp_kses(
+                    /* translators: %s: URL link to the options page */
                     __('An encryption key is not defined. Generate a new key in the <a href="%s">options page</a>, under Encryption Key.', 'runthings-secrets'),
                     ['a' => ['href' => []]] // Allows only <a> tags with href attributes
                 ),

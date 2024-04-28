@@ -216,6 +216,7 @@ if (!class_exists('runthings_secrets_Manage')) {
             $interval = $current_date->diff($expiration);
             $days_left = $interval->format('%r%a');
 
+            /* translators: %s: Number of days left */
             $pluralized_days = sprintf(_n('%s day', '%s days', $days_left, 'runthings-secrets'), $days_left);
 
             return $pluralized_days;
@@ -223,6 +224,7 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         private function get_views_left($views_difference)
         {
+            /* translators: %s: Number of views left */
             $pluralized_views = sprintf(_n('%s view', '%s views', $views_difference, 'runthings-secrets'), $views_difference);
 
             return $pluralized_views;

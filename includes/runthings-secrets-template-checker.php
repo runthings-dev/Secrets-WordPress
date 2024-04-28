@@ -74,6 +74,7 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
                     echo '<ul>';
                     foreach ($outdated_templates as $template_data) {
                         echo '<li>' . sprintf(
+                            /* translators: 1: Template file path, 2: User's version of the template, 3: Current version of the template */
                             esc_html__('Template %1$s is out of date. Your version: %2$s. Current version: %3$s.', 'runthings-secrets'),
                             '<code>' . esc_html($template_data['template']) . '</code>',
                             '<code>' . esc_html($template_data['user_version']) . '</code>',
