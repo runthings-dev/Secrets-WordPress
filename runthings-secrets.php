@@ -3,6 +3,7 @@
 /**
  * Plugin Name: Secrets
  * Plugin URI: https://runthings.dev/wordpress-plugins/secrets/
+ * Repository URI: https://github.com/runthings-dev/Secrets-WordPress
  * Description: Share secrets securely
  * Version: 1.1.0
  * Author: Matthew Harris, runthings.dev
