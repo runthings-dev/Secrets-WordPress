@@ -109,7 +109,9 @@ commercial projects.
 
 # Thanks
 
-SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-copy
+Copy To Clipboard - SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-copy
+
+Plugin Icon - Secret by Side Project from <a href="https://thenounproject.com/browse/icons/term/secret/" target="_blank" title="Secret Icons">Noun Project</a> (CC BY 3.0)
 
 # Author
 
