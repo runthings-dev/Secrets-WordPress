@@ -51,9 +51,10 @@ class runthings_secrets_Pages_Settings
 
     public function admin_enqueue_scripts()
     {
-        wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13');
-        wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], '4.0.13', true);
+        wp_enqueue_style('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/css/select2.min.css', [], '4.0.13');
+        wp_enqueue_script('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/js/select2.min.js', ['jquery'], '4.0.13', true);
     }
+
 
     public function settings_init()
     {
