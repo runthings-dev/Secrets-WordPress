@@ -50,7 +50,7 @@ deprecated api, and give a slightly degraded experience.
 
 Download and contribute issues at:
 
-https://github.com/rtpHarry/Secrets-Wordpress
+https://github.com/runthings-dev/Secrets-WordPress
 
 # Encryption
 
