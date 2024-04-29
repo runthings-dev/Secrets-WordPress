@@ -65,6 +65,10 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
         public function handle_form_submit()
         {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                return;
+            }
+
             if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
                 return;
             }
