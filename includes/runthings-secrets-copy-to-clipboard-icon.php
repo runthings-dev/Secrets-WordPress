@@ -49,29 +49,114 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
 
         public static function get_allowed_html($context)
         {
-            return apply_filters('runthings_secrets_copy_to_clipboard_icon_allowed_html', array(
-                'svg' => array(
-                    'xmlns' => array(),
-                    'fill' => array(),
-                    'viewbox' => array(),
-                    'width' => array(),
-                    'height' => array(),
-                    'class' => array(),
-                    'id' => array(),
-                    'aria-hidden' => array(),
-                    'role' => array(),
-                    'style' => array()
-                ),
+            return apply_filters('runthings_secrets_copy_to_clipboard_icon_allowed_html', self::kses_allowed_html(), $context);
+        }
+
+        private static function kses_allowed_html()
+        {
+            return array(
                 'img' => array(
-                    'src' => array(),
-                    'width' => array(),
-                    'height' => array(),
-                    'alt' => array(),
-                    'class' => array(),
-                    'id' => array(),
-                    'style' => array()
-                )
-            ), $context);
+                    'src'    => true,
+                    'width'  => true,
+                    'height' => true,
+                    'alt'    => true,
+                    'class'  => true,
+                    'id'     => true,
+                    'style'  => true
+                ),
+                'svg'            => array(
+                    'version'           => true,
+                    'class'             => true,
+                    'fill'              => true,
+                    'height'            => true,
+                    'xml:space'         => true,
+                    'xmlns'             => true,
+                    'xmlns:xlink'       => true,
+                    'viewbox'           => true,
+                    'enable-background' => true,
+                    'width'             => true,
+                    'x'                 => true,
+                    'y'                 => true,
+                    'stroke'            => true,
+                    'stroke-width'      => true,
+                    'stroke-linecap'    => true,
+                    'stroke-linejoin'   => true,
+                ),
+                'path'           => array(
+                    'clip-rule'    => true,
+                    'd'            => true,
+                    'fill'         => true,
+                    'fill-rule'    => true,
+                    'stroke'       => true,
+                    'stroke-width' => true,
+                ),
+                'g'              => array(
+                    'class'        => true,
+                    'clip-rule'    => true,
+                    'd'            => true,
+                    'transform'    => true,
+                    'fill'         => true,
+                    'fill-rule'    => true,
+                    'stroke'       => true,
+                    'stroke-width' => true,
+                ),
+                'rect'           => array(
+                    'clip-rule'    => true,
+                    'd'            => true,
+                    'x'            => true,
+                    'y'            => true,
+                    'rx'           => true,
+                    'ry'           => true,
+                    'transform'    => true,
+                    'fill'         => true,
+                    'fill-rule'    => true,
+                    'stroke'       => true,
+                    'stroke-width' => true,
+                    'width'        => true,
+                    'height'       => true,
+                ),
+                'polygon'        => array(
+                    'clip-rule'    => true,
+                    'd'            => true,
+                    'fill'         => true,
+                    'fill-rule'    => true,
+                    'stroke'       => true,
+                    'stroke-width' => true,
+                    'points'       => true,
+                ),
+                'circle'         => array(
+                    'clip-rule'    => true,
+                    'd'            => true,
+                    'fill'         => true,
+                    'fill-rule'    => true,
+                    'stroke'       => true,
+                    'stroke-width' => true,
+                    'cx'           => true,
+                    'cy'           => true,
+                    'r'            => true,
+                ),
+                'lineargradient' => array(
+                    'id'                => true,
+                    'gradientunits'     => true,
+                    'x'                 => true,
+                    'y'                 => true,
+                    'x2'                => true,
+                    'y2'                => true,
+                    'gradienttransform' => true,
+                ),
+                'stop'           => array(
+                    'offset' => true,
+                    'style'  => true,
+                ),
+                'image'          => array(
+                    'height'     => true,
+                    'width'      => true,
+                    'xlink:href' => true,
+                ),
+                'defs'           => array(
+                    'clipPath' => true,
+                ),
+            );
         }
     }
 }
