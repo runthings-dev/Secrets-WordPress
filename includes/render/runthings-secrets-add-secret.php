@@ -136,8 +136,12 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
                 if (!$this->verify_recaptcha_token()) {
-                    return; // TODO - improve handling
-                    // $error_message = __('reCAPTCHA verification failed, please try again.', 'runthings-secrets');
+                    wp_die(
+                        esc_html__('reCAPTCHA verification failed, please try again.', 'runthings-secrets'),
+                        esc_html__('Failed reCAPTCHA Security Checks.', 'runthings-secrets'),
+                        403
+                    );
+                    return;
                 }
             }
 
