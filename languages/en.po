@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runthings Secrets\n"
-"POT-Creation-Date: 2024-04-17 23:50+0100\n"
-"PO-Revision-Date: 2024-04-17 23:57+0100\n"
+"POT-Creation-Date: 2024-04-30 15:38+0100\n"
+"PO-Revision-Date: 2024-04-30 15:38+0100\n"
 "Last-Translator: Matthew Harris <matthew@rtpdesign.co.uk>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -31,78 +31,78 @@ msgstr ""
 msgid "The 'view secret' layout will be shown here."
 msgstr ""
 
-#: includes/options/runthings-secrets-options-page.php:47
-#: includes/options/runthings-secrets-options-page.php:48
+#: includes/options/runthings-secrets-options-page.php:49
+#: includes/options/runthings-secrets-options-page.php:50
 msgid "RunThings Secrets"
 msgstr ""
 
-#: includes/options/runthings-secrets-options-page.php:59
+#: includes/options/runthings-secrets-options-page.php:61
 msgid "RunThings Secrets Settings"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:54
+#: includes/options/sections/runthings-secrets-advanced-settings.php:70
 msgid "All secrets have been deleted."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:62
+#: includes/options/sections/runthings-secrets-advanced-settings.php:78
 msgid "Advanced"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:69
+#: includes/options/sections/runthings-secrets-advanced-settings.php:85
 msgid "Enqueue Form Styles"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:77
-#: includes/options/sections/runthings-secrets-advanced-settings.php:108
+#: includes/options/sections/runthings-secrets-advanced-settings.php:93
+#: includes/options/sections/runthings-secrets-advanced-settings.php:125
 msgid "Delete All Secrets"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:101
+#: includes/options/sections/runthings-secrets-advanced-settings.php:117
 msgid "Enqueue the stylesheet for the 'add secret' form."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-advanced-settings.php:107
+#: includes/options/sections/runthings-secrets-advanced-settings.php:124
 msgid ""
 "Are you sure you want to delete all secrets? This action cannot be undone."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:62
+#: includes/options/sections/runthings-secrets-encryption-settings.php:66
 msgid ""
 "Internal encryption key has been regenerated. Consider using the delete all "
 "secrets feature to clear out old secrets which are no longer decipherable."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:70
-#: includes/options/sections/runthings-secrets-encryption-settings.php:77
+#: includes/options/sections/runthings-secrets-encryption-settings.php:74
+#: includes/options/sections/runthings-secrets-encryption-settings.php:81
 msgid "Encryption Key"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:85
+#: includes/options/sections/runthings-secrets-encryption-settings.php:89
 msgid "Internal Encryption Key"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:93
+#: includes/options/sections/runthings-secrets-encryption-settings.php:97
 msgid "Current Encryption Method"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:102
+#: includes/options/sections/runthings-secrets-encryption-settings.php:106
 msgid ""
 "The plugin has generated a default internal encryption key automatically, "
 "and stored it as a WordPress option."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:103
+#: includes/options/sections/runthings-secrets-encryption-settings.php:107
 msgid ""
 "You can optionally override this using the snippet below in your wp-config."
 "php. This lets you store the key in an environment variable, or 3rd-party "
 "key storage service."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:104
+#: includes/options/sections/runthings-secrets-encryption-settings.php:108
 msgid "Important"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:104
+#: includes/options/sections/runthings-secrets-encryption-settings.php:108
 msgid ""
 "If you change the encryption key, any existing secrets will become "
 "unreadable. You should then use the \"Delete All Secrets\" feature to clear "
@@ -110,57 +110,101 @@ msgid ""
 "secrets."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:112
+#: includes/options/sections/runthings-secrets-encryption-settings.php:117
 msgid "Refresh the page to generate another key."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:119
+#: includes/options/sections/runthings-secrets-encryption-settings.php:126
 msgid ""
 "Are you sure you want to regenerate the internal encryption key? This action "
 "cannot be undone."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:120
+#: includes/options/sections/runthings-secrets-encryption-settings.php:127
 msgid "Regenerate Internal Key"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-encryption-settings.php:121
+#: includes/options/sections/runthings-secrets-encryption-settings.php:128
 msgid ""
 "The internal encryption key is used if you haven't specified one using the "
 "define() method above."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:40
+#: includes/options/sections/runthings-secrets-pages-settings.php:44
 #, php-format
 msgid ""
 "Please set the \"Add Secret Page\", \"Created Secret Page\" and \"View "
 "Secret Page\" options in the <a href=\"%s\">RunThings Secrets settings</a>."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:55
+#: includes/options/sections/runthings-secrets-pages-settings.php:63
 msgid "Secret Pages"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:62
+#: includes/options/sections/runthings-secrets-pages-settings.php:70
 msgid "Add Secret Page"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:70
+#: includes/options/sections/runthings-secrets-pages-settings.php:78
 msgid "Secret Created Page"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:78
+#: includes/options/sections/runthings-secrets-pages-settings.php:86
 msgid "View Secret Page"
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:105
+#: includes/options/sections/runthings-secrets-pages-settings.php:113
 msgid "Select the WordPress pages to use for adding and viewing secrets."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-pages-settings.php:112
-#: includes/options/sections/runthings-secrets-pages-settings.php:125
-#: includes/options/sections/runthings-secrets-pages-settings.php:138
+#: includes/options/sections/runthings-secrets-pages-settings.php:120
+#: includes/options/sections/runthings-secrets-pages-settings.php:133
+#: includes/options/sections/runthings-secrets-pages-settings.php:146
 msgid "(no page selected)"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:35
+msgid "Rate Limit Settings"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:49
+msgid "Enable Rate Limiting"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:61
+msgid "Maximum Add Secret Requests per Minute"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:62
+msgid "Maximum Secret Created Requests per Minute"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:63
+msgid "Maximum View Secret Requests per Minute"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:70
+msgid "Enable Role-Based Rate Limit Exemption"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:79
+msgid "Select Exempt Roles"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:108
+msgid "Configure the rate limiting for different operations within the plugin."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:115
+msgid "Enable rate limiting"
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:135
+msgid "Number of attempts allowed per minute from a single IP address."
+msgstr ""
+
+#: includes/options/sections/runthings-secrets-rate-limit-settings.php:142
+msgid "Enable rate limit exemptions for selected roles"
 msgstr ""
 
 #: includes/options/sections/runthings-secrets-spam-protection-settings.php:35
@@ -187,13 +231,13 @@ msgstr ""
 msgid "Protect your secrets from spam by enabling reCAPTCHA v3."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-spam-protection-settings.php:104
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:105
 msgid ""
 "Get your reCAPTCHA v3 keys <a target=\"_blank\" href=\"https://www.google."
 "com/recaptcha/admin/create\">here</a>."
 msgstr ""
 
-#: includes/options/sections/runthings-secrets-spam-protection-settings.php:129
+#: includes/options/sections/runthings-secrets-spam-protection-settings.php:137
 msgid ""
 "Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, "
 "a higher value is more strict."
@@ -215,105 +259,157 @@ msgstr ""
 msgid "Secrets In Database"
 msgstr ""
 
-#: includes/runthings-secrets-manage.php:50
+#: includes/render/runthings-secrets-add-secret.php:145
+msgid "reCAPTCHA verification failed, please try again."
+msgstr ""
+
+#: includes/render/runthings-secrets-add-secret.php:146
+msgid "Failed reCAPTCHA Security Checks."
+msgstr ""
+
+#: includes/render/runthings-secrets-secret-created.php:126
+#: includes/render/runthings-secrets-view-secret.php:116
+#: templates/secret-created.php:28 templates/secret-created.php:35
+#: templates/view-secret.php:20
+msgid "Copy to clipboard"
+msgstr ""
+
+#: includes/render/runthings-secrets-secret-created.php:127
+#: includes/render/runthings-secrets-view-secret.php:117
+msgid "Copied!"
+msgstr ""
+
+#: includes/runthings-secrets-manage.php:48
 msgid "Invalid UUID format."
 msgstr ""
 
-#: includes/runthings-secrets-manage.php:68
+#: includes/runthings-secrets-manage.php:65
 msgid "Invalid secret sharing URL."
 msgstr ""
 
-#: includes/runthings-secrets-manage.php:83
+#: includes/runthings-secrets-manage.php:74
 msgid "This secret has expired or reached its maximum number of views."
 msgstr ""
 
-#: includes/runthings-secrets-manage.php:150
+#: includes/runthings-secrets-manage.php:220
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/runthings-secrets-manage.php:157
+#: includes/runthings-secrets-manage.php:228
 #, php-format
 msgid "%s view"
 msgid_plural "%s views"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/runthings-secrets-sodium-encryption.php:78
+#: includes/runthings-secrets-rate-limit.php:41
+msgid "Invalid renderer specified."
+msgstr ""
+
+#: includes/runthings-secrets-rate-limit.php:42
+msgid "Invalid Request"
+msgstr ""
+
+#: includes/runthings-secrets-rate-limit.php:49
+msgid "This function is restricted to specific hook calls."
+msgstr ""
+
+#: includes/runthings-secrets-rate-limit.php:50
+msgid "Invalid Access"
+msgstr ""
+
+#: includes/runthings-secrets-rate-limit.php:85
+msgid "Too many requests. Please try again later."
+msgstr ""
+
+#: includes/runthings-secrets-rate-limit.php:86
+msgid "429 Too Many Requests"
+msgstr ""
+
+#: includes/runthings-secrets-sodium-encryption.php:77
 msgid ""
 "The Sodium library is not enabled on your hosting platform. Secrets saved "
 "will not be encrypted."
 msgstr ""
 
-#: includes/runthings-secrets-sodium-encryption.php:85
+#: includes/runthings-secrets-sodium-encryption.php:88
 #, php-format
 msgid ""
 "An encryption key is not defined. Generate a new key in the <a "
 "href=\"%s\">options page</a>, under Encryption Key."
 msgstr ""
 
-#: includes/runthings-secrets-sodium-encryption.php:122
+#: includes/runthings-secrets-sodium-encryption.php:129
 msgid "Using define() method"
 msgstr ""
 
-#: includes/runthings-secrets-sodium-encryption.php:124
+#: includes/runthings-secrets-sodium-encryption.php:131
 msgid "Internal encryption key"
 msgstr ""
 
-#: includes/runthings-secrets-sodium-encryption.php:126
+#: includes/runthings-secrets-sodium-encryption.php:133
 msgid "ERROR: No key found"
 msgstr ""
 
-#: runthings-secrets.php:92
+#: includes/runthings-secrets-template-checker.php:73
+msgid ""
+"The following template overrides are out of date. Please update them to the "
+"latest versions:"
+msgstr ""
+
+#: includes/runthings-secrets-template-checker.php:78
+#, php-format
+msgid ""
+"Template %1$s is out of date. Your version: %2$s. Current version: %3$s."
+msgstr ""
+
+#: runthings-secrets.php:105
 msgid "Settings"
 msgstr ""
 
-#: templates/add-secret-form.php:22
+#: templates/add-secret-form.php:20
 msgid "Secret:"
 msgstr ""
 
 #: templates/add-secret-form.php:26
-msgid "Expiration date:"
+#, php-format
+msgid "Expiration date (Timezone: %s):"
 msgstr ""
 
-#: templates/add-secret-form.php:30
+#: templates/add-secret-form.php:32
 msgid "Maximum number of views:"
 msgstr ""
 
-#: templates/add-secret-form.php:35
+#: templates/add-secret-form.php:37
 msgid "Submit"
 msgstr ""
 
-#: templates/error.php:16
+#: templates/error.php:17
 msgid "ERROR:"
 msgstr ""
 
-#: templates/secret-created.php:18
+#: templates/secret-created.php:19
 #, php-format
 msgid "Get it from %1$s (valid for %2$s / %3$s)."
 msgstr ""
 
-#: templates/secret-created.php:24
+#: templates/secret-created.php:25
 msgid "Your secret sharing link:"
 msgstr ""
 
-#: templates/secret-created.php:27 templates/secret-created.php:39
-#: templates/view-secret.php:20
-msgid "Copy to clipboard"
-msgstr ""
-
-#: templates/secret-created.php:36
+#: templates/secret-created.php:32
 msgid "Your secret sharing snippet:"
 msgstr ""
 
-#: templates/secret-created.php:48 templates/view-secret.php:29
+#: templates/secret-created.php:41 templates/view-secret.php:26
 #, php-format
 msgid "Expiration date: %s"
 msgstr ""
 
-#: templates/secret-created.php:49 templates/view-secret.php:30
+#: templates/secret-created.php:45 templates/view-secret.php:30
 #, php-format
 msgid "Views left: %s"
 msgstr ""
