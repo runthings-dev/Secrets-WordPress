@@ -35,6 +35,10 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
                 global $wp_filesystem;
 
                 $asset_output = $wp_filesystem->get_contents($asset_path);
+
+                if (false === $asset_output) {
+                    error_log('Failed to read file contents from: ' . $asset_path);
+                }
             } else {
                 $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
                 $asset_output = '<img src="' . esc_url($asset_url) . '" alt="" />';
