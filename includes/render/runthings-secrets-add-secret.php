@@ -125,7 +125,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
         {
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Nonce already checked in handle_form_submit()
-            $secret = sanitize_textarea_field($_POST['secret']);
+            // DO NOT SANITIZE SECRET - it is encrypted and stored as is, and displayed safely at the end with esc_html
+            $secret = is_string($_POST['secret']) ? $_POST['secret'] : '';
             $expiration = sanitize_text_field($_POST['expiration']);
             $max_views = intval($_POST['max_views']);
             // phpcs:enable WordPress.Security.NonceVerification.Missing
