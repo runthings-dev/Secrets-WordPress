@@ -26,7 +26,7 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
     {
         public static function get_icon($context, $embed = true)
         {
-            $asset_path = plugin_dir_path(__FILE__) . 'assets/copy-icon.svg';
+            $asset_path = RUNTHINGS_SECRETS_PLUGIN_DIR . 'assets/copy-icon.svg';
             $asset_output = '';
 
             if ($embed) {
