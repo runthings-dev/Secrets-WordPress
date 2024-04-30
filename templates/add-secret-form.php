@@ -21,8 +21,12 @@
         <textarea name="secret" required></textarea>
     </div>
     <div>
-        <label for="expiration"><?php esc_html_e('Expiration date:', 'runthings-secrets'); ?></label>
-        <input type="date" name="expiration" required min="<?php echo esc_attr(date('Y-m-d')); ?>" value="<?php echo esc_attr($context->default_expiration); ?>">
+        <label for="expiration"><?php echo sprintf(
+                                    /* translators: %s: Timezone string (e.g., "America/New_York") */
+                                    esc_html__('Expiration date (Timezone: %s):', 'runthings-secrets'),
+                                    esc_html($context->timezone)
+                                ); ?></label>
+        <input type="date" name="expiration" required min="<?php echo esc_attr($context->current_date); ?>" value="<?php echo esc_attr($context->default_expiration); ?>">
     </div>
     <div>
         <label for="max_views"><?php esc_html_e('Maximum number of views:', 'runthings-secrets'); ?></label>

@@ -44,8 +44,10 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $default_expiration = date('Y-m-d', strtotime('+7 days'));
+            $default_expiration = current_time('Y-m-d', strtotime('+7 days'));
             $default_max_views = 5;
+            $current_date = current_time('Y-m-d');
+            $timezone = wp_timezone_string();
 
             $template = new runthings_secrets_Template_Loader();
 
@@ -54,6 +56,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $data = array(
                 "default_expiration" => $default_expiration,
                 "default_max_views" => $default_max_views,
+                "current_date" => $current_date,
+                "timezone" => $timezone,
             );
 
             $template
