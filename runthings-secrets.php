@@ -12,6 +12,8 @@
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Requires at least: 6.2
  * Requires PHP: 7.0
+ * Text Domain: runthings-secrets
+ * Domain Path: /languages
  */
 /*
 Copyright 2023-2024 Matthew Harris
