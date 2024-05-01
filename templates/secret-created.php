@@ -54,3 +54,15 @@ $viewing_snippet = sprintf(
     /* translators: %s: Views left */
     echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)));
     ?></p>
+<p><?php
+    echo sprintf(
+        /* translators: %1$s: Link to view the secret, %2$s: Warning note that viewing will use one of the views */
+        esc_html__('View secret: %1$s. %2$s', 'runthings-secrets'),
+        sprintf(
+            '<a href="%s" target="_blank">%s</a>',
+            esc_url($context->viewing_url),
+            esc_html__('Click here', 'runthings-secrets')
+        ),
+        esc_html__('(Note: Viewing this secret will use up one of the views).', 'runthings-secrets')
+    );
+    ?></p>
