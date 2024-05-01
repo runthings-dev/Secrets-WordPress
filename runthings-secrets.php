@@ -5,7 +5,7 @@
  * Plugin URI: https://runthings.dev/wordpress-plugins/secrets/
  * Repository URI: https://github.com/runthings-dev/Secrets-WordPress
  * Description: Share secrets securely
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: runthingsdev
  * Author URI: https://runthings.dev/
  * License: GPLv3 or later
@@ -41,7 +41,7 @@ define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
 class runthings_secrets_Plugin
 {
-    const VERSION = '1.2.0';
+    const VERSION = '1.3.0';
 
     protected static $single_instance = null;
 
