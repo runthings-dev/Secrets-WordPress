@@ -6,7 +6,7 @@
  * Repository URI: https://github.com/runthings-dev/Secrets-WordPress
  * Description: Share secrets securely
  * Version: 1.2.0
- * Author: Matthew Harris, runthings.dev
+ * Author: runthingsdev
  * Author URI: https://runthings.dev/
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
