@@ -46,7 +46,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             $default_expiration_local = new DateTime('+7 days', new DateTimeZone(wp_timezone_string()));
             $default_max_views = 5;
-            $current_date_local = new DateTime('now', new DateTimeZone(wp_timezone_string()));
+            $minimum_date_local = new DateTime('+1 days', new DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 
             $template = new runthings_secrets_Template_Loader();
@@ -56,7 +56,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $data = array(
                 "default_expiration" => $default_expiration_local->format('Y-m-d'),
                 "default_max_views" => $default_max_views,
-                "current_date" => $current_date_local->format('Y-m-d'),
+                "minimum_date" => $minimum_date_local->format('Y-m-d'),
                 "timezone" => $timezone,
             );
 
