@@ -112,6 +112,17 @@ Remember, the timezone setting not only affects the display of dates in the "Add
 
 # Changelog
 
+## 1.3.0 - 1st May 2024
+
+- Update author meta field to be in line with WordPress Directory user name
+- Update cron schedule to be at 00:15 daily, instead of daily from time of install
+- Bump secret-created and view-secret template versions to 1.2.0
+- Add view secret link to secret-created template
+- Add abbr with timezone for expiration date on secret-created and view-secret templates
+- Update all date code to use datetime class and explicit timezones
+- Bump add-secret-form template version to 1.2.0
+- Add secret template - rename current date to minimum date, and add 1 day to it
+
 ## 1.2.0 - 30th Apr 2024
 
 - Rate limits - Implement optional rate limiting to stop bots
