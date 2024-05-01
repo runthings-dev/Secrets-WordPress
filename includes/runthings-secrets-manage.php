@@ -79,7 +79,7 @@ if (!class_exists('runthings_secrets_Manage')) {
 
             $secret->formatted_expiration_gmt = $this->format_expiration_date_gmt($secret->expiration);
             $secret->formatted_expiration = $this->format_expiration_date_local($secret->expiration);
-            $secret->days_left = $this->get_days_left($secret->expiration);
+            $secret->days_left = $this->get_days_left($secret->formatted_expiration);
             $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
 
             return $secret;
@@ -87,7 +87,10 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         private function has_expired_or_maxed_out($secret)
         {
-            return $secret->expiration < current_time('mysql') || $secret->views > $secret->max_views;
+            $expiration_datetime_utc = new DateTime($secret->expiration, new DateTimeZone('UTC'));
+            $current_datetime_utc = new DateTime('now', new DateTimeZone('UTC'));
+
+            return $expiration_datetime_utc <= $current_datetime_utc || $secret->views > $secret->max_views;
         }
 
         private function handle_expired_secret($secret)
@@ -155,21 +158,18 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         private function format_expiration_date_gmt($expiration)
         {
-            $timestamp = strtotime($expiration);
-            return gmdate('Y-m-d', $timestamp);
+            $date = new DateTime($expiration, new DateTimeZone('UTC'));
+            return $date->format('Y-m-d');
         }
 
         private function format_expiration_date_local($expiration)
         {
-            $timestamp = strtotime($expiration);
-            $timezone = get_option('timezone_string') ? new DateTimeZone(get_option('timezone_string')) : new DateTimeZone('UTC');
-            $date = new DateTime();
-            $date->setTimestamp($timestamp);
-            $date->setTimezone($timezone);
+            $date = new DateTime($expiration, new DateTimeZone('UTC'));
+            $date->setTimezone(new DateTimeZone(wp_timezone_string()));
             return $date->format('Y-m-d');
         }
 
-        public function add_secret($secret, $max_views, $expiration)
+        public function add_secret($secret, $max_views, $expiration_local)
         {
             // encrypt the secret
             $encrypted_secret = $this->crypt->encrypt($secret);
@@ -179,7 +179,13 @@ if (!class_exists('runthings_secrets_Manage')) {
             $table_name = $wpdb->prefix . 'runthings_secrets';
 
             $uuid = wp_generate_uuid4();
-            $created_at = current_time('mysql');
+
+            $expiration_datetime = new DateTime($expiration_local, new DateTimeZone(wp_timezone_string()));
+            $expiration_datetime->setTimezone(new DateTimeZone('UTC'));
+            $expiration_utc = $expiration_datetime->format('Y-m-d H:i:s');
+
+            $created_at_datetime = new DateTime('now', new DateTimeZone('UTC'));
+            $created_at_utc = $created_at_datetime->format('Y-m-d H:i:s');
 
             // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
             // Direct query is required as only way to insert custom table data
@@ -190,8 +196,8 @@ if (!class_exists('runthings_secrets_Manage')) {
                     'secret' => $encrypted_secret,
                     'max_views' => $max_views,
                     'views' => 0,
-                    'expiration' => $expiration,
-                    'created_at' => $created_at
+                    'expiration' => $expiration_utc,
+                    'created_at' => $created_at_utc
                 )
             );
             // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
@@ -207,11 +213,11 @@ if (!class_exists('runthings_secrets_Manage')) {
 
         private function get_days_left($expiration_date)
         {
-            $current_date = new DateTime(current_time('mysql'));
+            $current_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
 
-            // create DateTime object for the expiration date and add one day to include the end day fully
-            $expiration = new DateTime($expiration_date);
-            $expiration->modify('+1 day');
+            // create DateTime object for the expiration date
+            $expiration = new DateTime($expiration_date, new DateTimeZone(wp_timezone_string()));
+            $expiration->modify('+1 day'); // add one day to include the end day fully
 
             $interval = $current_date->diff($expiration);
             $days_left = $interval->format('%r%a');

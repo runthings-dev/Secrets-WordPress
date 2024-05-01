@@ -113,17 +113,17 @@ class runthings_secrets_Plugin
 
         $table_name = $wpdb->prefix . 'runthings_secrets';
 
-        $current_time = current_time('timestamp');
+        $current_time_datetime = new DateTime('now', new DateTimeZone('UTC'));
 
-        $expiration = $current_time - DAY_IN_SECONDS;
+        $current_time = $current_time_datetime->format('Y-m-d H:i:s');
 
         // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
         // Direct query is required as $wpdb->delete() does not support deleting rows based on a condition
         $rows_deleted = $wpdb->query(
             $wpdb->prepare(
-                "DELETE FROM %i WHERE expiration <= %d",
+                "DELETE FROM %i WHERE expiration <= %s",
                 $table_name,
-                $expiration
+                $current_time
             )
         );
         // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery

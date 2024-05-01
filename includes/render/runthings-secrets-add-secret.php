@@ -44,9 +44,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $default_expiration = current_time('Y-m-d', strtotime('+7 days'));
+            $default_expiration_local = new DateTime('+7 days', new DateTimeZone(wp_timezone_string()));
             $default_max_views = 5;
-            $current_date = current_time('Y-m-d');
+            $current_date_local = new DateTime('now', new DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 
             $template = new runthings_secrets_Template_Loader();
@@ -54,9 +54,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             ob_start();
 
             $data = array(
-                "default_expiration" => $default_expiration,
+                "default_expiration" => $default_expiration_local->format('Y-m-d'),
                 "default_max_views" => $default_max_views,
-                "current_date" => $current_date,
+                "current_date" => $current_date_local->format('Y-m-d'),
                 "timezone" => $timezone,
             );
 
@@ -131,7 +131,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             // Nonce already checked in handle_form_submit()
             // DO NOT SANITIZE SECRET - it is encrypted and stored as is, and displayed safely at the end with esc_html
             $secret = is_string($_POST['secret']) ? $_POST['secret'] : '';
-            $expiration = sanitize_text_field($_POST['expiration']);
+            $expiration_local = sanitize_text_field($_POST['expiration']);
             $max_views = intval($_POST['max_views']);
             // phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -150,7 +150,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 }
             }
 
-            return $this->manage->add_secret($secret, $max_views, $expiration);
+            return $this->manage->add_secret($secret, $max_views, $expiration_local);
         }
 
         private function verify_recaptcha_token()
