@@ -54,6 +54,8 @@ if (!class_exists('runthings_secrets_View_Secret')) {
                 return $this->handle_error($secret);
             }
 
+            $timezone = wp_timezone_string();
+
             $copy_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('link-icon', true);
             $copy_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('link-icon');
 
@@ -63,6 +65,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
             $data = array(
                 "secret" => $secret,
+                "timezone" => $timezone,
                 "copy_to_clipboard_icon" => $copy_icon,
                 "copy_to_clipboard_icon_allowed_html" => $copy_icon_allowed_html,
             );

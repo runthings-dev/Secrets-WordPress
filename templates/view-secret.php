@@ -22,8 +22,18 @@
     </button>
 </div>
 <p><?php
-    /* translators: %s: Expiration date */
-    echo esc_html(sprintf(__('Expiration date: %s', 'runthings-secrets'), $context->secret->formatted_expiration));
+    echo sprintf(
+        /* translators: %s: Expiration date formatted string including HTML abbreviation tag with the timezone */
+        esc_html__('Expiration date: %s', 'runthings-secrets'),
+        '<abbr title="' .
+            sprintf(
+                /* translators: %s: Timezone. */
+                esc_attr__('Timezone: %s', 'runthings-secrets'),
+                esc_attr($context->timezone)
+            ) . '">' .
+            esc_html($context->secret->formatted_expiration) .
+            '</abbr>'
+    );
     ?></p>
 <p><?php
     /* translators: %s: Views left */
