@@ -135,8 +135,20 @@ class runthings_secrets_Plugin
 
     public function schedule_clear_expired_secrets()
     {
-        if (!wp_next_scheduled('runthings_secrets_clear_expired_secrets')) {
-            wp_schedule_event(time(), 'daily', 'runthings_secrets_clear_expired_secrets');
+        $hook = 'runthings_secrets_clear_expired_secrets';
+
+        if (!wp_next_scheduled($hook)) {
+            $currentTime = time();
+
+            // Get today's date with the time set to 00:15
+            $midnightPlusFifteen = strtotime(date('Y-m-d', $currentTime) . ' 00:15');
+
+            // If it's already past 00:15 today, schedule for 00:15 the next day
+            if ($currentTime > $midnightPlusFifteen) {
+                $midnightPlusFifteen = strtotime('+1 day', $midnightPlusFifteen);
+            }
+
+            wp_schedule_event($midnightPlusFifteen, 'daily', $hook);
         }
     }
 
