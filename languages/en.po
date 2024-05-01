@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runthings Secrets\n"
-"POT-Creation-Date: 2024-04-30 15:38+0100\n"
-"PO-Revision-Date: 2024-04-30 15:38+0100\n"
+"POT-Creation-Date: 2024-05-01 13:23+0100\n"
+"PO-Revision-Date: 2024-05-01 13:23+0100\n"
 "Last-Translator: Matthew Harris <matthew@rtpdesign.co.uk>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -267,15 +267,15 @@ msgstr ""
 msgid "Failed reCAPTCHA Security Checks."
 msgstr ""
 
-#: includes/render/runthings-secrets-secret-created.php:126
-#: includes/render/runthings-secrets-view-secret.php:116
+#: includes/render/runthings-secrets-secret-created.php:129
+#: includes/render/runthings-secrets-view-secret.php:119
 #: templates/secret-created.php:28 templates/secret-created.php:35
 #: templates/view-secret.php:20
 msgid "Copy to clipboard"
 msgstr ""
 
-#: includes/render/runthings-secrets-secret-created.php:127
-#: includes/render/runthings-secrets-view-secret.php:117
+#: includes/render/runthings-secrets-secret-created.php:130
+#: includes/render/runthings-secrets-view-secret.php:120
 msgid "Copied!"
 msgstr ""
 
@@ -291,14 +291,14 @@ msgstr ""
 msgid "This secret has expired or reached its maximum number of views."
 msgstr ""
 
-#: includes/runthings-secrets-manage.php:220
+#: includes/runthings-secrets-manage.php:226
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/runthings-secrets-manage.php:228
+#: includes/runthings-secrets-manage.php:234
 #, php-format
 msgid "%s view"
 msgid_plural "%s views"
@@ -404,14 +404,32 @@ msgstr ""
 msgid "Your secret sharing snippet:"
 msgstr ""
 
-#: templates/secret-created.php:41 templates/view-secret.php:26
+#: templates/secret-created.php:42 templates/view-secret.php:27
 #, php-format
 msgid "Expiration date: %s"
 msgstr ""
 
-#: templates/secret-created.php:45 templates/view-secret.php:30
+#: templates/secret-created.php:46 templates/view-secret.php:31
+#, php-format
+msgid "Timezone: %s"
+msgstr ""
+
+#: templates/secret-created.php:55 templates/view-secret.php:40
 #, php-format
 msgid "Views left: %s"
+msgstr ""
+
+#: templates/secret-created.php:60
+#, php-format
+msgid "View secret: %1$s. %2$s"
+msgstr ""
+
+#: templates/secret-created.php:64
+msgid "Click here"
+msgstr ""
+
+#: templates/secret-created.php:66
+msgid "(Note: Viewing this secret will use up one of the views)."
 msgstr ""
 
 #: templates/view-secret.php:17
