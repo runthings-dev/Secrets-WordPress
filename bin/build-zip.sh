@@ -4,6 +4,14 @@
 PLUGIN_DIR=$(pwd)
 PLUGINSLUG="runthings-secrets"
 
+# Check if the script is being run from the bin directory
+if [[ $(basename "$PLUGIN_DIR") == "bin" ]]; then
+  echo "Error: This script should not be run from the bin directory."
+  echo "Usage: Run the script from the plugin's root directory."
+  echo "Example: ./bin/build-zip.sh"
+  exit 1
+fi
+
 # Create the build directory if it doesn't exist
 mkdir -p ${PLUGIN_DIR}/build
 
