@@ -1,0 +1,19 @@
+# Ignore development files
+.git/
+node_modules/
+tests/
+build/
+
+# Ignore documentation files
+README.md
+*.txt
+
+# Ignore configuration files
+*.json
+*.yml
+*.lock
+
+# Ignore build scripts and macOS file system files
+/bin/
+.DS_Store
+__MACOSX
