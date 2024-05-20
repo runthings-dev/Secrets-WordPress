@@ -29,11 +29,20 @@ mkdir -p ${BUILD_DIR}
 TEMP_DIR=$(mktemp -d)
 echo "Created temporary directory at ${TEMP_DIR}"
 
+# Function to clean up the temporary directory
+cleanup() {
+  echo "Cleaning up temporary directory..."
+  rm -rf "${TEMP_DIR}"
+  echo "Temporary directory cleaned up."
+}
+
+# Ensure the cleanup function is called on script exit
+trap cleanup EXIT
+
 # Copy all files to the temporary directory, excluding the patterns in .distignore
 echo "Copying files to temporary directory, excluding patterns in .distignore..."
 if ! rsync -av --exclude-from=${DISTIGNORE} ${PLUGIN_DIR}/ ${TEMP_DIR}/; then
   echo "Error: rsync failed."
-  rm -rf ${TEMP_DIR}
   exit 1
 fi
 
@@ -42,16 +51,11 @@ cd ${TEMP_DIR}
 echo "Creating zip file..."
 if ! zip -r ${BUILD_DIR}/${PLUGINSLUG}.zip .; then
   echo "Error: zip failed."
-  cd ${PLUGIN_DIR}
-  rm -rf ${TEMP_DIR}
   exit 1
 fi
 echo "Zip file created at ${BUILD_DIR}/${PLUGINSLUG}.zip"
 
 # Clean up the temporary directory
 cd ${PLUGIN_DIR}
-echo "Cleaning up temporary directory..."
-rm -rf ${TEMP_DIR}
-echo "Temporary directory cleaned up."
 
 echo "Build completed successfully."
