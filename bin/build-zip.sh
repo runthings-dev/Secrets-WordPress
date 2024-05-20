@@ -34,8 +34,15 @@ fi
 
 # Create the zip file from the temporary directory
 cd ${TEMP_DIR}
-zip -r ${PLUGIN_DIR}/build/${PLUGINSLUG}.zip .
+echo "Creating zip file..."
+if ! zip -r ${PLUGIN_DIR}/build/${PLUGINSLUG}.zip .; then
+  echo "Error: zip failed."
+  cd ${PLUGIN_DIR}
+  rm -rf ${TEMP_DIR}
+  exit 1
+fi
 echo "Zip file created at ./build/${PLUGINSLUG}.zip"
 
 # Clean up the temporary directory
+cd ${PLUGIN_DIR}
 rm -rf ${TEMP_DIR}
