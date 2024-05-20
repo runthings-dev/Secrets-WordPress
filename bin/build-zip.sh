@@ -12,20 +12,22 @@ if [[ $(basename "$PLUGIN_DIR") == "bin" ]]; then
 fi
 
 # Run makepot.sh to generate/update translation files
-echo "Running makepot.sh..."
+echo "Running makepot.sh to generate/update translation files..."
 if ! ./bin/makepot.sh; then
   echo "Error: makepot.sh failed."
   exit 1
 fi
 
 # Create the build directory if it doesn't exist
+echo "Creating build directory..."
 mkdir -p ${PLUGIN_DIR}/build
 
 # Create a temporary directory to stage the files to be zipped
 TEMP_DIR=$(mktemp -d)
+echo "Created temporary directory at ${TEMP_DIR}"
 
 # Copy all files to the temporary directory, excluding the patterns in .distignore
-echo "Copying files to temporary directory..."
+echo "Copying files to temporary directory, excluding patterns in .distignore..."
 if ! rsync -av --exclude-from=${PLUGIN_DIR}/.distignore ${PLUGIN_DIR}/ ${TEMP_DIR}/; then
   echo "Error: rsync failed."
   rm -rf ${TEMP_DIR}
@@ -45,4 +47,8 @@ echo "Zip file created at ./build/${PLUGINSLUG}.zip"
 
 # Clean up the temporary directory
 cd ${PLUGIN_DIR}
+echo "Cleaning up temporary directory..."
 rm -rf ${TEMP_DIR}
+echo "Temporary directory cleaned up."
+
+echo "Build completed successfully."
