@@ -25,7 +25,12 @@ mkdir -p ${PLUGIN_DIR}/build
 TEMP_DIR=$(mktemp -d)
 
 # Copy all files to the temporary directory, excluding the patterns in .distignore
-rsync -av --exclude-from=${PLUGIN_DIR}/.distignore ${PLUGIN_DIR}/ ${TEMP_DIR}/
+echo "Copying files to temporary directory..."
+if ! rsync -av --exclude-from=${PLUGIN_DIR}/.distignore ${PLUGIN_DIR}/ ${TEMP_DIR}/; then
+  echo "Error: rsync failed."
+  rm -rf ${TEMP_DIR}
+  exit 1
+fi
 
 # Create the zip file from the temporary directory
 cd ${TEMP_DIR}
