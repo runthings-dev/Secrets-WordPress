@@ -3,6 +3,8 @@
 node_modules/
 tests/
 build/
+.distignore
+.gitignore
 
 # Ignore documentation files
 README.md
