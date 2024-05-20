@@ -12,7 +12,11 @@ if [[ $(basename "$PLUGIN_DIR") == "bin" ]]; then
 fi
 
 # Run makepot.sh to generate/update translation files
-./bin/makepot.sh
+echo "Running makepot.sh..."
+if ! ./bin/makepot.sh; then
+  echo "Error: makepot.sh failed."
+  exit 1
+fi
 
 # Create the build directory if it doesn't exist
 mkdir -p ${PLUGIN_DIR}/build
