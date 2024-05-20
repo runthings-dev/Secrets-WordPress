@@ -19,11 +19,10 @@ check_tool rsync
 check_tool zip
 check_tool mktemp
 
-# Check if the script is being run from the bin directory
-if [[ $(basename "$PLUGIN_DIR") == "bin" ]]; then
-  echo "Error: This script should not be run from the bin directory."
-  echo "Usage: Run the script from the plugin's root directory."
-  echo "Example: ./bin/build-zip.sh"
+# Check if the script is being run from the root directory of the plugin
+if [[ ! -f "${PLUGIN_DIR}/${PLUGINSLUG}.php" ]]; then
+  echo "Error: This script should be run from the root directory of the plugin."
+  echo "Make sure you are in the ${PLUGINSLUG} directory and run the script as ./bin/build-zip.sh"
   exit 1
 fi
 
