@@ -6,6 +6,19 @@ BUILD_DIR="${PLUGIN_DIR}/build"
 DISTIGNORE="${PLUGIN_DIR}/.distignore"
 MAKEPOT_SCRIPT="${PLUGIN_DIR}/bin/makepot.sh"
 
+# Function to check for required tools
+check_tool() {
+  if ! command -v $1 &> /dev/null; then
+    echo "Error: $1 is not installed."
+    exit 1
+  fi
+}
+
+# Check for required tools
+check_tool rsync
+check_tool zip
+check_tool mktemp
+
 # Check if the script is being run from the bin directory
 if [[ $(basename "$PLUGIN_DIR") == "bin" ]]; then
   echo "Error: This script should not be run from the bin directory."
