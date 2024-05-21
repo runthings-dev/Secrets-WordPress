@@ -37,6 +37,12 @@ fi
 echo "Creating build directory..."
 mkdir -p ${BUILD_DIR}
 
+# Remove the existing zip file if it exists
+if [[ -f "${BUILD_DIR}/${PLUGINSLUG}.zip" ]]; then
+  echo "Removing existing zip file ${BUILD_DIR}/${PLUGINSLUG}.zip..."
+  rm -f "${BUILD_DIR}/${PLUGINSLUG}.zip"
+fi
+
 # Create a temporary directory to stage the files to be zipped
 TEMP_DIR=$(mktemp -d)
 echo "Created temporary directory at ${TEMP_DIR}"
