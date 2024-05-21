@@ -1,6 +1,6 @@
 === RunThings Secrets ===
 Contributors: runthingsdev
-Tags: secrets, passwords, encryption, secure sharing, block
+Tags: secure sharing, private links, temporary links, time-limited access, URL sharing
 Requires at least: 6.2
 Tested up to: 6.5
 Requires PHP: 7.2
