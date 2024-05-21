@@ -112,6 +112,12 @@ Remember, the timezone setting not only affects the display of dates in the "Add
 
 # Changelog
 
+## 1.4.0 - 21st May 2024
+
+- Implemented dev tooling - `./bin/makepot.sh`
+- Implemented dev tooling - `./bin/build-zip.sh`
+- Replaced po and mo files with pot file
+
 ## 1.3.0 - 1st May 2024
 
 - Update author meta field to be in line with WordPress Directory user name
