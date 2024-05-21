@@ -130,6 +130,23 @@ Plugin Icon - Secret by Side Project, on Noun Project, from https://thenounproje
 4. Settings
 5. Advanced Settings and Statistics
 
+== Upgrade Notice ==
+
+= 1.4.0 =
+This update includes new developer tooling scripts and replaces po and mo files with a pot file. Please update to ensure continued compatibility and take advantage of the new features.
+
+= 1.3.0 =
+Updated author meta field, cron schedule, and various template versions. Enhancements to the secret-created and view-secret templates, timezone handling, and added new features. Update for better security and new functionalities.
+
+= 1.2.0 =
+Implemented optional rate limiting, improved internationalization, added new date formatting options, and template version checks. Important security fixes and performance improvements.
+
+= 1.1.0 =
+Added tooltips on copy to clipboard buttons. A minor update focusing on enhancing user experience.
+
+= 1.0.0 =
+Initial public release. Includes basic functionality for secure sharing of secrets with time-limited URLs.
+
 == Changelog ==
 
 = 1.4.0 - 21st May 2024 =
