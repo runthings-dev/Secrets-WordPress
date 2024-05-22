@@ -81,7 +81,19 @@ class runthings_secrets_Rate_Limit_Settings
             'runthings-secrets',
             'runthings_secrets_rate_limit_section'
         );
-        register_setting('runthings-secrets-settings', 'runthings_secrets_rate_limit_exemption_roles', 'array');
+        register_setting('runthings-secrets-settings', 'runthings_secrets_rate_limit_exemption_roles', [
+            'type' => 'array',
+            'sanitize_callback' => [$this, 'sanitize_exempt_roles']
+        ]);
+    }
+
+    public function sanitize_exempt_roles($input)
+    {
+        if (!is_array($input)) {
+            return [];
+        }
+
+        return array_map('sanitize_text_field', $input);
     }
 
     private function add_rate_limit_setting($renderer, $label)
@@ -145,6 +157,10 @@ class runthings_secrets_Rate_Limit_Settings
     public function rate_limit_exemption_roles_callback()
     {
         $exempt_roles = get_option('runthings_secrets_rate_limit_exemption_roles', []);
+        if (!is_array($exempt_roles)) {
+            $exempt_roles = [];
+        }
+
         global $wp_roles;
         $all_roles = $wp_roles->roles;
 

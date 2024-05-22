@@ -98,7 +98,7 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
         private function is_user_role_exempt()
         {
             $exempt_roles = get_option('runthings_secrets_rate_limit_exemption_roles', []);
-            if (empty($exempt_roles)) {
+            if (!is_array($exempt_roles) || empty($exempt_roles)) {
                 return false;
             }
 
