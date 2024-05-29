@@ -6,7 +6,7 @@ Tested up to: 6.5
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 
 Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 
