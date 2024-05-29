@@ -6,7 +6,7 @@ Tested up to: 6.5
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 
 Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 
@@ -132,6 +132,9 @@ Plugin Icon - Secret by Side Project, on Noun Project, from https://thenounproje
 
 == Upgrade Notice ==
 
+= 1.4.1 =
+This update fixes a bug that broke the blocks.
+
 = 1.4.0 =
 This update includes new developer tooling scripts and replaces po and mo files with a pot file. Please update to ensure continued compatibility and take advantage of the new features.
 
@@ -148,6 +151,9 @@ Added tooltips on copy to clipboard buttons. A minor update focusing on enhancin
 Initial public release. Includes basic functionality for secure sharing of secrets with time-limited URLs.
 
 == Changelog ==
+
+= 1.4.1 - 29th May 2024 =
+* Bugfix - build script was excluding json files eg block.json and broke the blocks
 
 = 1.4.0 - 21st May 2024 =
 * Implemented dev tooling - ./bin/makepot.sh

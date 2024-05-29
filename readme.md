@@ -112,6 +112,10 @@ Remember, the timezone setting not only affects the display of dates in the "Add
 
 # Changelog
 
+## 1.4.1 - 29th May 2024
+
+- Bugfix - build script was excluding json files eg block.json and broke the blocks
+
 ## 1.4.0 - 21st May 2024
 
 - Implemented dev tooling - `./bin/makepot.sh`
