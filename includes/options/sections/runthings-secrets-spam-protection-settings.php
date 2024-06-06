@@ -133,7 +133,7 @@ class runthings_secrets_Spam_Protection_Settings
     public function recaptcha_score_callback()
     {
         $recaptcha_score = get_option('runthings_secrets_recaptcha_score', 0.5);
-        echo '<input type="text" class="regular-text" name="runthings_secrets_recaptcha_score" value="' . esc_attr($recaptcha_score) . '" />';
+        echo '<input type="number" step="0.01" min="0" max="1" class="regular-text" name="runthings_secrets_recaptcha_score" value="' . esc_attr($recaptcha_score) . '" />';
         echo '<p class="description">' . esc_html__('Set the reCAPTCHA v3 score threshold (0 to 1). A lower value is less strict, a higher value is more strict.', 'runthings-secrets') . '</p>';
     }
 

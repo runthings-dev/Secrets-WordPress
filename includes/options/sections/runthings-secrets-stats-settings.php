@@ -40,9 +40,9 @@ class runthings_secrets_Stats_Settings
 
     public function stats_section_callback()
     {
-        $total_views_count = get_option('runthings_secrets_stats_total_views', 0);
-        $total_secrets_count = get_option('runthings_secrets_stats_total_secrets', 0);
-        $secrets_in_database = $this->get_secrets_in_database();
+        $total_views_count = intval(get_option('runthings_secrets_stats_total_views', 0));
+        $total_secrets_count = intval(get_option('runthings_secrets_stats_total_secrets', 0));
+        $secrets_in_database = intval($this->get_secrets_in_database());
 ?>
         <table class="form-table" role="presentation">
             <tbody>

@@ -36,7 +36,7 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
          */
         public function handle_action($renderer)
         {
-            if (!in_array($renderer, $this->allowed_renderers)) {
+            if (!in_array($renderer, $this->allowed_renderers, true)) {
                 wp_die(
                     esc_html__('Invalid renderer specified.', 'runthings-secrets'),
                     esc_html__('Invalid Request', 'runthings-secrets'),
@@ -60,7 +60,7 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
          */
         private function check_rate_limit($renderer)
         {
-            $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enable', 1);
+            $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enabled', 1);
 
             if (!$rate_limit_enabled) {
                 return;
@@ -71,13 +71,21 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
                 return;
             }
 
-            $option_name = 'runthings_secrets_rate_limit_tries_' . $renderer;
+            $option_name = 'runthings_secrets_rate_limit_tries_' . sanitize_key($renderer);
             $max_attempts = get_option($option_name, 10);
 
-            $user_ip = $_SERVER['REMOTE_ADDR'];
+            $user_ip = $this->get_user_ip();
+            if (!$user_ip) {
+                wp_die(
+                    esc_html__('Unable to determine your IP address.', 'runthings-secrets'),
+                    esc_html__('Error', 'runthings-secrets'),
+                    400
+                );
+            }
+
             $salt = wp_salt('nonce');
             $hashed_ip = hash('sha256', $user_ip . $salt);
-            $transient_key = 'runthings_secrets_' . $renderer . '_attempts_' . $hashed_ip;
+            $transient_key = 'runthings_secrets_' . sanitize_key($renderer) . '_attempts_' . $hashed_ip;
             $attempts = get_transient($transient_key);
 
             if ($attempts >= $max_attempts) {
@@ -93,6 +101,18 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
         }
 
         /**
+         * Get the user's IP address from REMOTE_ADDR
+         * Don't use other headers as they can be spoofed.
+         */
+        private function get_user_ip()
+        {
+            if (isset($_SERVER['REMOTE_ADDR'])) {
+                return sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+            }
+            return null;
+        }
+
+        /**
          * Check if the current user's role is one of the exempt roles.
          */
         private function is_user_role_exempt()
@@ -104,7 +124,7 @@ if (!class_exists('runthings_secrets_Rate_Limit')) {
 
             $current_user = wp_get_current_user();
             foreach ($current_user->roles as $role) {
-                if (in_array($role, $exempt_roles)) {
+                if (in_array($role, $exempt_roles, true)) {
                     return true;
                 }
             }

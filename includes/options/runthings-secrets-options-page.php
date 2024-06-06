@@ -32,12 +32,12 @@ class runthings_secrets_Options_Page
 {
     public function __construct()
     {
-        $pages_settings = new runthings_secrets_Pages_Settings();
-        $spam_protection_settings = new runthings_secrets_Spam_Protection_Settings();
-        $rate_limit_settings = new runthings_secrets_Rate_Limit_Settings();
-        $advanced_settings = new runthings_secrets_Advanced_Settings();
-        $encryption_settings = new runthings_secrets_Encryption_Settings();
-        $stats_settings = new runthings_secrets_Stats_Settings();
+        new runthings_secrets_Pages_Settings();
+        new runthings_secrets_Spam_Protection_Settings();
+        new runthings_secrets_Rate_Limit_Settings();
+        new runthings_secrets_Advanced_Settings();
+        new runthings_secrets_Encryption_Settings();
+        new runthings_secrets_Stats_Settings();
 
         add_action('admin_menu', [$this, 'options_page']);
         add_action('admin_footer', [$this, 'admin_footer']);
@@ -72,6 +72,11 @@ class runthings_secrets_Options_Page
 
     public function admin_footer()
     {
+        $screen = get_current_screen();
+        if ($screen->id !== 'settings_page_runthings-secrets') {
+            return;
+        }
+
     ?>
         <style>
             .wp-core-ui .button.danger-button {

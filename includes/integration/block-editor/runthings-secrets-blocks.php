@@ -24,15 +24,13 @@ if (!defined('WPINC')) {
 class runthings_secrets_Blocks_Integration
 {
     private $plugin_version;
-
     private $add_renderer;
     private $created_renderer;
     private $view_renderer;
 
     public function __construct($plugin_version, $add_renderer, $created_renderer, $view_renderer)
     {
-        $this->plugin_version = $plugin_version;
-
+        $this->plugin_version = sanitize_text_field($plugin_version);
         $this->add_renderer = $add_renderer;
         $this->created_renderer = $created_renderer;
         $this->view_renderer = $view_renderer;
@@ -44,28 +42,28 @@ class runthings_secrets_Blocks_Integration
     public function register_blocks()
     {
         if (!function_exists('register_block_type')) {
-            // block editor is not available
+            // Block editor is not available
             return;
         }
 
         register_block_type(
             plugin_dir_path(__FILE__) . 'add-secret/block.json',
             array(
-                'render_callback' => array($this->add_renderer, "render"),
+                'render_callback' => array($this->add_renderer, 'render'),
             )
         );
 
         register_block_type(
             plugin_dir_path(__FILE__) . 'secret-created/block.json',
             array(
-                'render_callback' => array($this->created_renderer, "render"),
+                'render_callback' => array($this->created_renderer, 'render'),
             )
         );
 
         register_block_type(
             plugin_dir_path(__FILE__) . 'view-secret/block.json',
             array(
-                'render_callback' => array($this->view_renderer, "render"),
+                'render_callback' => array($this->view_renderer, 'render'),
             )
         );
     }
@@ -77,7 +75,7 @@ class runthings_secrets_Blocks_Integration
             plugins_url('add-secret/block-add-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
             $this->plugin_version,
-            false, // not $in_footer as block editor needs early access to the script
+            false // Not $in_footer as block editor needs early access to the script
         );
 
         wp_enqueue_script(
@@ -85,7 +83,7 @@ class runthings_secrets_Blocks_Integration
             plugins_url('secret-created/block-secret-created.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
             $this->plugin_version,
-            false, // not $in_footer as block editor needs early access to the script
+            false // Not $in_footer as block editor needs early access to the script
         );
 
         wp_enqueue_script(
@@ -93,7 +91,7 @@ class runthings_secrets_Blocks_Integration
             plugins_url('view-secret/block-view-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
             $this->plugin_version,
-            false, // not $in_footer as block editor needs early access to the script
+            false // Not $in_footer as block editor needs early access to the script
         );
     }
 }

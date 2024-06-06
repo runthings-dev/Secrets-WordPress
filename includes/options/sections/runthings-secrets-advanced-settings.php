@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 if (!defined('WPINC')) {
     die;
 }
@@ -31,11 +32,11 @@ class runthings_secrets_Advanced_Settings
 
     public function delete_all_secrets_check()
     {
-        $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : null;
-        $action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : null;
+        $page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : null;
+        $action = isset($_GET['action']) ? sanitize_text_field(wp_unslash($_GET['action'])) : null;
 
         if ($page === 'runthings-secrets' && $action === 'delete_all_secrets') {
-            if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'delete_all_secrets_action')) {
+            if (!isset($_GET['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'delete_all_secrets_action')) {
                 wp_die('Security check failed');
             }
 
@@ -99,15 +100,17 @@ class runthings_secrets_Advanced_Settings
         register_setting(
             'runthings-secrets-settings',
             'runthings_secrets_enqueue_form_styles',
-            array(
+            [
                 'type' => 'boolean',
-                'default' => 1
-            )
+                'default' => 1,
+                'sanitize_callback' => 'rest_sanitize_boolean'
+            ]
         );
     }
 
     public function enqueue_advanced_section_callback()
     {
+        // Empty callback
     }
 
     public function enqueue_stylesheet_callback()

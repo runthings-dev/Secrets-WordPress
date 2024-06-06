@@ -29,7 +29,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
         public function __construct($plugin_version)
         {
-            $this->plugin_version = $plugin_version;
+            $this->plugin_version = sanitize_text_field($plugin_version);
 
             include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
@@ -45,7 +45,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
             // Disabling nonce verification due to the long-lived nature of public access links.
             // This code uses GUID-based security with rate limiting to handle threats.
-            $uuid = isset($_GET['secret']) ? sanitize_text_field($_GET['secret']) : null;
+            $uuid = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
             $secret = $this->manage->get_secret($uuid);
@@ -65,7 +65,7 @@ if (!class_exists('runthings_secrets_View_Secret')) {
 
             $data = array(
                 "secret" => $secret,
-                "timezone" => $timezone,
+                "timezone" => esc_html($timezone),
                 "copy_to_clipboard_icon" => $copy_icon,
                 "copy_to_clipboard_icon_allowed_html" => $copy_icon_allowed_html,
             );
@@ -77,14 +77,14 @@ if (!class_exists('runthings_secrets_View_Secret')) {
             return ob_get_clean();
         }
 
-        public function handle_error($error)
+        private function handle_error($error)
         {
             $template = new runthings_secrets_Template_Loader();
 
             ob_start();
 
             $data = array(
-                "error_message" => $error->get_error_message()
+                "error_message" => esc_html($error->get_error_message())
             );
 
             $template

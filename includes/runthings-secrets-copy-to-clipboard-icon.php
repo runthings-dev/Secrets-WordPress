@@ -34,14 +34,17 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
                 WP_Filesystem();
                 global $wp_filesystem;
 
-                $asset_output = $wp_filesystem->get_contents($asset_path);
-
-                if (false === $asset_output) {
-                    error_log('Failed to read file contents from: ' . $asset_path);
+                if ($wp_filesystem->exists($asset_path)) {
+                    $asset_output = $wp_filesystem->get_contents($asset_path);
+                    if (false === $asset_output) {
+                        error_log('Failed to read file contents from: ' . esc_url($asset_path));
+                    }
+                } else {
+                    error_log('File does not exist: ' . esc_url($asset_path));
                 }
             } else {
                 $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
-                $asset_output = '<img src="' . esc_url($asset_url) . '" alt="" />';
+                $asset_output = '<img src="' . esc_url($asset_url) . '" alt="' . esc_attr(__('Copy to clipboard', 'runthings-secrets')) . '" />';
             }
 
             return apply_filters('runthings_secrets_copy_to_clipboard_icon', $asset_output, $context, $embed);

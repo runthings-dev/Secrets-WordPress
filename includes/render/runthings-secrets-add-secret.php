@@ -29,7 +29,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
         public function __construct($plugin_version)
         {
-            $this->plugin_version = $plugin_version;
+            $this->plugin_version = sanitize_text_field($plugin_version);
 
             include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
@@ -54,10 +54,10 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             ob_start();
 
             $data = array(
-                "default_expiration" => $default_expiration_local->format('Y-m-d'),
-                "default_max_views" => $default_max_views,
-                "minimum_date" => $minimum_date_local->format('Y-m-d'),
-                "timezone" => $timezone,
+                "default_expiration" => esc_attr($default_expiration_local->format('Y-m-d')),
+                "default_max_views" => esc_attr($default_max_views),
+                "minimum_date" => esc_attr($minimum_date_local->format('Y-m-d')),
+                "timezone" => esc_attr($timezone),
             );
 
             $template
@@ -73,7 +73,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 return;
             }
 
-            if (!wp_verify_nonce($_POST['runthings_secrets_add_nonce'], 'runthings_secrets_add')) {
+            if (!isset($_POST['runthings_secrets_add_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['runthings_secrets_add_nonce'])), 'runthings_secrets_add')) {
                 return;
             }
 
@@ -88,8 +88,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 $created_page_url = get_permalink($created_page_id);
 
                 if ($created_page_url !== false) {
-                    $redirect_url = add_query_arg('secret', $uuid, $created_page_url);
-                    wp_redirect($redirect_url);
+                    $redirect_url = add_query_arg('secret', urlencode($uuid), $created_page_url);
+                    wp_redirect(esc_url_raw($redirect_url));
                     exit;
                 }
             }
@@ -110,12 +110,12 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $recaptcha_private_key = get_option('runthings_secrets_recaptcha_private_key');
 
             if ($recaptcha_enabled && !empty($recaptcha_public_key) && !empty($recaptcha_private_key)) {
-                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $recaptcha_public_key, [], $this->plugin_version, true);
+                wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . esc_attr($recaptcha_public_key), [], $this->plugin_version, true);
 
                 wp_add_inline_script(
                     'google-recaptcha',
                     'grecaptcha.ready(function() {
-                        grecaptcha.execute("' . $recaptcha_public_key . '", {
+                        grecaptcha.execute("' . esc_js($recaptcha_public_key) . '", {
                             action: "add_secret"
                         }).then(function(token) {
                             document.getElementById("recaptcha_token").value = token;
@@ -130,9 +130,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Nonce already checked in handle_form_submit()
             // DO NOT SANITIZE SECRET - it is encrypted and stored as is, and displayed safely at the end with esc_html
-            $secret = is_string($_POST['secret']) ? $_POST['secret'] : '';
-            $expiration_local = sanitize_text_field($_POST['expiration']);
-            $max_views = intval($_POST['max_views']);
+            $secret = isset($_POST['secret']) && is_string($_POST['secret']) ? $_POST['secret'] : '';
+            $expiration_local = isset($_POST['expiration']) ? sanitize_text_field(wp_unslash($_POST['expiration'])) : '';
+            $max_views = isset($_POST['max_views']) ? intval($_POST['max_views']) : 5;
             // phpcs:enable WordPress.Security.NonceVerification.Missing
 
             $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
@@ -159,7 +159,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Nonce already checked in handle_form_submit()
-            $recaptcha_token = $_POST['recaptcha_token'];
+            $recaptcha_token = isset($_POST['recaptcha_token']) ? sanitize_text_field(wp_unslash($_POST['recaptcha_token'])) : '';
             // phpcs:enable WordPress.Security.NonceVerification.Missing
 
             $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
@@ -171,7 +171,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
             if (!is_wp_error($response)) {
                 $response_body = json_decode(wp_remote_retrieve_body($response), true);
-                $score_threshold = get_option('runthings_secrets_recaptcha_score', 0.5);
+                $score_threshold = floatval(get_option('runthings_secrets_recaptcha_score', 0.5));
                 if ($response_body['success'] && $response_body['score'] >= $score_threshold) {
                     return true;
                 } else {

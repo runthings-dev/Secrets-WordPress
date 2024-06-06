@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 if (!defined('WPINC')) {
     die;
 }
@@ -28,7 +29,6 @@ class runthings_secrets_Pages_Settings
         add_action('admin_notices', [$this, 'admin_notices']);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('admin_init', [$this, 'settings_init']);
-        add_action('admin_footer', [$this, 'admin_footer']);
     }
 
     public function admin_notices()
@@ -36,6 +36,7 @@ class runthings_secrets_Pages_Settings
         $add_secret_page = get_option('runthings_secrets_add_page');
         $created_secret_page = get_option('runthings_secrets_created_page');
         $view_secret_page = get_option('runthings_secrets_view_page');
+
         if (empty($add_secret_page) || empty($created_secret_page) || empty($view_secret_page)) {
             $settings_page_url = admin_url('options-general.php?page=runthings-secrets');
             echo '<div class="notice notice-warning"><p>' . sprintf(
@@ -49,12 +50,22 @@ class runthings_secrets_Pages_Settings
         }
     }
 
-    public function admin_enqueue_scripts()
+    public function admin_enqueue_scripts($hook)
     {
-        wp_enqueue_style('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/css/select2.min.css', [], '4.0.13');
-        wp_enqueue_script('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/js/select2.min.js', ['jquery'], '4.0.13', true);
-    }
+        if ('settings_page_runthings-secrets' !== $hook) {
+            return;
+        }
 
+        if (!wp_script_is('select2', 'registered')) {
+            wp_register_style('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/select2.min.css', [], '4.0.13');
+            wp_register_script('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/select2.min.js', ['jquery'], '4.0.13', true);
+        }
+
+        wp_enqueue_style('select2');
+        wp_enqueue_script('select2');
+
+        wp_add_inline_script('select2', 'jQuery(function($) { $(".runthings-secrets-select2").select2(); });');
+    }
 
     public function settings_init()
     {
@@ -120,7 +131,7 @@ class runthings_secrets_Pages_Settings
         echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
-            $selected = ($add_page_id == $page->ID) ? 'selected="selected"' : '';
+            $selected = selected($add_page_id, $page->ID, false);
             echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
@@ -133,7 +144,7 @@ class runthings_secrets_Pages_Settings
         echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
-            $selected = ($created_page_id == $page->ID) ? 'selected="selected"' : '';
+            $selected = selected($created_page_id, $page->ID, false);
             echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
@@ -146,20 +157,9 @@ class runthings_secrets_Pages_Settings
         echo '<option value="">' . esc_html__('(no page selected)', 'runthings-secrets') . '</option>';
         $pages = get_pages();
         foreach ($pages as $page) {
-            $selected = ($view_page_id == $page->ID) ? 'selected="selected"' : '';
+            $selected = selected($view_page_id, $page->ID, false);
             echo '<option value="' . esc_attr($page->ID) . '" ' . esc_attr($selected) . '>' . esc_html($page->post_title) . '</option>';
         }
         echo '</select>';
-    }
-
-    public function admin_footer()
-    {
-?>
-        <script>
-            jQuery(document).ready(function($) {
-                $('.runthings-secrets-select2').select2();
-            });
-        </script>
-<?php
     }
 }

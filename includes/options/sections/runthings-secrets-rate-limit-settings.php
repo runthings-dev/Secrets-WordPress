@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 if (!defined('WPINC')) {
     die;
 }
@@ -40,7 +41,6 @@ class runthings_secrets_Rate_Limit_Settings
         $this->add_rate_limits_settings();
         $this->add_role_exemption_settings();
     }
-
 
     private function add_rate_limits_settings()
     {
@@ -123,7 +123,7 @@ class runthings_secrets_Rate_Limit_Settings
     public function rate_limit_enable_callback()
     {
         $rate_limit_enabled = get_option('runthings_secrets_rate_limit_enabled', 1);
-        echo '<input type="checkbox" id="runthings_secrets_rate_limit_enabled" name="runthings_secrets_rate_limit_enabled" value="1" ' . checked(1, $rate_limit_enabled, false) . '/>';
+        echo '<input type="checkbox" id="runthings_secrets_rate_limit_enabled" name="runthings_secrets_rate_limit_enabled" value="1" ' . checked(1, $rate_limit_enabled, false) . ' />';
         echo '<label for="runthings_secrets_rate_limit_enabled">' . esc_html__('Enable rate limiting', 'runthings-secrets') . '</label>';
     }
 
@@ -150,7 +150,7 @@ class runthings_secrets_Rate_Limit_Settings
     public function rate_limit_exemption_enable_callback()
     {
         $exemption_enabled = get_option('runthings_secrets_rate_limit_exemption_enabled', 0);
-        echo '<input type="checkbox" id="runthings_secrets_rate_limit_exemption_enabled" name="runthings_secrets_rate_limit_exemption_enabled" value="1" ' . checked(1, $exemption_enabled, false) . '/>';
+        echo '<input type="checkbox" id="runthings_secrets_rate_limit_exemption_enabled" name="runthings_secrets_rate_limit_exemption_enabled" value="1" ' . checked(1, $exemption_enabled, false) . ' />';
         echo '<label for="runthings_secrets_rate_limit_exemption_enabled">' . esc_html__('Enable rate limit exemptions for selected roles', 'runthings-secrets') . '</label>';
     }
 
@@ -166,7 +166,7 @@ class runthings_secrets_Rate_Limit_Settings
 
         foreach ($all_roles as $role_key => $role_info) {
             $checked = in_array($role_key, $exempt_roles) ? 'checked' : '';
-            echo '<input type="checkbox" id="exempt_role_' . esc_attr($role_key) . '" name="runthings_secrets_rate_limit_exemption_roles[]" value="' . esc_attr($role_key) . '" ' . esc_attr($checked) . '/>';
+            echo '<input type="checkbox" id="exempt_role_' . esc_attr($role_key) . '" name="runthings_secrets_rate_limit_exemption_roles[]" value="' . esc_attr($role_key) . '" ' . esc_attr($checked) . ' />';
             echo '<label for="exempt_role_' . esc_attr($role_key) . '">' . esc_html($role_info['name']) . '</label><br />';
         }
     }

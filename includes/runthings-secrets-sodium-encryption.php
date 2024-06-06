@@ -78,7 +78,6 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             echo '</div>';
         }
 
-
         public function key_not_defined_notice()
         {
             $options_page_url = admin_url('options-general.php?page=runthings-secrets');
@@ -91,7 +90,6 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
                 esc_url($options_page_url)
             ) . '</p></div>';
         }
-
 
         public function encrypt($plaintext)
         {
@@ -126,14 +124,12 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
         public function get_key_method()
         {
             if (defined('RUNTHINGS_SECRETS_ENCRYPTION_KEY')) {
-                $key_method = __('Using define() method', 'runthings-secrets');
-            } else if (get_option('runthings_secrets_encryption_key')) {
-                $key_method = __('Internal encryption key', 'runthings-secrets');
+                return __('Using define() method', 'runthings-secrets');
+            } elseif (get_option('runthings_secrets_encryption_key')) {
+                return __('Internal encryption key', 'runthings-secrets');
             } else {
-                $key_method = __('ERROR: No key found', 'runthings-secrets');
+                return __('ERROR: No key found', 'runthings-secrets');
             }
-
-            return $key_method;
         }
 
         public function generate_and_store_key()

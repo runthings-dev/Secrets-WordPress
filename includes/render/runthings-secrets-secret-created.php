@@ -29,7 +29,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
         public function __construct($plugin_version)
         {
-            $this->plugin_version = $plugin_version;
+            $this->plugin_version = sanitize_text_field($plugin_version);
 
             include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
@@ -45,7 +45,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
             // Disabling nonce verification due to the long-lived nature of public access links.
             // This code uses GUID-based security with rate limiting to handle threats.
-            $uuid = isset($_GET['secret']) ? sanitize_text_field($_GET['secret']) : null;
+            $uuid = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
             $secret = $this->manage->get_secret_meta($uuid);
@@ -58,7 +58,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             // Generate the viewing URL.
             $view_page_id = get_option('runthings_secrets_view_page');
-            $viewing_url = get_permalink($view_page_id) . '?secret=' . $secret->uuid;
+            $viewing_url = add_query_arg('secret', $secret->uuid, get_permalink($view_page_id));
 
             $copy_link_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('link-icon', true);
             $copy_link_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('link-icon');
@@ -72,8 +72,8 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             $data = array(
                 "secret" => $secret,
-                "timezone" => $timezone,
-                "viewing_url" => $viewing_url,
+                "timezone" => esc_html($timezone),
+                "viewing_url" => esc_url($viewing_url),
                 "copy_to_clipboard_link_icon" => $copy_link_icon,
                 "copy_to_clipboard_link_icon_allowed_html" => $copy_link_icon_allowed_html,
                 "copy_to_clipboard_snippet_icon" => $copy_snippet_icon,
@@ -94,7 +94,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             ob_start();
 
             $data = array(
-                "error_message" => $error->get_error_message()
+                "error_message" => esc_html($error->get_error_message())
             );
 
             $template

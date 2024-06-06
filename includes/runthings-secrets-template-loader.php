@@ -17,11 +17,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 if (!defined('WPINC')) {
 	die;
 }
 
-include RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
+// Ensure the Gamajo_Template_Loader class is included
+if (!class_exists('Gamajo_Template_Loader')) {
+	include RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
+}
 
 if (!class_exists('runthings_secrets_Template_Loader')) {
 	class runthings_secrets_Template_Loader extends Gamajo_Template_Loader
@@ -30,7 +34,7 @@ if (!class_exists('runthings_secrets_Template_Loader')) {
 		 * Prefix for filter names.
 		 *
 		 * @since 1.0.0
-		 * @type string
+		 * @var string
 		 */
 		protected $filter_prefix = 'runthings_secrets';
 
@@ -38,7 +42,7 @@ if (!class_exists('runthings_secrets_Template_Loader')) {
 		 * Directory name where custom templates for this plugin should be found in the theme.
 		 *
 		 * @since 1.0.0
-		 * @type string
+		 * @var string
 		 */
 		protected $theme_template_directory = 'runthings-secrets';
 
@@ -46,8 +50,8 @@ if (!class_exists('runthings_secrets_Template_Loader')) {
 		 * Reference to the root directory path of this plugin.
 		 *
 		 * @since 1.0.0
-		 * @type string
+		 * @var string
 		 */
-		protected $plugin_directory = WP_PLUGIN_DIR . '/runthings-secrets';
+		protected $plugin_directory = RUNTHINGS_SECRETS_PLUGIN_DIR;
 	}
 }
