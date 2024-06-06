@@ -11,8 +11,9 @@
  * When this occurs the version of the template file will be bumped and the 
  * readme will list any important changes.
  *
- * @version 1.2.0
+ * @version 1.3.0
  */
+if (!defined('ABSPATH')) exit; // Exit if accessed directly 
 
 $viewing_snippet = sprintf(
     /* translators: %1$s: Viewing URL, %2$s: Days left, %3$s: Views left */

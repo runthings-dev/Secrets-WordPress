@@ -11,8 +11,9 @@
  * When this occurs the version of the template file will be bumped and the 
  * readme will list any important changes.
  *
- * @version 1.2.0
+ * @version 1.3.0
  */
+if (!defined('ABSPATH')) exit; // Exit if accessed directly 
 ?>
 <form method="post" class="add-secret-form">
     <?php wp_nonce_field('runthings_secrets_add', 'runthings_secrets_add_nonce'); ?>

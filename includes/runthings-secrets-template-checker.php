@@ -28,10 +28,10 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
          * Array of templates and their current versions.
          */
         private $plugin_templates = array(
-            'add-secret-form.php' => '1.2.0',
-            'error.php' => '1.1.0',
-            'secret-created.php' => '1.2.0',
-            'view-secret.php' => '1.2.0',
+            'add-secret-form.php' => '1.3.0',
+            'error.php' => '1.2.0',
+            'secret-created.php' => '1.3.0',
+            'view-secret.php' => '1.3.0',
         );
 
         public function __construct()
