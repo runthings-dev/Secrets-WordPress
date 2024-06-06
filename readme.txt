@@ -122,6 +122,20 @@ Copy To Clipboard - SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-c
 
 Plugin Icon - Secret by Side Project, on Noun Project, from https://thenounproject.com/browse/icons/term/secret/ (CC BY 3.0)
 
+= Third-Party Services =
+
+This plugin uses the following third-party service:
+
+### Google reCAPTCHA v3
+
+This plugin relies on Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
+
+- **Service URL:** [Google reCAPTCHA](https://www.google.com/recaptcha)
+- **Terms of Use:** [Google reCAPTCHA Terms of Use](https://www.google.com/recaptcha/terms)
+- **Privacy Policy:** [Google Privacy Policy](https://policies.google.com/privacy)
+
+When you enable reCAPTCHA in the plugin settings, it will send user data, such as the user's IP address and any data entered in the reCAPTCHA widget, to Google for verification.
+
 == Screenshots ==
 
 1. Add Secret

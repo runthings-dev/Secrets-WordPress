@@ -110,6 +110,20 @@ The timezone displayed in the "Add Secret" form is set to match your WordPress s
 
 Remember, the timezone setting not only affects the display of dates in the "Add Secret" form but also how the expiration dates are processed within the plugin.
 
+# Third-Party Services
+
+This plugin uses the following third-party service:
+
+## Google reCAPTCHA v3
+
+This plugin relies on Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
+
+- **Service URL:** [Google reCAPTCHA](https://www.google.com/recaptcha)
+- **Terms of Use:** [Google reCAPTCHA Terms of Use](https://www.google.com/recaptcha/terms)
+- **Privacy Policy:** [Google Privacy Policy](https://policies.google.com/privacy)
+
+When you enable reCAPTCHA in the plugin settings, it will send user data, such as the user's IP address and other data, to Google for verification.
+
 # Changelog
 
 ## 1.4.1 - 29th May 2024
