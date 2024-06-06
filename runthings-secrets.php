@@ -39,16 +39,16 @@ define('RUNTHINGS_SECRETS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES', plugin_dir_path(__FILE__) . "includes/");
 define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
+define('RUNTHINGS_SECRETS_PLUGIN_VERSION', '1.4.1');
+
 class runthings_secrets_Plugin
 {
-    const VERSION = '1.4.1';
-
     protected static $single_instance = null;
 
     protected function __construct()
     {
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/runthings-secrets-integration.php';
-        new runthings_secrets_Integration(self::VERSION);
+        new runthings_secrets_Integration();
 
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
 

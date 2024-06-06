@@ -24,13 +24,10 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Secret_Created')) {
     class runthings_secrets_Secret_Created
     {
-        private $plugin_version;
         private $manage;
 
-        public function __construct($plugin_version)
+        public function __construct()
         {
-            $this->plugin_version = sanitize_text_field($plugin_version);
-
             include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
             $this->manage = new runthings_secrets_Manage();
         }
@@ -107,22 +104,22 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
         public function enqueue_styles()
         {
             $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy.css';
-            wp_enqueue_style('tippy', $tippy_url, array(), $this->plugin_version, 'all');
+            wp_enqueue_style('tippy', $tippy_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
 
             $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/runthings-secrets.css';
-            wp_enqueue_style('runthings-secrets-styles', $style_url, array(), $this->plugin_version, 'all');
+            wp_enqueue_style('runthings-secrets-styles', $style_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
         }
 
         public function enqueue_scripts()
         {
             $popper_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/popper.min.js';
-            wp_enqueue_script('popper', $popper_url, array(), $this->plugin_version, true);
+            wp_enqueue_script('popper', $popper_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy-bundle.umd.min.js';
-            wp_enqueue_script('tippy', $tippy_url, array('popper'), $this->plugin_version, true);
+            wp_enqueue_script('tippy', $tippy_url, array('popper'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
-            wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), $this->plugin_version, true);
+            wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_options = array(
                 'i18n' => array(

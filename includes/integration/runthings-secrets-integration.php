@@ -23,17 +23,13 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Integration
 {
-    private $plugin_version;
-
-    public function __construct($plugin_version)
+    public function __construct()
     {
-        $this->plugin_version = sanitize_text_field($plugin_version);
-
         // Create renderers
         $this->include_renderers();
-        $add_secret = new runthings_secrets_Add_Secret($this->plugin_version);
-        $secret_created = new runthings_secrets_Secret_Created($this->plugin_version);
-        $view_secret = new runthings_secrets_View_Secret($this->plugin_version);
+        $add_secret = new runthings_secrets_Add_Secret();
+        $secret_created = new runthings_secrets_Secret_Created();
+        $view_secret = new runthings_secrets_View_Secret();
 
         // Integrate shortcodes
         $this->include_shortcodes($add_secret, $secret_created, $view_secret);
@@ -61,7 +57,7 @@ class runthings_secrets_Integration
     private function include_blocks($add_secret, $secret_created, $view_secret)
     {
         include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/block-editor/runthings-secrets-blocks.php';
-        new runthings_secrets_Blocks_Integration($this->plugin_version, $add_secret, $secret_created, $view_secret);
+        new runthings_secrets_Blocks_Integration($add_secret, $secret_created, $view_secret);
     }
 
     // Placeholder for future Elementor integration

@@ -23,14 +23,12 @@ if (!defined('WPINC')) {
 
 class runthings_secrets_Blocks_Integration
 {
-    private $plugin_version;
     private $add_renderer;
     private $created_renderer;
     private $view_renderer;
 
-    public function __construct($plugin_version, $add_renderer, $created_renderer, $view_renderer)
+    public function __construct($add_renderer, $created_renderer, $view_renderer)
     {
-        $this->plugin_version = sanitize_text_field($plugin_version);
         $this->add_renderer = $add_renderer;
         $this->created_renderer = $created_renderer;
         $this->view_renderer = $view_renderer;
@@ -74,7 +72,7 @@ class runthings_secrets_Blocks_Integration
             'runthings-secrets-block-add',
             plugins_url('add-secret/block-add-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            $this->plugin_version,
+            RUNTHINGS_SECRETS_PLUGIN_VERSION,
             false // Not $in_footer as block editor needs early access to the script
         );
 
@@ -82,7 +80,7 @@ class runthings_secrets_Blocks_Integration
             'runthings-secrets-block-created',
             plugins_url('secret-created/block-secret-created.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            $this->plugin_version,
+            RUNTHINGS_SECRETS_PLUGIN_VERSION,
             false // Not $in_footer as block editor needs early access to the script
         );
 
@@ -90,7 +88,7 @@ class runthings_secrets_Blocks_Integration
             'runthings-secrets-block-view',
             plugins_url('view-secret/block-view-secret.js', __FILE__),
             array('wp-blocks', 'wp-editor'),
-            $this->plugin_version,
+            RUNTHINGS_SECRETS_PLUGIN_VERSION,
             false // Not $in_footer as block editor needs early access to the script
         );
     }
