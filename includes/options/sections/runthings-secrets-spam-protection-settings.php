@@ -100,9 +100,19 @@ class runthings_secrets_Spam_Protection_Settings
 
     public function spam_protection_section_callback()
     {
-        echo '<p>' . esc_html__('Protect your secrets from spam by enabling reCAPTCHA v3.', 'runthings-secrets') . '</p>';
+        echo '<p>' . esc_html__('Protect your secrets from spam by enabling Google reCAPTCHA v3.', 'runthings-secrets') . '</p>';
         echo '<p>' . wp_kses(
             __('Get your reCAPTCHA v3 keys <a target="_blank" href="https://www.google.com/recaptcha/admin/create">here</a>.', 'runthings-secrets'),
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'target' => array()
+                )
+            )
+        ) . '</p>';
+
+        echo '<p>' . wp_kses(
+            __('Note: When you enable Google reCAPTCHA, it will send user data, such as the user\'s IP address and other data, to Google for verification. <a href="https://www.google.com/recaptcha" target="_blank">Google reCAPTCHA</a>, <a href="https://www.google.com/recaptcha/terms" target="_blank">Google reCAPTCHA Terms of Use</a>, <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.', 'runthings-secrets'),
             array(
                 'a' => array(
                     'href' => array(),

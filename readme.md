@@ -116,7 +116,7 @@ This plugin uses the following third-party service:
 
 ## Google reCAPTCHA v3
 
-This plugin relies on Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
+This plugin can make use of Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
 
 - **Service URL:** [Google reCAPTCHA](https://www.google.com/recaptcha)
 - **Terms of Use:** [Google reCAPTCHA Terms of Use](https://www.google.com/recaptcha/terms)
