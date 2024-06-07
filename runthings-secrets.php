@@ -175,7 +175,7 @@ class runthings_secrets_Plugin
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
 
-        add_option('runthings_secrets_db_version', self::VERSION);
+        add_option('runthings_secrets_db_version', RUNTHINGS_SECRETS_PLUGIN_VERSION, '', 'no');
     }
 
     private function activate_options()
