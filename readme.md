@@ -126,6 +126,12 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 # Changelog
 
+## 1.5.0 - 7th June 2024
+
+- Full review of plugin to enhance data validation and security
+- Add third-party services section to the readme and admin panel
+- Prevent direct access to template files, bumping version numbers up
+
 ## 1.4.1 - 29th May 2024
 
 - Bugfix - build script was excluding json files eg block.json and broke the blocks
