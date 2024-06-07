@@ -161,6 +161,8 @@ class runthings_secrets_Plugin
         $table_name = $wpdb->prefix . 'runthings_secrets';
         $charset_collate = $wpdb->get_charset_collate();
 
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        // Charset cannot be passed in with %s placeholder because it wraps it in single quotes and creates a sql syntax error
         $sql = $wpdb->prepare("CREATE TABLE %i (
             id int(11) NOT NULL AUTO_INCREMENT,
             uuid varchar(255) NOT NULL,
@@ -170,7 +172,8 @@ class runthings_secrets_Plugin
             expiration datetime NOT NULL,
             created_at datetime NOT NULL,
             PRIMARY KEY  (id)
-          ) %s;", $table_name, $charset_collate);
+          ) $charset_collate;", $table_name);
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
