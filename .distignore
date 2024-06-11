@@ -6,10 +6,6 @@ build/
 .distignore
 .gitignore
 
-# Ignore documentation files
-README.md
-*.txt
-
 # Ignore configuration files
 *.yml
 *.lock
