@@ -126,6 +126,10 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 # Changelog
 
+# 1.5.1 - 7th June 2024
+
+- Add readme files back into the release archive.
+
 ## 1.5.0 - 7th June 2024
 
 - Full review of plugin to enhance data validation and security

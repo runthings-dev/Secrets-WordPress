@@ -146,6 +146,9 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 == Upgrade Notice ==
 
+= 1.5.1 =
+This update adds the documentation back into the archive.
+
 = 1.5.0 =
 This update integrates feedback for the WordPress Plugin Directory submission.
 
@@ -168,6 +171,9 @@ Added tooltips on copy to clipboard buttons. A minor update focusing on enhancin
 Initial public release. Includes basic functionality for secure sharing of secrets with time-limited URLs.
 
 == Changelog ==
+
+= 1.5.1 - 7th June 2024 =
+* Add readme files back into the release archive.
 
 = 1.5.0 - 7th June 2024 =
 * Full review of plugin to enhance data validation and security
