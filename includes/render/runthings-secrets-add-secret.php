@@ -95,7 +95,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
         public function maybe_enqueue_form_styles()
         {
             if (get_option('runthings_secrets_enqueue_form_styles', 1) == 1) {
-                $style_url = plugins_url('/runthings-secrets/css/add-secret-form.css');
+                $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/add-secret-form.css';
                 wp_enqueue_style('add-secret-form-styles', $style_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
             }
         }
