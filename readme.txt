@@ -6,7 +6,7 @@ Tested up to: 6.5
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.5.1
+Stable tag: 1.6.0
 
 Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 
@@ -146,6 +146,9 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 == Upgrade Notice ==
 
+= 1.6.0 =
+This update fixes a hardcoded path bug
+
 = 1.5.1 =
 This update adds the documentation back into the archive.
 
@@ -171,6 +174,9 @@ Added tooltips on copy to clipboard buttons. A minor update focusing on enhancin
 Initial public release. Includes basic functionality for secure sharing of secrets with time-limited URLs.
 
 == Changelog ==
+
+= 1.6.0 - 9th July 2024 =
+* Bugfix - Remove hardcoded plugin folder name
 
 = 1.5.1 - 7th June 2024 =
 * Add readme files back into the release archive.
