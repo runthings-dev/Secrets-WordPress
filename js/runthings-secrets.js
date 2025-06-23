@@ -1,9 +1,9 @@
-const copyToClipboardButtons = document.querySelectorAll('.copy-to-clipboard');
+const copyToClipboardButtons = document.querySelectorAll(".copy-to-clipboard");
 
 copyToClipboardButtons.forEach((button) => {
   const tooltip = tippy(button, {
     content: runthings_secrets.i18n.copyToClipboard,
-    trigger: 'mouseenter focus', // Trigger on hover and focus
+    trigger: "mouseenter focus", // Trigger on hover and focus
     hideOnClick: false,
     interactive: true,
     duration: [250, 0],
@@ -12,7 +12,7 @@ copyToClipboardButtons.forEach((button) => {
     },
   });
 
-  button.addEventListener('click', function (event) {
+  button.addEventListener("click", function (event) {
     event.preventDefault();
     const dataItemInput = button.previousElementSibling;
     dataItemInput.select();
@@ -22,13 +22,13 @@ copyToClipboardButtons.forEach((button) => {
         .writeText(dataItemInput.value)
         .then(() => handleCopySuccess())
         .catch((err) => {
-          console.error('Failed to copy text: ', err);
+          console.error("Failed to copy text: ", err);
         });
     } else {
       // Fallback for older browsers
-      document.execCommand('copy')
+      document.execCommand("copy")
         ? handleCopySuccess()
-        : console.error('Failed to copy text');
+        : console.error("Failed to copy text");
     }
   });
 
@@ -42,10 +42,27 @@ copyToClipboardButtons.forEach((button) => {
   }
 });
 
-const dataItemInputs = document.querySelectorAll('.rs-data-item');
+const dataItemInputs = document.querySelectorAll(".rs-data-item");
 
 dataItemInputs.forEach((input) => {
-  input.addEventListener('mousedown', (event) => {
+  input.addEventListener("mousedown", (event) => {
     event.preventDefault(); // Prevent focus
   });
+});
+
+const textareas = document.querySelectorAll(".rs-view-data-item");
+
+const resizeTextarea = (ta) => {
+  ta.style.height = "auto";
+  ta.style.height = `${ta.scrollHeight}px`;
+};
+
+textareas.forEach((ta) => {
+  ta.style.overflow = "hidden";
+  ta.addEventListener("input", () => resizeTextarea(ta));
+  resizeTextarea(ta);
+});
+
+window.addEventListener("resize", () => {
+  textareas.forEach(resizeTextarea);
 });

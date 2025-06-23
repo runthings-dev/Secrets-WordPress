@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 ?>
 <p><?php esc_html_e('Your secret is:', 'runthings-secrets'); ?></p>
 <div class="rs-data-container">
-    <textarea class="view-secret rs-data-item" rows="2" readonly><?php echo esc_html($context->secret->secret); ?></textarea>
+    <textarea class="view-secret rs-view-data-item" rows="2" readonly><?php echo esc_html($context->secret->secret); ?></textarea>
     <button class="copy-to-clipboard" title="<?php esc_attr_e('Copy to clipboard', 'runthings-secrets'); ?>">
         <?php echo wp_kses($context->copy_to_clipboard_icon, $context->copy_to_clipboard_icon_allowed_html); ?>
     </button>
