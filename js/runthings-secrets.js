@@ -70,9 +70,12 @@ window.addEventListener("resize", () => {
 // Date validation for add secret form
 document.addEventListener("DOMContentLoaded", function () {
   const expirationInput = document.querySelector('input[name="expiration"]');
-  const warningMessage = document.querySelector(".expiration-warning");
+  const expirationWarning = document.querySelector(".expiration-warning");
+  const maxViewsInput = document.querySelector('input[name="max_views"]');
+  const maxViewsWarning = document.querySelector(".max-views-warning");
 
-  if (expirationInput && warningMessage) {
+  // Expiration date validation
+  if (expirationInput && expirationWarning) {
     // Function to check if date is more than 6 months in the future
     function checkExpirationDate() {
       const selectedDate = new Date(expirationInput.value);
@@ -80,9 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
       sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
 
       if (selectedDate > sixMonthsFromNow) {
-        warningMessage.style.display = "block";
+        expirationWarning.style.display = "block";
       } else {
-        warningMessage.style.display = "none";
+        expirationWarning.style.display = "none";
       }
     }
 
@@ -93,6 +96,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check on page load if there's already a value
     if (expirationInput.value) {
       checkExpirationDate();
+    }
+  }
+
+  // Max views validation
+  if (maxViewsInput && maxViewsWarning) {
+    // Function to check if view count is high (more than 25)
+    function checkMaxViews() {
+      const viewCount = parseInt(maxViewsInput.value);
+
+      if (viewCount > 25) {
+        maxViewsWarning.style.display = "block";
+      } else {
+        maxViewsWarning.style.display = "none";
+      }
+    }
+
+    // Check on input change
+    maxViewsInput.addEventListener("change", checkMaxViews);
+    maxViewsInput.addEventListener("input", checkMaxViews);
+
+    // Check on page load if there's already a value
+    if (maxViewsInput.value) {
+      checkMaxViews();
     }
   }
 });

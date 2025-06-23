@@ -34,7 +34,10 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     </div>
     <div class="form-row">
         <label for="max_views"><?php esc_html_e('Maximum number of views:', 'runthings-secrets'); ?></label>
-        <input type="number" name="max_views" min="1" max="10" required value="<?php echo esc_attr($context->default_max_views); ?>">
+        <input type="number" name="max_views" min="1" required value="<?php echo esc_attr($context->default_max_views); ?>">
+        <div class="max-views-warning" style="display: none;">
+            <?php esc_html_e('Warning: High view counts increase the risk of unauthorized access. Consider if this many views are really necessary.', 'runthings-secrets'); ?>
+        </div>
     </div>
     <div>
         <input type="hidden" name="recaptcha_token" id="recaptcha_token">
