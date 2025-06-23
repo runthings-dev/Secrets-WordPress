@@ -40,6 +40,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             do_action('runthings_secrets_check_rate_limit', 'add');
 
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_styles']);
+            add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_scripts']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
             $default_expiration_local = new DateTime('+7 days', new DateTimeZone(wp_timezone_string()));
@@ -121,6 +122,20 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                     });'
                 );
             }
+        }
+
+        public function maybe_enqueue_form_scripts()
+        {
+            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
+            wp_enqueue_script('runthings-secrets-script', $script_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+
+            $script_options = array(
+                'i18n' => array(
+                    'expirationWarning' => __('Consider setting a shorter expiration date. It\'s better to keep expiration dates just long enough to share with the recipient.', 'runthings-secrets')
+                )
+            );
+
+            wp_localize_script('runthings-secrets-script', 'runthings_secrets', $script_options);
         }
 
         private function create_secret()

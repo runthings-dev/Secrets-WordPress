@@ -66,3 +66,33 @@ textareas.forEach((ta) => {
 window.addEventListener("resize", () => {
   textareas.forEach(resizeTextarea);
 });
+
+// Date validation for add secret form
+document.addEventListener("DOMContentLoaded", function () {
+  const expirationInput = document.querySelector('input[name="expiration"]');
+  const warningMessage = document.querySelector(".expiration-warning");
+
+  if (expirationInput && warningMessage) {
+    // Function to check if date is more than 6 months in the future
+    function checkExpirationDate() {
+      const selectedDate = new Date(expirationInput.value);
+      const sixMonthsFromNow = new Date();
+      sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+
+      if (selectedDate > sixMonthsFromNow) {
+        warningMessage.style.display = "block";
+      } else {
+        warningMessage.style.display = "none";
+      }
+    }
+
+    // Check on input change
+    expirationInput.addEventListener("change", checkExpirationDate);
+    expirationInput.addEventListener("input", checkExpirationDate);
+
+    // Check on page load if there's already a value
+    if (expirationInput.value) {
+      checkExpirationDate();
+    }
+  }
+});
