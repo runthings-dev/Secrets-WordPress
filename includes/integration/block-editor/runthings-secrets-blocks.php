@@ -1,4 +1,5 @@
 <?php
+
 /*
 Secrets by runthings.dev
 
@@ -24,7 +25,9 @@ if (!defined('WPINC')) {
 class runthings_secrets_Blocks_Integration
 {
     private $add_renderer;
+
     private $created_renderer;
+
     private $view_renderer;
 
     public function __construct($add_renderer, $created_renderer, $view_renderer)

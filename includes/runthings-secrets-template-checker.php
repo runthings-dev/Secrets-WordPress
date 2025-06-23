@@ -1,4 +1,5 @@
 <?php
+
 /*
 Secrets by runthings.dev
 
@@ -112,7 +113,7 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
 
             // Make sure we catch CR-only line endings.
             $file_data = str_replace("\r", "\n", $file_data);
-            $version   = '';
+            $version = '';
 
             if (preg_match('/^[ \t\/*#@]*' . preg_quote('@version', '/') . '(.*)$/mi', $file_data, $match) && $match[1]) {
                 $version = _cleanup_header_comment($match[1]);

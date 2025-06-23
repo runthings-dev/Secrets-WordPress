@@ -153,7 +153,6 @@ class runthings_secrets_Plugin
         }
     }
 
-
     private function activate_database()
     {
         global $wpdb;
