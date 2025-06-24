@@ -170,13 +170,13 @@ Plugin Icon - Secret by Side Project, on Noun Project, from https://thenounproje
 
 This plugin uses the following third-party service:
 
-### Google reCAPTCHA v3
+**Google reCAPTCHA v3**
 
 This plugin can make use of Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
 
-- **Service URL:** [Google reCAPTCHA](https://www.google.com/recaptcha)
-- **Terms of Use:** [Google reCAPTCHA Terms of Use](https://www.google.com/recaptcha/terms)
-- **Privacy Policy:** [Google Privacy Policy](https://policies.google.com/privacy)
+- Service URL: https://www.google.com/recaptcha
+- Terms of Use: https://www.google.com/recaptcha/terms
+- Privacy Policy: https://policies.google.com/privacy
 
 When you enable reCAPTCHA in the plugin settings, it will send user data, such as the user's IP address and any data entered in the reCAPTCHA widget, to Google for verification.
 
