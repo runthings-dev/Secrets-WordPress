@@ -170,6 +170,20 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 # Changelog
 
+## 1.7.0 - 24th June 2025
+
+- Add autogrow on view secret and secret created pages
+- Allow selecting partial text in the view secret textarea
+- Bump view-secret and add-secret-form templates version to 1.4.0
+- Bugfix - Single quote was being escaped in secret output
+- Show warning if expiration date more than six months in the future
+- Show warning if view count allows more than 25 views
+- Added filter - expiration warning visibility filter as `runthings_secrets_show_expiration_warning` to allow disabling the expiration date warning
+- Added filter - max views warning visibility filter as `runthings_secrets_show_max_views_warning` to allow disabling the max views warning
+- Added filter - expiration warning date filter as `runthings_secrets_expiration_warning_date` to allow customizing the expiration warning threshold
+- Added filter - max views warning threshold filter as `runthings_secrets_max_views_warning_threshold` to allow customizing the max views warning threshold
+- Bump tested up to 6.8
+
 ## 1.6.0 - 9th July 2024
 
 - Bugfix - Remove hardcoded plugin folder name
