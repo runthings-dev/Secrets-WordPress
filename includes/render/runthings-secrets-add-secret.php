@@ -78,7 +78,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
 
         public function handle_form_submit()
         {
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
                 return;
             }
 
@@ -153,7 +153,9 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Nonce already checked in handle_form_submit()
             // DO NOT SANITIZE SECRET - it is encrypted and stored as is, and displayed safely at the end with esc_html
+            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $secret = isset($_POST['secret']) && is_string($_POST['secret']) ? wp_unslash($_POST['secret']) : '';
+            // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $expiration_local = isset($_POST['expiration']) ? sanitize_text_field(wp_unslash($_POST['expiration'])) : '';
             $max_views = isset($_POST['max_views']) ? intval($_POST['max_views']) : 5;
             // phpcs:enable WordPress.Security.NonceVerification.Missing

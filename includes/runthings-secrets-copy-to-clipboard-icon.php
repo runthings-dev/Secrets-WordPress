@@ -38,14 +38,22 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
                 if ($wp_filesystem->exists($asset_path)) {
                     $asset_output = $wp_filesystem->get_contents($asset_path);
                     if (false === $asset_output) {
-                        error_log('Failed to read file contents from: ' . esc_url($asset_path));
+                        // File exists but couldn't be read, fallback to img tag
+                        $asset_output = '';
                     }
                 } else {
-                    error_log('File does not exist: ' . esc_url($asset_path));
+                    // File doesn't exist, fallback to img tag
+                    $asset_output = '';
                 }
-            } else {
+            }
+
+            // If we don't have SVG content (either embed=false or file read failed), create img tag
+            if (empty($asset_output)) {
                 $asset_url = plugin_dir_url(__FILE__) . 'assets/copy-icon.svg';
+                // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+                // This is a plugin asset, not a media library attachment, so wp_get_attachment_image() is not applicable
                 $asset_output = '<img src="' . esc_url($asset_url) . '" alt="' . esc_attr(__('Copy to clipboard', 'runthings-secrets')) . '" />';
+                // phpcs:enable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
             }
 
             return apply_filters('runthings_secrets_copy_to_clipboard_icon', $asset_output, $context, $embed);
