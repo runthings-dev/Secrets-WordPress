@@ -101,7 +101,26 @@ If you have access to it, some web servers can also support setting up rate limi
 
 # Validation Warnings
 
-The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These can be disabled using WordPress filters:
+The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These warnings can be customized or disabled using WordPress filters:
+
+**Customize expiration warning date (default: 6 months from now):**
+
+```php
+add_filter('runthings_secrets_expiration_warning_date', function() {
+    // Show warning for dates more than 3 months in the future
+    $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
+    $warning_date->add(new DateInterval('P3M'));
+    return $warning_date->format('Y-m-d');
+});
+```
+
+**Customize max views warning threshold (default: 25 views):**
+
+```php
+add_filter('runthings_secrets_max_views_warning_threshold', function() {
+    return 10; // Show warning for more than 10 views
+});
+```
 
 **Disable expiration date warning:**
 
