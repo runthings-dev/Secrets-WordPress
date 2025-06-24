@@ -48,6 +48,14 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             $minimum_date_local = new DateTime('+1 days', new DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 
+            // Calculate validation thresholds
+            $max_views_warning_threshold = apply_filters('runthings_secrets_max_views_warning_threshold', 25);
+
+            // Calculate the default warning date (6 months from now) and allow filtering
+            $default_warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
+            $default_warning_date->add(new DateInterval('P6M'));
+            $expiration_warning_date_string = apply_filters('runthings_secrets_expiration_warning_date', $default_warning_date->format('Y-m-d'));
+
             $template = new runthings_secrets_Template_Loader();
 
             ob_start();
@@ -57,6 +65,8 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 "default_max_views" => esc_attr($default_max_views),
                 "minimum_date" => esc_attr($minimum_date_local->format('Y-m-d')),
                 "timezone" => esc_attr($timezone),
+                "expiration_warning_date" => esc_attr($expiration_warning_date_string),
+                "max_views_warning_threshold" => esc_attr($max_views_warning_threshold),
             );
 
             $template

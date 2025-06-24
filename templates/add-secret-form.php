@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
                                     esc_html__('Expiration date (Timezone: %s):', 'runthings-secrets'),
                                     esc_html($context->timezone)
                                 ); ?></label>
-        <input type="date" name="expiration" required min="<?php echo esc_attr($context->minimum_date); ?>" value="<?php echo esc_attr($context->default_expiration); ?>">
+        <input type="date" name="expiration" required min="<?php echo esc_attr($context->minimum_date); ?>" value="<?php echo esc_attr($context->default_expiration); ?>" data-warning-date="<?php echo esc_attr($context->expiration_warning_date); ?>">
         <?php if (apply_filters('runthings_secrets_show_expiration_warning', true)): ?>
         <div class="expiration-warning" style="display: none;">
             <?php esc_html_e('Warning: This expiration date is more than 6 months away. For better security, consider setting a shorter timeframe.', 'runthings-secrets'); ?>
@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     </div>
     <div class="form-row">
         <label for="max_views"><?php esc_html_e('Maximum number of views:', 'runthings-secrets'); ?></label>
-        <input type="number" name="max_views" min="1" required value="<?php echo esc_attr($context->default_max_views); ?>">
+        <input type="number" name="max_views" min="1" required value="<?php echo esc_attr($context->default_max_views); ?>" data-warning-threshold="<?php echo esc_attr($context->max_views_warning_threshold); ?>">
         <?php if (apply_filters('runthings_secrets_show_max_views_warning', true)): ?>
         <div class="max-views-warning" style="display: none;">
             <?php esc_html_e('Warning: High view counts increase the risk of unauthorized access. Consider if this many views are really necessary.', 'runthings-secrets'); ?>

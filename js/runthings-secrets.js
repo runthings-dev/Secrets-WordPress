@@ -76,17 +76,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Expiration date validation
   if (expirationInput) {
-    // Function to check if date is more than 6 months in the future
+    // Function to check if date exceeds the warning threshold
     function checkExpirationDate() {
       if (!expirationWarning) {
         return; // Exit if warning element doesn't exist
       }
 
       const selectedDate = new Date(expirationInput.value);
-      const sixMonthsFromNow = new Date();
-      sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6);
+      const warningDate = new Date(expirationInput.dataset.warningDate);
 
-      if (selectedDate > sixMonthsFromNow) {
+      if (selectedDate > warningDate) {
         expirationWarning.style.display = "block";
       } else {
         expirationWarning.style.display = "none";
@@ -105,15 +104,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Max views validation
   if (maxViewsInput) {
-    // Function to check if view count is high (more than 25)
+    // Function to check if view count exceeds the warning threshold
     function checkMaxViews() {
       if (!maxViewsWarning) {
         return; // Exit if warning element doesn't exist
       }
 
       const viewCount = parseInt(maxViewsInput.value);
+      const warningThreshold = parseInt(maxViewsInput.dataset.warningThreshold);
 
-      if (viewCount > 25) {
+      if (viewCount > warningThreshold) {
         maxViewsWarning.style.display = "block";
       } else {
         maxViewsWarning.style.display = "none";
