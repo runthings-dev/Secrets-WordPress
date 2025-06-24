@@ -99,6 +99,22 @@ This is for advanced setups, where you might want to provide your own brute forc
 
 If you have access to it, some web servers can also support setting up rate limiting via their config files, which would remove the overhead of WordPress loading for each bot request.
 
+= How can I disable the validation warnings? =
+
+The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These can be disabled using WordPress filters:
+
+**Disable expiration date warning:**
+`add_filter('runthings_secrets_show_expiration_warning', '__return_false');`
+
+**Disable max views warning:**
+`add_filter('runthings_secrets_show_max_views_warning', '__return_false');`
+
+**Disable both warnings:**
+`add_filter('runthings_secrets_show_expiration_warning', '__return_false');`
+`add_filter('runthings_secrets_show_max_views_warning', '__return_false');`
+
+Add these lines to your theme's `functions.php` file or a custom plugin.
+
 = How can I change the timezone displayed in the "Add Secret" form? =
 
 The timezone displayed in the "Add Secret" form is set to match your WordPress site's timezone settings. To change the displayed timezone, follow these steps:
