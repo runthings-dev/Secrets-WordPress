@@ -1,14 +1,19 @@
 #!/bin/bash
 
-PLUGIN_DIR=$(pwd)
-PLUGINSLUG="runthings-secrets"
+# Version: 2.1.0
+
+PLUGIN_DIR="$(pwd)"
+PLUGINSLUG="$(basename "$PLUGIN_DIR")"
 BUILD_DIR="${PLUGIN_DIR}/build"
 DISTIGNORE="${PLUGIN_DIR}/.distignore"
-MAKEPOT_SCRIPT="${PLUGIN_DIR}/bin/makepot.sh"
+LANG_DIR="languages"
+POT_FILE="$LANG_DIR/$PLUGINSLUG.pot"
+
+# That's all, stop editing! Happy building.
 
 # Function to check for required tools
 check_tool() {
-  if ! command -v $1 &> /dev/null; then
+  if ! command -v "$1" &> /dev/null; then
     echo "Error: $1 is not installed."
     exit 1
   fi
@@ -18,6 +23,7 @@ check_tool() {
 check_tool rsync
 check_tool zip
 check_tool mktemp
+check_tool wp
 
 # Check if the script is being run from the root directory of the plugin
 if [[ ! -f "${PLUGIN_DIR}/${PLUGINSLUG}.php" ]]; then
@@ -26,16 +32,16 @@ if [[ ! -f "${PLUGIN_DIR}/${PLUGINSLUG}.php" ]]; then
   exit 1
 fi
 
-# Run makepot.sh to generate/update translation files
-echo "Running makepot.sh to generate/update translation files..."
-if ! ${MAKEPOT_SCRIPT}; then
-  echo "Error: makepot.sh failed."
+# Generate the .pot file
+echo "Generating .pot file..."
+if ! wp i18n make-pot . "$POT_FILE" --domain="$PLUGINSLUG"; then
+  echo "Error: Failed to generate .pot file."
   exit 1
 fi
 
 # Create the build directory if it doesn't exist
 echo "Creating build directory..."
-mkdir -p ${BUILD_DIR}
+mkdir -p "${BUILD_DIR}"
 
 # Remove the existing zip file if it exists
 if [[ -f "${BUILD_DIR}/${PLUGINSLUG}.zip" ]]; then
@@ -44,7 +50,7 @@ if [[ -f "${BUILD_DIR}/${PLUGINSLUG}.zip" ]]; then
 fi
 
 # Create a temporary directory to stage the files to be zipped
-TEMP_DIR=$(mktemp -d)
+TEMP_DIR="$(mktemp -d)"
 echo "Created temporary directory at ${TEMP_DIR}"
 
 # Function to clean up the temporary directory
@@ -59,21 +65,21 @@ trap cleanup EXIT
 
 # Copy all files to the temporary directory, excluding the patterns in .distignore
 echo "Copying files to temporary directory, excluding patterns in .distignore..."
-if ! rsync -av --exclude-from=${DISTIGNORE} ${PLUGIN_DIR}/ ${TEMP_DIR}/; then
+if ! rsync -av --exclude-from="${DISTIGNORE}" "${PLUGIN_DIR}/" "${TEMP_DIR}/"; then
   echo "Error: rsync failed."
   exit 1
 fi
 
 # Create the zip file from the temporary directory
-cd ${TEMP_DIR}
+cd "${TEMP_DIR}"
 echo "Creating zip file..."
-if ! zip -r ${BUILD_DIR}/${PLUGINSLUG}.zip .; then
+if ! zip -r "${BUILD_DIR}/${PLUGINSLUG}.zip" .; then
   echo "Error: zip failed."
   exit 1
 fi
 echo "Zip file created at ${BUILD_DIR}/${PLUGINSLUG}.zip"
 
 # Clean up the temporary directory
-cd ${PLUGIN_DIR}
+cd "${PLUGIN_DIR}"
 
 echo "Build completed successfully."
