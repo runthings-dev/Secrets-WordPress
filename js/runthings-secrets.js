@@ -50,7 +50,9 @@ dataItemInputs.forEach((input) => {
   });
 });
 
-const textareas = document.querySelectorAll(".rs-view-data-item");
+const textareas = document.querySelectorAll(
+  ".rs-view-data-item, .rs-data-item"
+);
 
 const resizeTextarea = (ta) => {
   ta.style.height = "auto";
