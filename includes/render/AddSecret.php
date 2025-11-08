@@ -141,6 +141,7 @@ class AddSecret
             // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $expiration_local = isset($_POST['expiration']) ? sanitize_text_field(wp_unslash($_POST['expiration'])) : '';
             $max_views = isset($_POST['max_views']) ? intval($_POST['max_views']) : 5;
+            $allow_delete = isset($_POST['allow_delete']) && $_POST['allow_delete'] === '1';
             // phpcs:enable WordPress.Security.NonceVerification.Missing
 
             $recaptcha_enabled = get_option('runthings_secrets_recaptcha_enabled');
@@ -158,7 +159,7 @@ class AddSecret
                 }
             }
 
-            return $this->view_manager->add_secret($secret, $max_views, $expiration_local);
+            return $this->view_manager->add_secret($secret, $max_views, $expiration_local, $allow_delete);
         }
 
         private function verify_recaptcha_token()

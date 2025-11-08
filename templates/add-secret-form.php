@@ -11,7 +11,7 @@
  * When this occurs the version of the template file will be bumped and the 
  * readme will list any important changes.
  *
- * @version 1.4.0
+ * @version 1.5.0
  */
 if (!defined('ABSPATH')) exit; // Exit if accessed directly 
 ?>
@@ -42,6 +42,13 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
             <?php esc_html_e('Warning: High view counts increase the risk of unauthorized access. Consider if this many views are really necessary.', 'runthings-secrets'); ?>
         </div>
         <?php endif; ?>
+    </div>
+    <div class="form-row form-row-checkbox">
+        <label>
+            <input type="checkbox" name="allow_delete" value="1" checked>
+            <?php esc_html_e('Allow manual deletion of this secret', 'runthings-secrets'); ?>
+            <span class="help-tip" title="<?php esc_attr_e('When enabled, you can manually delete this secret before it expires. When disabled, the secret can only be removed by expiration or reaching maximum views.', 'runthings-secrets'); ?>">?</span>
+        </label>
     </div>
     <div>
         <input type="hidden" name="recaptcha_token" id="recaptcha_token">
