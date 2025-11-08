@@ -19,27 +19,27 @@ class Secrets
         /**
          * Get secret data from database
          *
-         * @param string $uuid The secret UUID
+         * @param string $id The secret ID
          * @param string $context 'view' to decrypt secret and increment views, 'created' for metadata only
          * @return object|WP_Error Secret object or WP_Error on failure
          */
-        public function get_secret($uuid, $context = 'view')
+        public function get_secret($id, $context = 'view')
         {
-            if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $uuid)) {
-                return new \WP_Error('invalid_uuid_format', __("Invalid UUID format.", 'runthings-secrets'));
+            if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $id)) {
+                return new \WP_Error('invalid_secret_id', __("Invalid secret ID.", 'runthings-secrets'));
             }
 
             global $wpdb;
             $table_name = $wpdb->prefix . 'runthings_secrets';
 
-            $cache_key = 'secret_' . $uuid;
+            $cache_key = 'secret_' . $id;
             $cache_group = 'runthings_secrets';
 
             $secret = wp_cache_get($cache_key, $cache_group);
             if (!$secret) {
                 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
                 // Direct query is required as only way to access custom table data
-                $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $uuid));
+                $secret = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE uuid = %s", $table_name, $id));
                 // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
                 if (!$secret) {

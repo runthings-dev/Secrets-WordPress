@@ -26,10 +26,10 @@ class SecretCreated
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
             // Disabling nonce verification due to the long-lived nature of public access links.
             // This code uses GUID-based security with rate limiting to handle threats.
-            $uuid = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
+            $id = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-            $secret = $this->view_manager->get_secret_meta($uuid);
+            $secret = $this->view_manager->get_secret_meta($id);
 
             if (is_wp_error($secret)) {
                 return $this->handle_error($secret);

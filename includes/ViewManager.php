@@ -16,14 +16,14 @@ class ViewManager
         $this->secrets = new Secrets();
     }
 
-    public function get_secret($uuid)
+    public function get_secret($id)
     {
-        return $this->secrets->get_secret($uuid, 'view');
+        return $this->secrets->get_secret($id, 'view');
     }
 
-    public function get_secret_meta($uuid)
+    public function get_secret_meta($id)
     {
-        return $this->secrets->get_secret($uuid, 'created');
+        return $this->secrets->get_secret($id, 'created');
     }
 
     public function add_secret($secret, $max_views, $expiration_local)
