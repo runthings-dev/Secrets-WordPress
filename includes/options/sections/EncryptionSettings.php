@@ -6,7 +6,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
 
 class EncryptionSettings
 {

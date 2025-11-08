@@ -49,17 +49,17 @@ class Plugin
 
     protected function __construct()
     {
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/Integration.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/Integration.php';
         new \RunthingsSecrets\Integration\Integration();
 
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/OptionsPage.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/OptionsPage.php';
 
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'Activation.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'CopyToClipboardIcon.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'DatabaseMigration.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'RateLimit.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateChecker.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateLoader.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'Activation.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'CopyToClipboardIcon.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'DatabaseMigration.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'RateLimit.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateChecker.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateLoader.php';
     }
 
     public static function get_instance()

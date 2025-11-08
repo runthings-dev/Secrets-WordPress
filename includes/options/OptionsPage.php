@@ -6,12 +6,12 @@ if (!defined('WPINC')) {
     die;
 }
 
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/PagesSettings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/SpamProtectionSettings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/RateLimitSettings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/AdvancedSettings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/StatsSettings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/EncryptionSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/PagesSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/SpamProtectionSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/RateLimitSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/AdvancedSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/StatsSettings.php';
+include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/EncryptionSettings.php';
 
 class OptionsPage
 {

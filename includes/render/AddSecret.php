@@ -12,7 +12,7 @@ class AddSecret
 
     public function __construct()
     {
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
         $this->view_manager = new \RunthingsSecrets\ViewManager();
 
             add_action('template_redirect', [$this, 'handle_form_submit']);
