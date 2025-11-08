@@ -1,10 +1,12 @@
 <?php
 
+namespace RunthingsSecrets\Options\Sections;
+
 if (!defined('WPINC')) {
     die;
 }
 
-class runthings_secrets_Spam_Protection_Settings
+class SpamProtectionSettings
 {
     public function __construct()
     {

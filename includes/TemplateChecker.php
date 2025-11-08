@@ -1,16 +1,17 @@
 <?php
 
+namespace RunthingsSecrets;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Template_Checker')) {
-    class runthings_secrets_Template_Checker
-    {
-        /**
-         * Array of templates and their current versions.
-         */
-        private $plugin_templates = array(
+class TemplateChecker
+{
+    /**
+     * Array of templates and their current versions.
+     */
+    private $plugin_templates = array(
             'add-secret-form.php' => '1.4.0',
             'error.php' => '1.2.0',
             'secret-created.php' => '1.3.0',
@@ -104,4 +105,3 @@ if (!class_exists('runthings_secrets_Template_Checker')) {
             return $version;
         }
     }
-}

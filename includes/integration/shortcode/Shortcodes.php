@@ -1,10 +1,12 @@
 <?php
 
+namespace RunthingsSecrets\Integration\Shortcodes;
+
 if (!defined('WPINC')) {
     die;
 }
 
-class runthings_secrets_Shortcodes_Integration
+class Shortcodes
 {
     private $add_renderer;
 

@@ -1,12 +1,13 @@
 <?php
 
+namespace RunthingsSecrets;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Sodium_Encryption')) {
-    class runthings_secrets_Sodium_Encryption
-    {
+class SodiumEncryption
+{
         private $key;
 
         protected static $single_instance = null;
@@ -30,14 +31,14 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             $this->key = $this->get_encryption_key();
         }
 
-        public static function get_instance()
-        {
-            if (self::$single_instance === null) {
-                self::$single_instance = new self();
-            }
-
-            return self::$single_instance;
+    public static function get_instance()
+    {
+        if (self::$single_instance === null) {
+            self::$single_instance = new self();
         }
+
+        return self::$single_instance;
+    }
 
         public function is_sodium_enabled()
         {
@@ -153,4 +154,3 @@ if (!class_exists('runthings_secrets_Sodium_Encryption')) {
             return base64_decode(strtr($data, '-_', '+/') . str_repeat('=', 3 - (3 + strlen($data)) % 4));
         }
     }
-}

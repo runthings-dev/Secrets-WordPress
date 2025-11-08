@@ -1,23 +1,24 @@
 <?php
 
+namespace RunthingsSecrets\Render;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Secret_Created')) {
-    class runthings_secrets_Secret_Created
-    {
-        private $view_manager;
+class ViewSecret
+{
+    private $view_manager;
 
-        public function __construct()
-        {
-            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-view-manager.php';
-            $this->view_manager = new runthings_secrets_View_Manager();
+    public function __construct()
+    {
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
+        $this->view_manager = new \RunthingsSecrets\ViewManager();
         }
 
         public function render()
         {
-            do_action('runthings_secrets_check_rate_limit', 'created');
+            do_action('runthings_secrets_check_rate_limit', 'view');
 
             add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
@@ -28,7 +29,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             $uuid = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-            $secret = $this->view_manager->get_secret_meta($uuid);
+            $secret = $this->view_manager->get_secret($uuid);
 
             if (is_wp_error($secret)) {
                 return $this->handle_error($secret);
@@ -36,40 +37,30 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
 
             $timezone = wp_timezone_string();
 
-            // Generate the viewing URL.
-            $view_page_id = get_option('runthings_secrets_view_page');
-            $viewing_url = add_query_arg('secret', $secret->uuid, get_permalink($view_page_id));
+            $copy_icon = \RunthingsSecrets\CopyToClipboardIcon::get_icon('link-icon', true);
+            $copy_icon_allowed_html = \RunthingsSecrets\CopyToClipboardIcon::get_allowed_html('link-icon');
 
-            $copy_link_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('link-icon', true);
-            $copy_link_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('link-icon');
-
-            $copy_snippet_icon = runthings_secrets_Copy_To_Clipboard_Icon::get_icon('snippet-icon', true);
-            $copy_snippet_icon_allowed_html = runthings_secrets_Copy_To_Clipboard_Icon::get_allowed_html('snippet-icon');
-
-            $template = new runthings_secrets_Template_Loader();
+            $template = new \RunthingsSecrets\TemplateLoader();
 
             ob_start();
 
             $data = array(
                 "secret" => $secret,
                 "timezone" => esc_html($timezone),
-                "viewing_url" => esc_url($viewing_url),
-                "copy_to_clipboard_link_icon" => $copy_link_icon,
-                "copy_to_clipboard_link_icon_allowed_html" => $copy_link_icon_allowed_html,
-                "copy_to_clipboard_snippet_icon" => $copy_snippet_icon,
-                "copy_to_clipboard_snippet_icon_allowed_html" => $copy_snippet_icon_allowed_html
+                "copy_to_clipboard_icon" => $copy_icon,
+                "copy_to_clipboard_icon_allowed_html" => $copy_icon_allowed_html,
             );
 
             $template
                 ->set_template_data($data, 'context')
-                ->get_template_part('secret-created');
+                ->get_template_part('view-secret');
 
             return ob_get_clean();
         }
 
         private function handle_error($error)
         {
-            $template = new runthings_secrets_Template_Loader();
+            $template = new \RunthingsSecrets\TemplateLoader();
 
             ob_start();
 
@@ -114,4 +105,3 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             wp_localize_script('runthings-secrets-script', 'runthings_secrets', $script_options);
         }
     }
-}

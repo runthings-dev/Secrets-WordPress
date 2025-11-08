@@ -1,25 +1,28 @@
 <?php
+
+namespace RunthingsSecrets\Options;
+
 if (!defined('WPINC')) {
     die;
 }
 
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-pages-settings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-spam-protection-settings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-rate-limit-settings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-advanced-settings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-stats-settings.php';
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/runthings-secrets-encryption-settings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/PagesSettings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/SpamProtectionSettings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/RateLimitSettings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/AdvancedSettings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/StatsSettings.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/sections/EncryptionSettings.php';
 
-class runthings_secrets_Options_Page
+class OptionsPage
 {
     public function __construct()
     {
-        new runthings_secrets_Pages_Settings();
-        new runthings_secrets_Spam_Protection_Settings();
-        new runthings_secrets_Rate_Limit_Settings();
-        new runthings_secrets_Advanced_Settings();
-        new runthings_secrets_Encryption_Settings();
-        new runthings_secrets_Stats_Settings();
+        new Sections\PagesSettings();
+        new Sections\SpamProtectionSettings();
+        new Sections\RateLimitSettings();
+        new Sections\AdvancedSettings();
+        new Sections\EncryptionSettings();
+        new Sections\StatsSettings();
 
         add_action('admin_menu', [$this, 'options_page']);
         add_action('admin_footer', [$this, 'admin_footer']);
@@ -79,4 +82,4 @@ class runthings_secrets_Options_Page
     }
 }
 
-new runthings_secrets_Options_Page();
+new OptionsPage();

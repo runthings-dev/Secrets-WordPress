@@ -1,13 +1,14 @@
 <?php
 
+namespace RunthingsSecrets;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
-    class runthings_secrets_Copy_To_Clipboard_Icon
-    {
-        public static function get_icon($context, $embed = true)
+class CopyToClipboardIcon
+{
+    public static function get_icon($context, $embed = true)
         {
             $asset_path = RUNTHINGS_SECRETS_PLUGIN_DIR . 'assets/copy-icon.svg';
             $asset_output = '';
@@ -153,4 +154,3 @@ if (!class_exists('runthings_secrets_Copy_To_Clipboard_Icon')) {
             );
         }
     }
-}

@@ -1,19 +1,20 @@
 <?php
 
+namespace RunthingsSecrets;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Secrets')) {
-    class runthings_secrets_Secrets
-    {
-        private $crypt;
+class Secrets
+{
+    private $crypt;
 
-        public function __construct()
-        {
-            include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-sodium-encryption.php';
-            $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
-        }
+    public function __construct()
+    {
+        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
+        $this->crypt = SodiumEncryption::get_instance();
+    }
 
         /**
          * Get secret data from database
@@ -25,7 +26,7 @@ if (!class_exists('runthings_secrets_Secrets')) {
         public function get_secret($uuid, $context = 'view')
         {
             if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i', $uuid)) {
-                return new WP_Error('invalid_uuid_format', __("Invalid UUID format.", 'runthings-secrets'));
+                return new \WP_Error('invalid_uuid_format', __("Invalid UUID format.", 'runthings-secrets'));
             }
 
             global $wpdb;
@@ -42,7 +43,7 @@ if (!class_exists('runthings_secrets_Secrets')) {
                 // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
 
                 if (!$secret) {
-                    return new WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
+                    return new \WP_Error('invalid_secret_url', __("Invalid secret sharing URL.", 'runthings-secrets'));
                 }
 
                 wp_cache_set($cache_key, $secret, $cache_group);
@@ -51,7 +52,7 @@ if (!class_exists('runthings_secrets_Secrets')) {
             // Check if the secret has expired or reached its maximum number of views.
             if ($this->has_expired_or_maxed_out($secret)) {
                 $this->delete_secret($secret);
-                return new WP_Error('secret_expired', __("This secret has expired or reached its maximum number of views.", 'runthings-secrets'));
+                return new \WP_Error('secret_expired', __("This secret has expired or reached its maximum number of views.", 'runthings-secrets'));
             }
 
             if ($context == 'view') {
@@ -90,11 +91,11 @@ if (!class_exists('runthings_secrets_Secrets')) {
 
             $uuid = wp_generate_uuid4();
 
-            $expiration_datetime = new DateTime($expiration_local, new DateTimeZone(wp_timezone_string()));
-            $expiration_datetime->setTimezone(new DateTimeZone('UTC'));
+            $expiration_datetime = new \DateTime($expiration_local, new \DateTimeZone(wp_timezone_string()));
+            $expiration_datetime->setTimezone(new \DateTimeZone('UTC'));
             $expiration_utc = $expiration_datetime->format('Y-m-d H:i:s');
 
-            $created_at_datetime = new DateTime('now', new DateTimeZone('UTC'));
+            $created_at_datetime = new \DateTime('now', new \DateTimeZone('UTC'));
             $created_at_utc = $created_at_datetime->format('Y-m-d H:i:s');
 
             // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
@@ -191,8 +192,8 @@ if (!class_exists('runthings_secrets_Secrets')) {
          */
         private function has_expired_or_maxed_out($secret)
         {
-            $expiration_datetime_utc = new DateTime($secret->expiration, new DateTimeZone('UTC'));
-            $current_datetime_utc = new DateTime('now', new DateTimeZone('UTC'));
+            $expiration_datetime_utc = new \DateTime($secret->expiration, new \DateTimeZone('UTC'));
+            $current_datetime_utc = new \DateTime('now', new \DateTimeZone('UTC'));
 
             return $expiration_datetime_utc <= $current_datetime_utc || $secret->views > $secret->max_views;
         }
@@ -227,7 +228,7 @@ if (!class_exists('runthings_secrets_Secrets')) {
          */
         private function format_expiration_date_gmt($expiration)
         {
-            $date = new DateTime($expiration, new DateTimeZone('UTC'));
+            $date = new \DateTime($expiration, new \DateTimeZone('UTC'));
             return $date->format('Y-m-d');
         }
 
@@ -239,8 +240,8 @@ if (!class_exists('runthings_secrets_Secrets')) {
          */
         private function format_expiration_date_local($expiration)
         {
-            $date = new DateTime($expiration, new DateTimeZone('UTC'));
-            $date->setTimezone(new DateTimeZone(wp_timezone_string()));
+            $date = new \DateTime($expiration, new \DateTimeZone('UTC'));
+            $date->setTimezone(new \DateTimeZone(wp_timezone_string()));
             return $date->format('Y-m-d');
         }
 
@@ -281,5 +282,4 @@ if (!class_exists('runthings_secrets_Secrets')) {
             return $pluralized_views;
         }
     }
-}
 

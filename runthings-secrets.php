@@ -1,5 +1,7 @@
 <?php
 
+namespace RunthingsSecrets;
+
 /**
  * Plugin Name: RunThings Secrets
  * Plugin URI: https://runthings.dev/wordpress-plugins/secrets/
@@ -41,21 +43,21 @@ define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
 define('RUNTHINGS_SECRETS_PLUGIN_VERSION', '1.7.0');
 
-class runthings_secrets_Plugin
+class Plugin
 {
     protected static $single_instance = null;
 
     protected function __construct()
     {
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/runthings-secrets-integration.php';
-        new runthings_secrets_Integration();
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/Integration.php';
+        new \RunthingsSecrets\Integration\Integration();
 
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/runthings-secrets-options-page.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/OptionsPage.php';
 
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-copy-to-clipboard-icon.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-rate-limit.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-template-checker.php';
-        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-template-loader.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'CopyToClipboardIcon.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'RateLimit.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateChecker.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateLoader.php';
     }
 
     public static function get_instance()
@@ -76,7 +78,7 @@ class runthings_secrets_Plugin
     {
         $this->load_textdomain();
 
-        new runthings_secrets_Template_Checker();
+        new \RunthingsSecrets\TemplateChecker();
 
         add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
 
@@ -113,7 +115,7 @@ class runthings_secrets_Plugin
 
         $table_name = $wpdb->prefix . 'runthings_secrets';
 
-        $current_time_datetime = new DateTime('now', new DateTimeZone('UTC'));
+        $current_time_datetime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $current_time = $current_time_datetime->format('Y-m-d H:i:s');
 
@@ -140,9 +142,9 @@ class runthings_secrets_Plugin
         if (!wp_next_scheduled($hook)) {
             $timezone = wp_timezone_string();
 
-            $targetTime = new DateTime('today 00:15', new DateTimeZone($timezone));
+            $targetTime = new \DateTime('today 00:15', new \DateTimeZone($timezone));
 
-            $currentTime = new DateTime('now', new DateTimeZone($timezone));
+            $currentTime = new \DateTime('now', new \DateTimeZone($timezone));
 
             // If it's already past 00:15 today, schedule for 00:15 the next day
             if ($currentTime > $targetTime) {
@@ -251,7 +253,7 @@ if (!function_exists('runthings_secrets_uninstall')) {
 if (!function_exists('runthings_secrets')) {
     function runthings_secrets()
     {
-        return runthings_secrets_Plugin::get_instance();
+        return Plugin::get_instance();
     }
 }
 
@@ -261,4 +263,4 @@ add_action('plugins_loaded', array(runthings_secrets(), 'hooks'));
 // activation and deactivation hooks
 register_activation_hook(__FILE__, array(runthings_secrets(), 'activate'));
 register_deactivation_hook(__FILE__, array(runthings_secrets(), 'deactivate'));
-register_uninstall_hook(__FILE__, 'runthings_secrets_uninstall');
+register_uninstall_hook(__FILE__, 'RunthingsSecrets\\runthings_secrets_uninstall');

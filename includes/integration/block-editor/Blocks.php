@@ -1,10 +1,12 @@
 <?php
 
+namespace RunthingsSecrets\Integration\BlockEditor;
+
 if (!defined('WPINC')) {
     die;
 }
 
-class runthings_secrets_Blocks_Integration
+class Blocks
 {
     private $add_renderer;
 

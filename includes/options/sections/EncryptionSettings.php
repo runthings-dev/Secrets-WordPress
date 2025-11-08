@@ -1,18 +1,20 @@
 <?php
 
+namespace RunthingsSecrets\Options\Sections;
+
 if (!defined('WPINC')) {
     die;
 }
 
-include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-sodium-encryption.php';
+include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
 
-class runthings_secrets_Encryption_Settings
+class EncryptionSettings
 {
     private $crypt;
 
     public function __construct()
     {
-        $this->crypt = runthings_secrets_Sodium_Encryption::get_instance();
+        $this->crypt = \RunthingsSecrets\SodiumEncryption::get_instance();
 
         if (!$this->crypt->is_sodium_enabled()) {
             return;

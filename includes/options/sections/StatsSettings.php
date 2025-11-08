@@ -1,9 +1,12 @@
 <?php
+
+namespace RunthingsSecrets\Options\Sections;
+
 if (!defined('WPINC')) {
     die;
 }
 
-class runthings_secrets_Stats_Settings
+class StatsSettings
 {
     public function __construct()
     {

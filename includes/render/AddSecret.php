@@ -1,18 +1,19 @@
 <?php
 
+namespace RunthingsSecrets\Render;
+
 if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Add_Secret')) {
-    class runthings_secrets_Add_Secret
-    {
-        private $view_manager;
+class AddSecret
+{
+    private $view_manager;
 
-        public function __construct()
-        {
-            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-view-manager.php';
-            $this->view_manager = new runthings_secrets_View_Manager();
+    public function __construct()
+    {
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
+        $this->view_manager = new \RunthingsSecrets\ViewManager();
 
             add_action('template_redirect', [$this, 'handle_form_submit']);
         }
@@ -25,20 +26,20 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_scripts']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $default_expiration_local = new DateTime('+7 days', new DateTimeZone(wp_timezone_string()));
+            $default_expiration_local = new \DateTime('+7 days', new \DateTimeZone(wp_timezone_string()));
             $default_max_views = 5;
-            $minimum_date_local = new DateTime('+1 days', new DateTimeZone(wp_timezone_string()));
+            $minimum_date_local = new \DateTime('+1 days', new \DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 
             // Calculate validation thresholds
             $max_views_warning_threshold = apply_filters('runthings_secrets_max_views_warning_threshold', 25);
 
             // Calculate the default warning date (6 months from now) and allow filtering
-            $default_warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
-            $default_warning_date->add(new DateInterval('P6M'));
+            $default_warning_date = new \DateTime('now', new \DateTimeZone(wp_timezone_string()));
+            $default_warning_date->add(new \DateInterval('P6M'));
             $expiration_warning_date_string = apply_filters('runthings_secrets_expiration_warning_date', $default_warning_date->format('Y-m-d'));
 
-            $template = new runthings_secrets_Template_Loader();
+            $template = new \RunthingsSecrets\TemplateLoader();
 
             ob_start();
 
@@ -189,4 +190,3 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
             }
         }
     }
-}

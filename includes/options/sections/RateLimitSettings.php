@@ -1,10 +1,12 @@
 <?php
 
+namespace RunthingsSecrets\Options\Sections;
+
 if (!defined('WPINC')) {
     die;
 }
 
-class runthings_secrets_Rate_Limit_Settings
+class RateLimitSettings
 {
     public function __construct()
     {

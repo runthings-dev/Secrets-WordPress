@@ -1,7 +1,9 @@
 <?php
 
+namespace RunthingsSecrets;
+
 if (!defined('WPINC')) {
-	die;
+    die;
 }
 
 // Ensure the Gamajo_Template_Loader class is included
@@ -9,9 +11,8 @@ if (!class_exists('Gamajo_Template_Loader')) {
 	include RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
 }
 
-if (!class_exists('runthings_secrets_Template_Loader')) {
-	class runthings_secrets_Template_Loader extends Gamajo_Template_Loader
-	{
+class TemplateLoader extends \Gamajo_Template_Loader
+{
 		/**
 		 * Prefix for filter names.
 		 *
@@ -34,6 +35,5 @@ if (!class_exists('runthings_secrets_Template_Loader')) {
 		 * @since 1.0.0
 		 * @var string
 		 */
-		protected $plugin_directory = RUNTHINGS_SECRETS_PLUGIN_DIR;
-	}
+	protected $plugin_directory = RUNTHINGS_SECRETS_PLUGIN_DIR;
 }
