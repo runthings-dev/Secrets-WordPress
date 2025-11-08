@@ -25,12 +25,12 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Secret_Created')) {
     class runthings_secrets_Secret_Created
     {
-        private $manage;
+        private $view_manager;
 
         public function __construct()
         {
-            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
-            $this->manage = new runthings_secrets_Manage();
+            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-view-manager.php';
+            $this->view_manager = new runthings_secrets_View_Manager();
         }
 
         public function render()
@@ -46,7 +46,7 @@ if (!class_exists('runthings_secrets_Secret_Created')) {
             $uuid = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
-            $secret = $this->manage->get_secret_meta($uuid);
+            $secret = $this->view_manager->get_secret_meta($uuid);
 
             if (is_wp_error($secret)) {
                 return $this->handle_error($secret);

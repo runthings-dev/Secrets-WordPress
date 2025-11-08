@@ -25,12 +25,12 @@ if (!defined('WPINC')) {
 if (!class_exists('runthings_secrets_Add_Secret')) {
     class runthings_secrets_Add_Secret
     {
-        private $manage;
+        private $view_manager;
 
         public function __construct()
         {
-            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-manage.php';
-            $this->manage = new runthings_secrets_Manage();
+            include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'runthings-secrets-view-manager.php';
+            $this->view_manager = new runthings_secrets_View_Manager();
 
             add_action('template_redirect', [$this, 'handle_form_submit']);
         }
@@ -175,7 +175,7 @@ if (!class_exists('runthings_secrets_Add_Secret')) {
                 }
             }
 
-            return $this->manage->add_secret($secret, $max_views, $expiration_local);
+            return $this->view_manager->add_secret($secret, $max_views, $expiration_local);
         }
 
         private function verify_recaptcha_token()

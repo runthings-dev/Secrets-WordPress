@@ -22,8 +22,8 @@ if (!defined('WPINC')) {
     die;
 }
 
-if (!class_exists('runthings_secrets_Manage')) {
-    class runthings_secrets_Manage
+if (!class_exists('runthings_secrets_View_Manager')) {
+    class runthings_secrets_View_Manager
     {
         private $secrets;
 
@@ -49,3 +49,4 @@ if (!class_exists('runthings_secrets_Manage')) {
         }
     }
 }
+
