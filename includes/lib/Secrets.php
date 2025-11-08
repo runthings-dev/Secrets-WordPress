@@ -253,10 +253,10 @@ class Secrets
          */
         private function get_days_left($expiration_date)
         {
-            $current_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
+            $current_date = new \DateTime('now', new \DateTimeZone(wp_timezone_string()));
 
             // create DateTime object for the expiration date
-            $expiration = new DateTime($expiration_date, new DateTimeZone(wp_timezone_string()));
+            $expiration = new \DateTime($expiration_date, new \DateTimeZone(wp_timezone_string()));
             $expiration->modify('+1 day'); // add one day to include the end day fully
 
             $interval = $current_date->diff($expiration);
