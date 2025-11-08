@@ -78,9 +78,10 @@ class Secrets
          * @param string $secret The secret text to store
          * @param int $max_views Maximum number of views allowed
          * @param string $expiration_local Expiration date in local timezone
+         * @param bool $allow_delete Whether to allow manual deletion of the secret
          * @return string UUID of the created secret
          */
-        public function add_secret($secret, $max_views, $expiration_local)
+        public function add_secret($secret, $max_views, $expiration_local, $allow_delete = true)
         {
             // encrypt the secret
             $encrypted_secret = $this->crypt->encrypt($secret);
@@ -108,7 +109,8 @@ class Secrets
                     'max_views' => $max_views,
                     'views' => 0,
                     'expiration' => $expiration_utc,
-                    'created_at' => $created_at_utc
+                    'created_at' => $created_at_utc,
+                    'allow_delete' => $allow_delete ? 1 : 0
                 )
             );
             // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery

@@ -26,9 +26,9 @@ class ViewManager
         return $this->secrets->get_secret($id, 'created');
     }
 
-    public function add_secret($secret, $max_views, $expiration_local)
+    public function add_secret($secret, $max_views, $expiration_local, $allow_delete = true)
     {
-        return $this->secrets->add_secret($secret, $max_views, $expiration_local);
+        return $this->secrets->add_secret($secret, $max_views, $expiration_local, $allow_delete);
     }
 }
 

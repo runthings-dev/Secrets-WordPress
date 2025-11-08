@@ -169,6 +169,7 @@ class Plugin
             uuid varchar(255) NOT NULL,
             secret text NOT NULL,
             max_views int(11) NOT NULL,
+            allow_delete tinyint(1) NOT NULL DEFAULT 1,
             views int(11) NOT NULL,
             expiration datetime NOT NULL,
             created_at datetime NOT NULL,
