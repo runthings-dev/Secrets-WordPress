@@ -55,6 +55,7 @@ class Plugin
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/OptionsPage.php';
 
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'CopyToClipboardIcon.php';
+        include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'DatabaseMigration.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'RateLimit.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateChecker.php';
         include RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateLoader.php';
@@ -77,6 +78,9 @@ class Plugin
     public function init()
     {
         $this->load_textdomain();
+
+        // Run database migrations
+        DatabaseMigration::run();
 
         new \RunthingsSecrets\TemplateChecker();
 
