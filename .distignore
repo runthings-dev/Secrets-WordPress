@@ -5,6 +5,7 @@ tests/
 build/
 .distignore
 .gitignore
+BUILD.md
 
 # Ignore configuration files
 *.yml
