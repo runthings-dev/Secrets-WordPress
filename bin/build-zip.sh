@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version: 2.2.0
+# Version: 2.3.0
 
 PLUGIN_DIR="$(pwd)"
 PLUGINSLUG="$(basename "$PLUGIN_DIR")"
@@ -30,6 +30,15 @@ if [[ ! -f "${PLUGIN_DIR}/${PLUGINSLUG}.php" ]]; then
   echo "Error: This script should be run from the root directory of the plugin."
   echo "Make sure you are in the ${PLUGINSLUG} directory and run the script as ./bin/build-zip.sh"
   exit 1
+fi
+
+# Regenerate Composer autoloader if it exists
+if [[ -f "${PLUGIN_DIR}/vendor/autoload.php" ]]; then
+  echo "Regenerating Composer autoloader..."
+  if ! composer dump-autoload; then
+    echo "Error: Failed to regenerate Composer autoloader."
+    exit 1
+  fi
 fi
 
 # Generate the .pot file (with memory bump + sensible excludes)
