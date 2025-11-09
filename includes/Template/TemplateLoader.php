@@ -6,11 +6,6 @@ if (!defined('WPINC')) {
     die;
 }
 
-// Ensure the Gamajo_Template_Loader class is included
-if (!class_exists('Gamajo_Template_Loader')) {
-	require_once RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
-}
-
 class TemplateLoader extends \Gamajo_Template_Loader
 {
 		/**
