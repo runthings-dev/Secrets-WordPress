@@ -81,7 +81,7 @@ class AddSecret
 
                 if ($created_page_url !== false) {
                     $redirect_url = add_query_arg('secret', urlencode($uuid), $created_page_url);
-                    wp_redirect(esc_url_raw($redirect_url));
+                    wp_safe_redirect(esc_url_raw($redirect_url));
                     exit;
                 }
             }

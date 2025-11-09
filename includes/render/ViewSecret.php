@@ -45,7 +45,7 @@ class ViewSecret
                 // Redirect to avoid form resubmission (POST-Redirect-GET pattern)
                 $current_url = remove_query_arg('deleted');
                 $redirect_url = add_query_arg('deleted', '1', $current_url);
-                wp_redirect(esc_url_raw($redirect_url));
+                wp_safe_redirect(esc_url_raw($redirect_url));
                 exit;
             }
         }
