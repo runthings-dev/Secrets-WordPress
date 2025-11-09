@@ -45,6 +45,7 @@ class RateLimitSettings
         $this->add_rate_limit_setting('add', __('Maximum Add Secret Requests per Minute', 'runthings-secrets'));
         $this->add_rate_limit_setting('created', __('Maximum Secret Created Requests per Minute', 'runthings-secrets'));
         $this->add_rate_limit_setting('view', __('Maximum View Secret Requests per Minute', 'runthings-secrets'));
+        $this->add_rate_limit_setting('delete', __('Maximum Delete Secret Requests per Minute', 'runthings-secrets'));
     }
 
     private function add_role_exemption_settings()
@@ -118,6 +119,9 @@ class RateLimitSettings
         switch ($args['renderer']) {
             case 'add':
                 $default_value = 25;
+                break;
+            case 'delete':
+                $default_value = 5;
                 break;
             case 'created':
             case 'view':

@@ -32,6 +32,8 @@ class ViewSecret
                 return;
             }
 
+            do_action('runthings_secrets_check_rate_limit', 'delete');
+
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Nonce already checked above
             $id = isset($_POST['secret_id']) ? sanitize_text_field(wp_unslash($_POST['secret_id'])) : null;

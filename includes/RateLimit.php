@@ -8,7 +8,7 @@ if (!defined('WPINC')) {
 
 class RateLimit
 {
-    private $allowed_renderers = ['view', 'created', 'add'];
+    private $allowed_renderers = ['view', 'created', 'add', 'delete'];
 
     public function __construct()
     {
