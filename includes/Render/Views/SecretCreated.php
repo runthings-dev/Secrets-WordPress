@@ -110,10 +110,10 @@ class SecretCreated
 
         public function enqueue_scripts()
         {
-            $popper_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/popper.min.js';
+            $popper_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/assets/vendor/tippy/popper.min.js';
             wp_enqueue_script('popper', $popper_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
-            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy-bundle.umd.min.js';
+            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/assets/vendor/tippy/tippy-bundle.umd.min.js';
             wp_enqueue_script('tippy', $tippy_url, array('popper'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets-shared.js';

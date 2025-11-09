@@ -41,8 +41,8 @@ class PagesSettings
         }
 
         if (!wp_script_is('select2', 'registered')) {
-            wp_register_style('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/select2.min.css', [], '4.0.13');
-            wp_register_script('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/select2/select2.min.js', ['jquery'], '4.0.13', true);
+            wp_register_style('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/assets/vendor/select2/select2.min.css', [], '4.0.13');
+            wp_register_script('select2', RUNTHINGS_SECRETS_PLUGIN_URL . '/assets/vendor/select2/select2.min.js', ['jquery'], '4.0.13', true);
         }
 
         wp_enqueue_style('select2');
