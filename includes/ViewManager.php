@@ -23,7 +23,7 @@ class ViewManager
 
     public function get_secret_meta($id)
     {
-        return $this->secrets->get_secret($id, 'created');
+        return $this->secrets->get_secret($id, 'metadata');
     }
 
     public function add_secret($secret, $max_views, $expiration_local, $allow_delete = true)
@@ -33,7 +33,7 @@ class ViewManager
 
     public function delete_secret($id)
     {
-        $secret = $this->secrets->get_secret($id, 'created');
+        $secret = $this->secrets->get_secret($id, 'metadata');
 
         if (is_wp_error($secret)) {
             return $secret;

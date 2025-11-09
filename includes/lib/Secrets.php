@@ -20,7 +20,7 @@ class Secrets
          * Get secret data from database
          *
          * @param string $id The secret ID
-         * @param string $context 'view' to decrypt secret and increment views, 'created' for metadata only
+         * @param string $context 'view' to decrypt secret and increment views, 'metadata' for metadata only
          * @return object|WP_Error Secret object or WP_Error on failure
          */
         public function get_secret($id, $context = 'view')
