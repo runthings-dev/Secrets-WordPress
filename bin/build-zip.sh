@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version: 2.1.0
+# Version: 2.2.0
 
 PLUGIN_DIR="$(pwd)"
 PLUGINSLUG="$(basename "$PLUGIN_DIR")"
@@ -32,11 +32,20 @@ if [[ ! -f "${PLUGIN_DIR}/${PLUGINSLUG}.php" ]]; then
   exit 1
 fi
 
-# Generate the .pot file
+# Generate the .pot file (with memory bump + sensible excludes)
 echo "Generating .pot file..."
-if ! wp i18n make-pot . "$POT_FILE" --domain="$PLUGINSLUG"; then
-  echo "Error: Failed to generate .pot file."
-  exit 1
+export WP_CLI_PHP_ARGS="${WP_CLI_PHP_ARGS:--d memory_limit=1024M}"
+
+EXCLUDES="node_modules,vendor,bin,tests,.git,dist,build"
+
+base_cmd=(wp i18n make-pot . "$POT_FILE" --domain="$PLUGINSLUG" --exclude="$EXCLUDES")
+
+if ! "${base_cmd[@]}"; then
+  echo "Retrying without JS scanning..."
+  if ! "${base_cmd[@]}" --skip-js; then
+    echo "Error: Failed to generate .pot file."
+    exit 1
+  fi
 fi
 
 # Create the build directory if it doesn't exist
