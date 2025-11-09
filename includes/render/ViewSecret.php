@@ -39,7 +39,12 @@ class ViewSecret
 
             if ($id) {
                 $this->view_manager->delete_secret($id);
-                // Continue to render which will show not-found error
+
+                // Redirect to avoid form resubmission (POST-Redirect-GET pattern)
+                $current_url = remove_query_arg('deleted');
+                $redirect_url = add_query_arg('deleted', '1', $current_url);
+                wp_redirect(esc_url_raw($redirect_url));
+                exit;
             }
         }
 
@@ -54,12 +59,13 @@ class ViewSecret
             // Disabling nonce verification due to the long-lived nature of public access links.
             // This code uses GUID-based security with rate limiting to handle threats.
             $id = isset($_GET['secret']) ? sanitize_text_field(wp_unslash($_GET['secret'])) : null;
+            $deleted = isset($_GET['deleted']) && $_GET['deleted'] === '1';
             // phpcs:enable WordPress.Security.NonceVerification.Recommended
 
             $secret = $this->view_manager->get_secret($id);
 
             if (is_wp_error($secret)) {
-                return $this->handle_error($secret);
+                return $this->handle_error($secret, $deleted);
             }
 
             $timezone = wp_timezone_string();
@@ -112,14 +118,15 @@ class ViewSecret
             return apply_filters('runthings_secrets_delete_button', $default_button, $secret);
         }
 
-        private function handle_error($error)
+        private function handle_error($error, $deleted = false)
         {
             $template = new \RunthingsSecrets\TemplateLoader();
 
             ob_start();
 
             $data = array(
-                "error_message" => esc_html($error->get_error_message())
+                "error_message" => esc_html($error->get_error_message()),
+                "deleted" => $deleted
             );
 
             $template
