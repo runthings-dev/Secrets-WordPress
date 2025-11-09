@@ -47,7 +47,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
         <label>
             <input type="checkbox" name="allow_delete" value="1" checked>
             <?php esc_html_e('Allow manual deletion of this secret', 'runthings-secrets'); ?>
-            <span class="help-tip" title="<?php esc_attr_e('When enabled, you can manually delete this secret before it expires. When disabled, the secret can only be removed by expiration or reaching maximum views.', 'runthings-secrets'); ?>">?</span>
+            <span class="help-tip" data-tippy-content="<?php esc_attr_e('When enabled, you can manually delete this secret before it expires. When disabled, the secret can only be removed by expiration or reaching maximum views.', 'runthings-secrets'); ?>">?</span>
         </label>
     </div>
     <div>

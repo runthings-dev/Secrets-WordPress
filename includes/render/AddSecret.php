@@ -89,6 +89,9 @@ class AddSecret
 
         public function maybe_enqueue_form_styles()
         {
+            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy.css';
+            wp_enqueue_style('tippy', $tippy_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
+
             if (get_option('runthings_secrets_enqueue_form_styles', 1) == 1) {
                 $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/add-secret-form.css';
                 wp_enqueue_style('add-secret-form-styles', $style_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
@@ -119,8 +122,14 @@ class AddSecret
 
         public function maybe_enqueue_form_scripts()
         {
+            $popper_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/popper.min.js';
+            wp_enqueue_script('popper', $popper_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+
+            $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy-bundle.umd.min.js';
+            wp_enqueue_script('tippy', $tippy_url, array('popper'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+
             $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets-add-secret.js';
-            wp_enqueue_script('runthings-secrets-add-secret-script', $script_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+            wp_enqueue_script('runthings-secrets-add-secret-script', $script_url, array('tippy'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_options = array(
                 'i18n' => array(

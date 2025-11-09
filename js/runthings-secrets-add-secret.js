@@ -1,3 +1,12 @@
+// Initialize Tippy tooltips
+const helpTips = document.querySelectorAll(".help-tip");
+helpTips.forEach((tip) => {
+  tippy(tip, {
+    theme: "light-border",
+    placement: "right",
+  });
+});
+
 // Date validation for add secret form
 document.addEventListener("DOMContentLoaded", function () {
   const expirationInput = document.querySelector('input[name="expiration"]');
@@ -61,4 +70,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-
