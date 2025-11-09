@@ -78,8 +78,6 @@ class Plugin
 
     public function init()
     {
-        $this->load_textdomain();
-
         // Run database migrations
         DatabaseMigration::run();
 
@@ -99,11 +97,6 @@ class Plugin
     public function deactivate()
     {
         Activation::deactivate();
-    }
-
-    public function load_textdomain()
-    {
-        load_plugin_textdomain('runthings-secrets', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function add_settings_link($links)
