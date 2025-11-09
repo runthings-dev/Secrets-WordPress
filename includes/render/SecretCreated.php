@@ -90,8 +90,8 @@ class SecretCreated
             $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy.css';
             wp_enqueue_style('tippy', $tippy_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
 
-            $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/runthings-secrets.css';
-            wp_enqueue_style('runthings-secrets-styles', $style_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
+            $style_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/css/runthings-secrets-shared.css';
+            wp_enqueue_style('runthings-secrets-shared-styles', $style_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, 'all');
         }
 
         public function enqueue_scripts()
@@ -102,8 +102,8 @@ class SecretCreated
             $tippy_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/vendor/tippy/tippy-bundle.umd.min.js';
             wp_enqueue_script('tippy', $tippy_url, array('popper'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
-            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
-            wp_enqueue_script('runthings-secrets-script', $script_url, array('tippy'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets-shared.js';
+            wp_enqueue_script('runthings-secrets-shared-script', $script_url, array('tippy'), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_options = array(
                 'i18n' => array(
@@ -112,6 +112,6 @@ class SecretCreated
                 )
             );
 
-            wp_localize_script('runthings-secrets-script', 'runthings_secrets', $script_options);
+            wp_localize_script('runthings-secrets-shared-script', 'runthings_secrets', $script_options);
         }
     }

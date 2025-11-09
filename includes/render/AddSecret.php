@@ -119,8 +119,8 @@ class AddSecret
 
         public function maybe_enqueue_form_scripts()
         {
-            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets.js';
-            wp_enqueue_script('runthings-secrets-script', $script_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
+            $script_url = RUNTHINGS_SECRETS_PLUGIN_URL . '/js/runthings-secrets-add-secret.js';
+            wp_enqueue_script('runthings-secrets-add-secret-script', $script_url, array(), RUNTHINGS_SECRETS_PLUGIN_VERSION, true);
 
             $script_options = array(
                 'i18n' => array(
@@ -128,7 +128,7 @@ class AddSecret
                 )
             );
 
-            wp_localize_script('runthings-secrets-script', 'runthings_secrets', $script_options);
+            wp_localize_script('runthings-secrets-add-secret-script', 'runthings_secrets', $script_options);
         }
 
         private function create_secret()
