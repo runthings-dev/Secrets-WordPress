@@ -43,23 +43,25 @@ define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
 define('RUNTHINGS_SECRETS_PLUGIN_VERSION', '1.7.0');
 
+// Load Composer autoloader
+require_once RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/autoload.php';
+
+use RunthingsSecrets\Integration\Integration;
+use RunthingsSecrets\Admin\OptionsPage;
+use RunthingsSecrets\Admin\Activation;
+use RunthingsSecrets\Admin\DatabaseMigration;
+use RunthingsSecrets\Security\RateLimit;
+use RunthingsSecrets\Template\TemplateChecker;
+
 class Plugin
 {
     protected static $single_instance = null;
 
     protected function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'integration/Integration.php';
-        new \RunthingsSecrets\Integration\Integration();
-
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'options/OptionsPage.php';
-
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'Activation.php';
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'CopyToClipboardIcon.php';
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'DatabaseMigration.php';
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'RateLimit.php';
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateChecker.php';
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'TemplateLoader.php';
+        new Integration();
+        new OptionsPage();
+        new RateLimit();
     }
 
     public static function get_instance()
@@ -81,7 +83,7 @@ class Plugin
         // Run database migrations
         DatabaseMigration::run();
 
-        new \RunthingsSecrets\TemplateChecker();
+        new TemplateChecker();
 
         add_filter('plugin_action_links_runthings-secrets/runthings-secrets.php', [$this, 'add_settings_link']);
 

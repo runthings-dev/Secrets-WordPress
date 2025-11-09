@@ -1,6 +1,6 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Security;
 
 if (!defined('WPINC')) {
     die;

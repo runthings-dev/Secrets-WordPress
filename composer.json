@@ -1,0 +1,18 @@
+{
+  "name": "runthingsdev/runthings-secrets",
+  "description": "Share secrets securely",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Matthew Harris",
+      "email": "rtpharry@hotmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "RunthingsSecrets\\": "includes/"
+    }
+  }
+}

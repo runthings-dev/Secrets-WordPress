@@ -1,6 +1,10 @@
 <?php
 
-namespace RunthingsSecrets\Render;
+namespace RunthingsSecrets\Render\Views;
+
+use RunthingsSecrets\Render\ViewManager;
+use RunthingsSecrets\Template\TemplateLoader;
+use RunthingsSecrets\Template\CopyToClipboardIcon;
 
 if (!defined('WPINC')) {
     die;
@@ -12,11 +16,10 @@ class AddSecret
 
     public function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
-        $this->view_manager = new \RunthingsSecrets\ViewManager();
+        $this->view_manager = new ViewManager();
 
-            add_action('template_redirect', [$this, 'handle_form_submit']);
-        }
+        add_action('template_redirect', [$this, 'handle_form_submit']);
+    }
 
         public function render()
         {
@@ -39,7 +42,7 @@ class AddSecret
             $default_warning_date->add(new \DateInterval('P6M'));
             $expiration_warning_date_string = apply_filters('runthings_secrets_expiration_warning_date', $default_warning_date->format('Y-m-d'));
 
-            $template = new \RunthingsSecrets\TemplateLoader();
+            $template = new TemplateLoader();
 
             ob_start();
 

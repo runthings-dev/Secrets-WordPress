@@ -1,6 +1,6 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Template;
 
 if (!defined('WPINC')) {
     die;

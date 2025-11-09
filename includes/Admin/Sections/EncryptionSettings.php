@@ -1,12 +1,12 @@
 <?php
 
-namespace RunthingsSecrets\Options\Sections;
+namespace RunthingsSecrets\Admin\Sections;
+
+use RunthingsSecrets\Security\SodiumEncryption;
 
 if (!defined('WPINC')) {
     die;
 }
-
-include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
 
 class EncryptionSettings
 {
@@ -14,7 +14,7 @@ class EncryptionSettings
 
     public function __construct()
     {
-        $this->crypt = \RunthingsSecrets\SodiumEncryption::get_instance();
+        $this->crypt = SodiumEncryption::get_instance();
 
         if (!$this->crypt->is_sodium_enabled()) {
             return;

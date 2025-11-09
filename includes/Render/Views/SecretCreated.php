@@ -1,6 +1,10 @@
 <?php
 
-namespace RunthingsSecrets\Render;
+namespace RunthingsSecrets\Render\Views;
+
+use RunthingsSecrets\Render\ViewManager;
+use RunthingsSecrets\Template\TemplateLoader;
+use RunthingsSecrets\Template\CopyToClipboardIcon;
 
 if (!defined('WPINC')) {
     die;
@@ -12,9 +16,8 @@ class SecretCreated
 
     public function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
-        $this->view_manager = new \RunthingsSecrets\ViewManager();
-        }
+        $this->view_manager = new ViewManager();
+    }
 
         public function render()
         {
@@ -41,11 +44,11 @@ class SecretCreated
             $view_page_id = get_option('runthings_secrets_view_page');
             $viewing_url = add_query_arg('secret', $secret->uuid, get_permalink($view_page_id));
 
-            $copy_link_icon = \RunthingsSecrets\CopyToClipboardIcon::get_icon('link-icon', true);
-            $copy_link_icon_allowed_html = \RunthingsSecrets\CopyToClipboardIcon::get_allowed_html('link-icon');
+            $copy_link_icon = CopyToClipboardIcon::get_icon('link-icon', true);
+            $copy_link_icon_allowed_html = CopyToClipboardIcon::get_allowed_html('link-icon');
 
-            $copy_snippet_icon = \RunthingsSecrets\CopyToClipboardIcon::get_icon('snippet-icon', true);
-            $copy_snippet_icon_allowed_html = \RunthingsSecrets\CopyToClipboardIcon::get_allowed_html('snippet-icon');
+            $copy_snippet_icon = CopyToClipboardIcon::get_icon('snippet-icon', true);
+            $copy_snippet_icon_allowed_html = CopyToClipboardIcon::get_allowed_html('snippet-icon');
 
             $viewing_snippet = sprintf(
                 /* translators: %1$s: Viewing URL, %2$s: Days left, %3$s: Views left */
@@ -57,7 +60,7 @@ class SecretCreated
 
             $viewing_snippet = apply_filters('runthings_secrets_viewing_snippet', $viewing_snippet, $secret, $viewing_url);
 
-            $template = new \RunthingsSecrets\TemplateLoader();
+            $template = new TemplateLoader();
 
             ob_start();
 
@@ -81,7 +84,7 @@ class SecretCreated
 
         private function handle_error($error)
         {
-            $template = new \RunthingsSecrets\TemplateLoader();
+            $template = new TemplateLoader();
 
             ob_start();
 

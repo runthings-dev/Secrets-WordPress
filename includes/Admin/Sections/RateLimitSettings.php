@@ -1,6 +1,6 @@
 <?php
 
-namespace RunthingsSecrets\Options\Sections;
+namespace RunthingsSecrets\Admin\Sections;
 
 if (!defined('WPINC')) {
     die;

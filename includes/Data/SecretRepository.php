@@ -1,18 +1,19 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Data;
+
+use RunthingsSecrets\Security\SodiumEncryption;
 
 if (!defined('WPINC')) {
     die;
 }
 
-class Secrets
+class SecretRepository
 {
     private $crypt;
 
     public function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'SodiumEncryption.php';
         $this->crypt = SodiumEncryption::get_instance();
     }
 

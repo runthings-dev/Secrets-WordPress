@@ -1,6 +1,6 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Template;
 
 if (!defined('WPINC')) {
     die;
@@ -8,7 +8,7 @@ if (!defined('WPINC')) {
 
 // Ensure the Gamajo_Template_Loader class is included
 if (!class_exists('Gamajo_Template_Loader')) {
-	include_once RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
+	require_once RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/gamajo-template-loader/class-gamajo-template-loader.php';
 }
 
 class TemplateLoader extends \Gamajo_Template_Loader

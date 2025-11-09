@@ -1,6 +1,6 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Security;
 
 if (!defined('WPINC')) {
     die;
@@ -115,5 +115,3 @@ class RateLimit
         return false;
     }
 }
-
-new RateLimit();

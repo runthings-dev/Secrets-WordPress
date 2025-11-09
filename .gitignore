@@ -3,8 +3,10 @@
 *.log
 *.zip
 
-# Ignore composer.lock
+# Ignore Composer generated files (keep manually-managed vendor libraries)
 composer.lock
+/vendor/autoload.php
+/vendor/composer/
 
 # Ignore Node.js modules and dependencies
 node_modules/

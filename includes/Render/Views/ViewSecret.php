@@ -1,6 +1,10 @@
 <?php
 
-namespace RunthingsSecrets\Render;
+namespace RunthingsSecrets\Render\Views;
+
+use RunthingsSecrets\Render\ViewManager;
+use RunthingsSecrets\Template\TemplateLoader;
+use RunthingsSecrets\Template\CopyToClipboardIcon;
 
 if (!defined('WPINC')) {
     die;
@@ -12,11 +16,10 @@ class ViewSecret
 
     public function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
-        $this->view_manager = new \RunthingsSecrets\ViewManager();
+        $this->view_manager = new ViewManager();
 
         add_action('template_redirect', [$this, 'handle_delete_submit']);
-        }
+    }
 
         public function handle_delete_submit()
         {
@@ -72,10 +75,10 @@ class ViewSecret
 
             $timezone = wp_timezone_string();
 
-            $copy_icon = \RunthingsSecrets\CopyToClipboardIcon::get_icon('link-icon', true);
-            $copy_icon_allowed_html = \RunthingsSecrets\CopyToClipboardIcon::get_allowed_html('link-icon');
+            $copy_icon = CopyToClipboardIcon::get_icon('link-icon', true);
+            $copy_icon_allowed_html = CopyToClipboardIcon::get_allowed_html('link-icon');
 
-            $template = new \RunthingsSecrets\TemplateLoader();
+            $template = new TemplateLoader();
 
             ob_start();
 
@@ -122,7 +125,7 @@ class ViewSecret
 
         private function handle_error($error, $deleted = false)
         {
-            $template = new \RunthingsSecrets\TemplateLoader();
+            $template = new TemplateLoader();
 
             ob_start();
 

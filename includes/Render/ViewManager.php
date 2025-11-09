@@ -1,6 +1,8 @@
 <?php
 
-namespace RunthingsSecrets;
+namespace RunthingsSecrets\Render;
+
+use RunthingsSecrets\Data\SecretRepository;
 
 if (!defined('WPINC')) {
     die;
@@ -12,8 +14,7 @@ class ViewManager
 
     public function __construct()
     {
-        include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'lib/Secrets.php';
-        $this->secrets = new Secrets();
+        $this->secrets = new SecretRepository();
     }
 
     public function get_secret($id)
