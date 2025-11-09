@@ -11,7 +11,7 @@
  * When this occurs the version of the template file will be bumped and the 
  * readme will list any important changes.
  *
- * @version 1.4.0
+ * @version 1.5.0
  */
 if (!defined('ABSPATH')) exit; // Exit if accessed directly 
 ?>
