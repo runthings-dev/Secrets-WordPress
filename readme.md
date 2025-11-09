@@ -166,6 +166,19 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 # Changelog
 
+## 1.8.0 - 9th November 2025
+
+- Added feature - let the user decide if a secret can be manually deleted by the viewer
+- Added filter - `runthings_secrets_delete_button` to allow customizing the delete button
+- Added filter - `runthings_secrets_viewing_snippet` to allow customizing the viewing snippet text
+- Update error screen to show custom message for deleted secret
+- Add rate limiting for delete secret action to prevent brute force deletion attacks (default: 5 attempts per minute)
+- Added developer documentation in DEVELOPERS.md
+- Bump add-secret-form template version to 1.5.0
+- Bump error template version to 1.3.0
+- Bump secret-created template version to 1.4.0
+- Bump view-secret template version to 1.5.0
+
 ## 1.7.0 - 24th June 2025
 
 - Add autogrow on view secret and secret created pages
