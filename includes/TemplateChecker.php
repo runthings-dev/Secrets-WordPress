@@ -14,7 +14,7 @@ class TemplateChecker
     private $plugin_templates = array(
             'add-secret-form.php' => '1.5.0',
             'error.php' => '1.3.0',
-            'secret-created.php' => '1.3.0',
+            'secret-created.php' => '1.4.0',
             'view-secret.php' => '1.5.0',
         );
 
@@ -84,22 +84,24 @@ class TemplateChecker
                 return '';
             }
 
-            $response = wp_remote_get($file);
-            if (is_wp_error($response)) {
+            // We don't need to write to the file, so just open for reading.
+            $fp = fopen($file, 'r'); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+            if (!$fp) {
                 return '';
             }
 
-            $file_data = wp_remote_retrieve_body($response);
-            if (empty($file_data)) {
-                return '';
-            }
+            // Pull only the first 8kiB of the file in.
+            $file_data = fread($fp, 8192); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+
+            // PHP will close file handle, but we are good citizens.
+            fclose($fp); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
             // Make sure we catch CR-only line endings.
             $file_data = str_replace("\r", "\n", $file_data);
             $version = '';
 
             if (preg_match('/^[ \t\/*#@]*' . preg_quote('@version', '/') . '(.*)$/mi', $file_data, $match) && $match[1]) {
-                $version = _cleanup_header_comment($match[1]);
+                $version = trim(preg_replace('/\s*(?:\*\/|\?>).*/', '', $match[1]));
             }
 
             return $version;
