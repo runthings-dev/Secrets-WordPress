@@ -7,7 +7,7 @@ namespace RunthingsSecrets;
  * Plugin URI: https://runthings.dev/wordpress-plugins/secrets/
  * Repository URI: https://github.com/runthings-dev/Secrets-WordPress
  * Description: Share secrets securely
- * Version: 1.7.0
+ * Version: 1.8.0
  * Author: runthingsdev
  * Author URI: https://runthings.dev/
  * License: GPLv3 or later
@@ -41,7 +41,7 @@ define('RUNTHINGS_SECRETS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES', plugin_dir_path(__FILE__) . "includes/");
 define('RUNTHINGS_SECRETS_PLUGIN_URL', plugins_url('', __FILE__));
 
-define('RUNTHINGS_SECRETS_PLUGIN_VERSION', '1.7.0');
+define('RUNTHINGS_SECRETS_PLUGIN_VERSION', '1.8.0');
 
 // Load Composer autoloader
 require_once RUNTHINGS_SECRETS_PLUGIN_DIR . 'vendor/autoload.php';
