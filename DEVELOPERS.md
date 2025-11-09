@@ -113,6 +113,50 @@ add_filter('runthings_secrets_show_max_views_warning', '__return_false');
 
 ### UI Customization
 
+#### `runthings_secrets_viewing_snippet`
+
+Customize the viewing snippet text shown on the secret created page.
+
+**Default:** "Get it from {url} (valid for {days} / {views})."
+
+**Parameters:**
+
+- `$viewing_snippet` (string) - The default snippet text
+- `$secret` (object) - Secret object containing days_left, views_left, etc.
+- `$viewing_url` (string) - The URL to view the secret
+
+**Returns:** (string) Customized snippet text
+
+**Example - Change the format:**
+
+```php
+add_filter('runthings_secrets_viewing_snippet', function($viewing_snippet, $secret, $viewing_url) {
+    return sprintf(
+        'Access your secret at %s - expires in %s or after %s views',
+        $viewing_url,
+        $secret->days_left,
+        $secret->views_left
+    );
+}, 10, 3);
+```
+
+**Example - Add custom branding:**
+
+```php
+add_filter('runthings_secrets_viewing_snippet', function($viewing_snippet, $secret, $viewing_url) {
+    return sprintf(
+        '[ACME Corp] Secret link: %s (valid %s days, %s views)',
+        $viewing_url,
+        $secret->days_left,
+        $secret->views_left
+    );
+}, 10, 3);
+```
+
+**Added in:** v1.8.0
+
+---
+
 #### `runthings_secrets_copy_to_clipboard_icon`
 
 Customize the copy to clipboard icon.

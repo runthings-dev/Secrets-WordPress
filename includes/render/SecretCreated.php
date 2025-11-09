@@ -47,6 +47,16 @@ class SecretCreated
             $copy_snippet_icon = \RunthingsSecrets\CopyToClipboardIcon::get_icon('snippet-icon', true);
             $copy_snippet_icon_allowed_html = \RunthingsSecrets\CopyToClipboardIcon::get_allowed_html('snippet-icon');
 
+            $viewing_snippet = sprintf(
+                /* translators: %1$s: Viewing URL, %2$s: Days left, %3$s: Views left */
+                esc_html__("Get it from %1\$s (valid for %2\$s / %3\$s).", 'runthings-secrets'),
+                esc_url($viewing_url),
+                esc_html($secret->days_left),
+                esc_html($secret->views_left)
+            );
+
+            $viewing_snippet = apply_filters('runthings_secrets_viewing_snippet', $viewing_snippet, $secret, $viewing_url);
+
             $template = new \RunthingsSecrets\TemplateLoader();
 
             ob_start();
@@ -55,6 +65,7 @@ class SecretCreated
                 "secret" => $secret,
                 "timezone" => esc_html($timezone),
                 "viewing_url" => esc_url($viewing_url),
+                "viewing_snippet" => $viewing_snippet,
                 "copy_to_clipboard_link_icon" => $copy_link_icon,
                 "copy_to_clipboard_link_icon_allowed_html" => $copy_link_icon_allowed_html,
                 "copy_to_clipboard_snippet_icon" => $copy_snippet_icon,
