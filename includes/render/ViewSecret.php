@@ -14,6 +14,33 @@ class ViewSecret
     {
         include_once RUNTHINGS_SECRETS_PLUGIN_DIR_INCLUDES . 'ViewManager.php';
         $this->view_manager = new \RunthingsSecrets\ViewManager();
+
+        add_action('template_redirect', [$this, 'handle_delete_submit']);
+        }
+
+        public function handle_delete_submit()
+        {
+            if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+                return;
+            }
+
+            if (!isset($_POST['runthings_secrets_delete_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['runthings_secrets_delete_nonce'])), 'runthings_secrets_delete')) {
+                return;
+            }
+
+            if (!isset($_POST['delete_now']) || $_POST['delete_now'] !== '1') {
+                return;
+            }
+
+            // phpcs:disable WordPress.Security.NonceVerification.Missing
+            // Nonce already checked above
+            $id = isset($_POST['secret_id']) ? sanitize_text_field(wp_unslash($_POST['secret_id'])) : null;
+            // phpcs:enable WordPress.Security.NonceVerification.Missing
+
+            if ($id) {
+                $this->view_manager->delete_secret($id);
+                // Continue to render which will show not-found error
+            }
         }
 
         public function render()
@@ -44,11 +71,17 @@ class ViewSecret
 
             ob_start();
 
+            $delete_button_html = '';
+            if ($secret->allow_delete) {
+                $delete_button_html = $this->get_delete_button($secret);
+            }
+
             $data = array(
                 "secret" => $secret,
                 "timezone" => esc_html($timezone),
                 "copy_to_clipboard_icon" => $copy_icon,
                 "copy_to_clipboard_icon_allowed_html" => $copy_icon_allowed_html,
+                "delete_button_html" => $delete_button_html,
             );
 
             $template
@@ -56,6 +89,27 @@ class ViewSecret
                 ->get_template_part('view-secret');
 
             return ob_get_clean();
+        }
+
+        private function get_delete_button($secret)
+        {
+            if (!$secret->allow_delete) {
+                return '';
+            }
+
+            $default_button = sprintf(
+                '<form method="post" class="rs-delete-form">
+                    %s
+                    <input type="hidden" name="secret_id" value="%s">
+                    <input type="hidden" name="delete_now" value="1">
+                    <button type="submit" class="rs-delete-button">%s</button>
+                </form>',
+                wp_nonce_field('runthings_secrets_delete', 'runthings_secrets_delete_nonce', true, false),
+                esc_attr($secret->uuid),
+                esc_html__('Delete Now', 'runthings-secrets')
+            );
+
+            return apply_filters('runthings_secrets_delete_button', $default_button, $secret);
         }
 
         private function handle_error($error)
@@ -98,7 +152,8 @@ class ViewSecret
             $script_options = array(
                 'i18n' => array(
                     'copyToClipboard' => __('Copy to clipboard', 'runthings-secrets'),
-                    'copied' => __('Copied!', 'runthings-secrets')
+                    'copied' => __('Copied!', 'runthings-secrets'),
+                    'deleteConfirm' => __('Are you sure you want to delete this secret? This action cannot be undone.', 'runthings-secrets')
                 )
             );
 

@@ -40,3 +40,9 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     /* translators: %s: Views left */
     echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)));
     ?></p>
+<?php if ($context->secret->allow_delete) : ?>
+    <?php
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    echo apply_filters('runthings_secrets_delete_button', $context->delete_button_html, $context->secret);
+    ?>
+<?php endif; ?>
