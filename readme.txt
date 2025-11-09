@@ -99,49 +99,25 @@ This is for advanced setups, where you might want to provide your own brute forc
 
 If you have access to it, some web servers can also support setting up rate limiting via their config files, which would remove the overhead of WordPress loading for each bot request.
 
+= Where can I find developer documentation? =
+
+For complete developer documentation including all available filters, hooks, and template overrides, see the DEVELOPERS.md file in the plugin directory or on GitHub: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md
+
 = How can I disable the validation warnings? =
 
-The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These warnings can be customized or disabled using WordPress filters:
+The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These warnings can be customized or disabled using WordPress filters.
 
-**Customize expiration warning date (default: 6 months from now):**
+Disable expiration date warning: `add_filter('runthings_secrets_show_expiration_warning', '__return_false');`
 
-```php
-add_filter('runthings_secrets_expiration_warning_date', function() {
-    // Show warning for dates more than 3 months in the future
-    $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
-    $warning_date->add(new DateInterval('P3M'));
-    return $warning_date->format('Y-m-d');
-});
-```
+Disable max views warning: `add_filter('runthings_secrets_show_max_views_warning', '__return_false');`
 
-**Customize max views warning threshold (default: 25 views):**
+Customize the warning thresholds: `add_filter('runthings_secrets_expiration_warning_date', function() { $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string())); $warning_date->add(new DateInterval('P3M')); return $warning_date->format('Y-m-d'); });`
 
-```php
-add_filter('runthings_secrets_max_views_warning_threshold', function() {
-    return 10; // Show warning for more than 10 views
-});
-```
-
-**Disable expiration date warning:**
-
-```php
-add_filter('runthings_secrets_show_expiration_warning', '__return_false');
-```
-
-**Disable max views warning:**
-
-```php
-add_filter('runthings_secrets_show_max_views_warning', '__return_false');
-```
-
-**Disable both warnings:**
-
-```php
-add_filter('runthings_secrets_show_expiration_warning', '__return_false');
-add_filter('runthings_secrets_show_max_views_warning', '__return_false');
-```
+Or customize max views threshold: `add_filter('runthings_secrets_max_views_warning_threshold', function() { return 10; });`
 
 Add these lines to your theme's `functions.php` file or a custom plugin.
+
+For complete documentation on these and other filters, see DEVELOPERS.md in the plugin directory or on GitHub: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md#validation-warnings
 
 = How can I change the timezone displayed in the "Add Secret" form? =
 
