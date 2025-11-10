@@ -16,19 +16,20 @@ RunThings Secrets is a WordPress plugin that allows you to securely share secret
 
 = Features =
 
+  * Secure encryption of secrets when stored in the database.
   * Limit access by views and expiration date to enhance security.
+  * Allow viewer to delete the secret, or disable this option to prevent manual deletion.
   * Easy sharing with a copy-to-clipboard button, featuring a helpful tooltip.
   * Options to copy a plain link or a link with instructions and expiration terms.
-  * Configurable pages for 'Add Secret,' 'Secret Created,' and 'View Secret' actions.
   * Spam protection powered by reCAPTCHA v3, including a score threshold setting.
-  * Flexible integration using shortcodes or WordPress Block Editor blocks.
-  * Optional styling for forms can be enqueued as needed.
-  * Secure encryption of secrets when stored in the database.
-  * Customizable templates that can be overridden to fit your site’s design.
-  * Fully translatable.
-  * Timezone-aware expiration dates, synchronized with your site’s timezone settings.
-  * Object caching support, to improve performance.
   * Customisable rate limiting, to prevent brute force attacks from bots.
+  * Timezone-aware expiration dates, synchronized with your site’s timezone settings.
+  * Flexible integration using shortcodes or WordPress Block Editor blocks.
+  * Configurable pages for 'Add Secret,' 'Secret Created,' and 'View Secret' actions.
+  * Customizable templates that can be overridden to fit your site’s design.
+  * Optional styling for forms can be enqueued as needed.
+  * Fully translatable.
+  * Object caching support, to improve performance.
 
 == Installation ==
 
