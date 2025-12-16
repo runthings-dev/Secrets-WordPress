@@ -29,34 +29,50 @@ class AddSecret
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_scripts']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $default_expiration_string = get_option('runthings_secrets_default_expiration', '+7 days');
-            $default_expiration_local = new \DateTime($default_expiration_string, new \DateTimeZone(wp_timezone_string()));
-            $default_max_views = intval(get_option('runthings_secrets_default_max_views', 5));
-            $minimum_date_local = new \DateTime('+1 days', new \DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 
-            // Calculate validation thresholds
-            $max_views_warning_threshold = apply_filters('runthings_secrets_max_views_warning_threshold', 25);
+            // Calculate default expiration from option
+            $default_expiration_string = get_option('runthings_secrets_default_expiration', '+7 days');
+            $default_expiration_local = new \DateTime($default_expiration_string, new \DateTimeZone($timezone));
 
-            // Calculate the default warning date (6 months from now) and allow filtering
-            $default_warning_date = new \DateTime('now', new \DateTimeZone(wp_timezone_string()));
-            $default_warning_date->add(new \DateInterval('P6M'));
-            $expiration_warning_date_string = apply_filters('runthings_secrets_expiration_warning_date', $default_warning_date->format('Y-m-d'));
+            // Calculate the expiration warning date (6 months from now)
+            $expiration_warning_date = new \DateTime('now', new \DateTimeZone($timezone));
+            $expiration_warning_date->add(new \DateInterval('P6M'));
+
+            $data = array(
+                "default_expiration" => $default_expiration_local->format('Y-m-d'),
+                "default_max_views" => intval(get_option('runthings_secrets_default_max_views', 5)),
+                "minimum_date" => (new \DateTime('+1 days', new \DateTimeZone($timezone)))->format('Y-m-d'),
+                "timezone" => $timezone,
+                "expiration_warning_date" => $expiration_warning_date->format('Y-m-d'),
+                "max_views_warning_threshold" => 25,
+                "show_expiration_warning" => true,
+                "show_max_views_warning" => true,
+            );
+
+            $data = apply_filters('runthings_secrets_add_form_data', $data);
+
+            $data['show_expiration_warning'] = apply_filters_deprecated(
+                'runthings_secrets_show_expiration_warning',
+                array($data['show_expiration_warning']),
+                '1.9.0',
+                'runthings_secrets_add_form_data'
+            );
+            $data['show_max_views_warning'] = apply_filters_deprecated(
+                'runthings_secrets_show_max_views_warning',
+                array($data['show_max_views_warning']),
+                '1.9.0',
+                'runthings_secrets_add_form_data'
+            );
+
+            // Escape values for output
+            $data = array_map(function ($value) {
+                return is_string($value) ? esc_attr($value) : $value;
+            }, $data);
 
             $template = new TemplateLoader();
 
             ob_start();
-
-            $data = array(
-                "default_expiration" => esc_attr($default_expiration_local->format('Y-m-d')),
-                "default_max_views" => esc_attr($default_max_views),
-                "minimum_date" => esc_attr($minimum_date_local->format('Y-m-d')),
-                "timezone" => esc_attr($timezone),
-                "expiration_warning_date" => esc_attr($expiration_warning_date_string),
-                "max_views_warning_threshold" => esc_attr($max_views_warning_threshold),
-                "show_expiration_warning" => apply_filters('runthings_secrets_show_expiration_warning', true),
-                "show_max_views_warning" => apply_filters('runthings_secrets_show_max_views_warning', true),
-            );
 
             $template
                 ->set_template_data($data, 'context')
