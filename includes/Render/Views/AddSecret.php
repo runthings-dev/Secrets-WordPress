@@ -53,6 +53,8 @@ class AddSecret
                 "timezone" => esc_attr($timezone),
                 "expiration_warning_date" => esc_attr($expiration_warning_date_string),
                 "max_views_warning_threshold" => esc_attr($max_views_warning_threshold),
+                "show_expiration_warning" => apply_filters('runthings_secrets_show_expiration_warning', true),
+                "show_max_views_warning" => apply_filters('runthings_secrets_show_max_views_warning', true),
             );
 
             $template
