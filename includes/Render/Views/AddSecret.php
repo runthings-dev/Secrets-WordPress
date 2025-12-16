@@ -29,8 +29,9 @@ class AddSecret
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_form_scripts']);
             add_action('wp_enqueue_scripts', [$this, 'maybe_enqueue_recaptcha']);
 
-            $default_expiration_local = new \DateTime('+7 days', new \DateTimeZone(wp_timezone_string()));
-            $default_max_views = 5;
+            $default_expiration_string = get_option('runthings_secrets_default_expiration', '+7 days');
+            $default_expiration_local = new \DateTime($default_expiration_string, new \DateTimeZone(wp_timezone_string()));
+            $default_max_views = intval(get_option('runthings_secrets_default_max_views', 5));
             $minimum_date_local = new \DateTime('+1 days', new \DateTimeZone(wp_timezone_string()));
             $timezone = wp_timezone_string();
 

@@ -66,6 +66,22 @@ class AdvancedSettings
         );
 
         add_settings_field(
+            'runthings_secrets_default_expiration',
+            __('Default Expiration', 'runthings-secrets'),
+            [$this, 'default_expiration_callback'],
+            'runthings-secrets',
+            'runthings_secrets_advanced_section'
+        );
+
+        add_settings_field(
+            'runthings_secrets_default_max_views',
+            __('Default Max Views', 'runthings-secrets'),
+            [$this, 'default_max_views_callback'],
+            'runthings-secrets',
+            'runthings_secrets_advanced_section'
+        );
+
+        add_settings_field(
             'runthings_secrets_enqueue_form_styles',
             __('Enqueue Form Styles', 'runthings-secrets'),
             [$this, 'enqueue_stylesheet_callback'],
@@ -83,6 +99,26 @@ class AdvancedSettings
 
         register_setting(
             'runthings-secrets-settings',
+            'runthings_secrets_default_expiration',
+            [
+                'type' => 'string',
+                'default' => '+7 days',
+                'sanitize_callback' => 'sanitize_text_field'
+            ]
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
+            'runthings_secrets_default_max_views',
+            [
+                'type' => 'integer',
+                'default' => 5,
+                'sanitize_callback' => 'absint'
+            ]
+        );
+
+        register_setting(
+            'runthings-secrets-settings',
             'runthings_secrets_enqueue_form_styles',
             [
                 'type' => 'boolean',
@@ -95,6 +131,20 @@ class AdvancedSettings
     public function enqueue_advanced_section_callback()
     {
         // Empty callback
+    }
+
+    public function default_expiration_callback()
+    {
+        $default_expiration = get_option('runthings_secrets_default_expiration', '+7 days');
+        echo '<input type="text" id="runthings_secrets_default_expiration" name="runthings_secrets_default_expiration" value="' . esc_attr($default_expiration) . '" class="regular-text" />';
+        echo '<p class="description">' . esc_html__('Default expiration for new secrets. Use relative date strings like "+7 days", "+2 weeks", or "+1 month".', 'runthings-secrets') . '</p>';
+    }
+
+    public function default_max_views_callback()
+    {
+        $default_max_views = get_option('runthings_secrets_default_max_views', 5);
+        echo '<input type="number" id="runthings_secrets_default_max_views" name="runthings_secrets_default_max_views" value="' . esc_attr($default_max_views) . '" min="1" class="small-text" />';
+        echo '<p class="description">' . esc_html__('Default value for "Maximum number of views" in the add secret form.', 'runthings-secrets') . '</p>';
     }
 
     public function enqueue_stylesheet_callback()

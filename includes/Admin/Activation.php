@@ -72,6 +72,8 @@ class Activation
      */
     private static function activate_options()
     {
+        add_option('runthings_secrets_default_expiration', '+7 days', '', 'no');
+        add_option('runthings_secrets_default_max_views', 5, '', 'no');
         add_option('runthings_secrets_enqueue_form_styles', 1, '', 'no');
         add_option('runthings_secrets_stats_total_secrets', 0, '', 'no');
         add_option('runthings_secrets_stats_total_views', 0, '', 'no');
