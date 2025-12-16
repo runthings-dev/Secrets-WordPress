@@ -68,7 +68,8 @@ class SecretRepository
             $secret->formatted_expiration_gmt = $this->format_expiration_date_gmt($secret->expiration);
             $secret->formatted_expiration = $this->format_expiration_date_local($secret->expiration);
             $secret->days_left = $this->get_days_left($secret->formatted_expiration);
-            $secret->views_left = $this->get_views_left($secret->max_views - $secret->views);
+            $secret->views_left_raw = $secret->max_views - $secret->views;
+            $secret->views_left = $this->get_views_left($secret->views_left_raw);
 
             return $secret;
         }

@@ -45,7 +45,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     ?></p>
 <p><?php
     /* translators: %s: Views left */
-    echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), ($context->secret->max_views - $context->secret->views)));
+    echo esc_html(sprintf(__('Views left: %s', 'runthings-secrets'), $context->secret->views_left_raw));
     ?></p>
 <p><?php
     echo sprintf(
