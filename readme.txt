@@ -104,21 +104,19 @@ If you have access to it, some web servers can also support setting up rate limi
 
 For complete developer documentation including all available filters, hooks, and template overrides, see the DEVELOPERS.md file in the plugin directory or on GitHub: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md
 
+= How can I change the default expiration or max views? =
+
+Go to Settings → RunThings Secrets → Advanced to configure the default expiration date and max views for the add secret form.
+
+For programmatic control, use the `runthings_secrets_add_form_data` filter. See DEVELOPERS.md for details: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md#add-form-data
+
 = How can I disable the validation warnings? =
 
-The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These warnings can be customized or disabled using WordPress filters.
+Use the `runthings_secrets_add_form_data` filter to disable warnings:
 
-Disable expiration date warning: `add_filter('runthings_secrets_show_expiration_warning', '__return_false');`
+`add_filter('runthings_secrets_add_form_data', function($data) { $data['show_expiration_warning'] = false; $data['show_max_views_warning'] = false; return $data; });`
 
-Disable max views warning: `add_filter('runthings_secrets_show_max_views_warning', '__return_false');`
-
-Customize the warning thresholds: `add_filter('runthings_secrets_expiration_warning_date', function() { $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string())); $warning_date->add(new DateInterval('P3M')); return $warning_date->format('Y-m-d'); });`
-
-Or customize max views threshold: `add_filter('runthings_secrets_max_views_warning_threshold', function() { return 10; });`
-
-Add these lines to your theme's `functions.php` file or a custom plugin.
-
-For complete documentation on these and other filters, see DEVELOPERS.md in the plugin directory or on GitHub: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md#validation-warnings
+For complete documentation, see DEVELOPERS.md: https://github.com/runthings-dev/Secrets-WordPress/blob/master/DEVELOPERS.md#add-form-data
 
 = How can I change the timezone displayed in the "Add Secret" form? =
 

@@ -5,7 +5,8 @@ This document provides technical documentation for developers who want to extend
 ## Table of Contents
 
 - [Filters](#filters)
-  - [Validation Warnings](#validation-warnings)
+  - [Add Form Data](#add-form-data)
+  - [Deprecated Filters](#deprecated-filters)
   - [UI Customization](#ui-customization)
   - [Delete Feature](#delete-feature)
 - [Actions](#actions)
@@ -13,101 +14,93 @@ This document provides technical documentation for developers who want to extend
 
 ## Filters
 
-### Validation Warnings
+### Add Form Data
 
-The plugin includes validation warnings that appear when users set potentially insecure values. These can be customized or disabled using the following filters.
+#### `runthings_secrets_add_form_data`
 
-#### `runthings_secrets_expiration_warning_date`
-
-Customize the date threshold for showing expiration warnings.
-
-**Default:** 6 months from current date
+Filter the data passed to the add secret form template. This is the recommended way to customize form defaults and validation thresholds.
 
 **Parameters:**
 
-- `$date_string` (string) - Date in Y-m-d format
+- `$data` (array) - Form data array with the following keys:
+  - `default_expiration` (string) - Default expiration date in Y-m-d format
+  - `default_max_views` (int) - Default max views value
+  - `minimum_date` (string) - Minimum selectable date in Y-m-d format
+  - `timezone` (string) - Site timezone string
+  - `expiration_warning_date` (string) - Date threshold for expiration warning in Y-m-d format
+  - `max_views_warning_threshold` (int) - View count threshold for warning
+  - `show_expiration_warning` (bool) - Whether to show expiration warning
+  - `show_max_views_warning` (bool) - Whether to show max views warning
 
-**Returns:** (string) Date in Y-m-d format
+**Returns:** (array) Modified data array
 
-**Example - Show warning for dates more than 3 months in the future:**
+**Example - Customize warning thresholds:**
 
 ```php
-add_filter('runthings_secrets_expiration_warning_date', function($date_string) {
+add_filter('runthings_secrets_add_form_data', function($data) {
+    // Show warning for dates more than 3 months in the future
     $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
-    $warning_date->add(new DateInterval('P3M')); // 3 months
-    return $warning_date->format('Y-m-d');
+    $warning_date->add(new DateInterval('P3M'));
+    $data['expiration_warning_date'] = $warning_date->format('Y-m-d');
+
+    // Show warning for more than 10 views
+    $data['max_views_warning_threshold'] = 10;
+
+    return $data;
 });
 ```
 
-**Added in:** v1.7.0
-
----
-
-#### `runthings_secrets_max_views_warning_threshold`
-
-Customize the view count threshold for showing warnings.
-
-**Default:** 25 views
-
-**Parameters:**
-
-- `$threshold` (int) - Number of views
-
-**Returns:** (int) Number of views
-
-**Example - Show warning for more than 10 views:**
+**Example - Disable all warnings:**
 
 ```php
-add_filter('runthings_secrets_max_views_warning_threshold', function($threshold) {
-    return 10;
+add_filter('runthings_secrets_add_form_data', function($data) {
+    $data['show_expiration_warning'] = false;
+    $data['show_max_views_warning'] = false;
+    return $data;
 });
 ```
 
-**Added in:** v1.7.0
-
 ---
+
+### Deprecated Filters
+
+The following filters still work but are deprecated. Use `runthings_secrets_add_form_data` instead.
 
 #### `runthings_secrets_show_expiration_warning`
 
+**Deprecated in:** v1.9.0
+
 Toggle visibility of the expiration date warning.
 
-**Default:** true
-
-**Parameters:**
-
-- `$show` (bool) - Whether to show the warning
-
-**Returns:** (bool) Whether to show the warning
-
-**Example - Disable expiration warning:**
-
 ```php
+// Old way (deprecated)
 add_filter('runthings_secrets_show_expiration_warning', '__return_false');
-```
 
-**Added in:** v1.7.0
+// New way
+add_filter('runthings_secrets_add_form_data', function($data) {
+    $data['show_expiration_warning'] = false;
+    return $data;
+});
+```
 
 ---
 
 #### `runthings_secrets_show_max_views_warning`
 
+**Deprecated in:** v1.9.0
+
 Toggle visibility of the max views warning.
 
-**Default:** true
-
-**Parameters:**
-
-- `$show` (bool) - Whether to show the warning
-
-**Returns:** (bool) Whether to show the warning
-
-**Example - Disable max views warning:**
-
 ```php
+// Old way (deprecated)
 add_filter('runthings_secrets_show_max_views_warning', '__return_false');
-```
 
-**Added in:** v1.7.0
+// New way
+add_filter('runthings_secrets_add_form_data', function($data) {
+    $data['show_max_views_warning'] = false;
+    return $data;
+});
+```
 
 ---
 

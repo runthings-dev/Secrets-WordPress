@@ -104,41 +104,21 @@ If you have access to it, some web servers can also support setting up rate limi
 
 For complete developer documentation including all available filters, hooks, and template overrides, see [DEVELOPERS.md](DEVELOPERS.md).
 
-# Validation Warnings
+# Form Defaults
 
-The plugin includes validation warnings that appear when users set potentially insecure values (expiration dates more than 6 months in the future, or view counts above 25). These warnings can be customized or disabled using WordPress filters.
+The default expiration date and max views can be configured in Settings → RunThings Secrets → Advanced.
 
-**Quick examples:**
-
-Disable expiration date warning:
+For programmatic control, use the `runthings_secrets_add_form_data` filter:
 
 ```php
-add_filter('runthings_secrets_show_expiration_warning', '__return_false');
-```
-
-Disable max views warning:
-
-```php
-add_filter('runthings_secrets_show_max_views_warning', '__return_false');
-```
-
-Customize thresholds:
-
-```php
-// Show warning for dates more than 3 months in the future
-add_filter('runthings_secrets_expiration_warning_date', function() {
-    $warning_date = new DateTime('now', new DateTimeZone(wp_timezone_string()));
-    $warning_date->add(new DateInterval('P3M'));
-    return $warning_date->format('Y-m-d');
-});
-
-// Show warning for more than 10 views
-add_filter('runthings_secrets_max_views_warning_threshold', function() {
-    return 10;
+add_filter('runthings_secrets_add_form_data', function($data) {
+    $data['default_max_views'] = 3;
+    $data['show_expiration_warning'] = false;
+    return $data;
 });
 ```
 
-For complete documentation on these and other filters, see [DEVELOPERS.md](DEVELOPERS.md#validation-warnings).
+For complete documentation, see [DEVELOPERS.md](DEVELOPERS.md#add-form-data).
 
 # Timezone
 
