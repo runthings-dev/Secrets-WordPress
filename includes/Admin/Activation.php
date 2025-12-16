@@ -72,12 +72,34 @@ class Activation
      */
     private static function activate_options()
     {
+        // Page settings
+        add_option('runthings_secrets_add_page', 0, '', 'no');
+        add_option('runthings_secrets_created_page', 0, '', 'no');
+        add_option('runthings_secrets_view_page', 0, '', 'no');
+
+        // Form defaults
         add_option('runthings_secrets_default_expiration', '+7 days', '', 'no');
         add_option('runthings_secrets_default_max_views', 5, '', 'no');
         add_option('runthings_secrets_enqueue_form_styles', 1, '', 'no');
+
+        // Spam protection
+        add_option('runthings_secrets_recaptcha_enabled', 0, '', 'no');
+        add_option('runthings_secrets_recaptcha_public_key', '', '', 'no');
+        add_option('runthings_secrets_recaptcha_private_key', '', '', 'no');
+        add_option('runthings_secrets_recaptcha_score', 0.5, '', 'no');
+
+        // Rate limiting
+        add_option('runthings_secrets_rate_limit_enabled', 1, '', 'no');
+        add_option('runthings_secrets_rate_limit_tries_add', 5, '', 'no');
+        add_option('runthings_secrets_rate_limit_tries_created', 10, '', 'no');
+        add_option('runthings_secrets_rate_limit_tries_view', 10, '', 'no');
+        add_option('runthings_secrets_rate_limit_tries_delete', 5, '', 'no');
+        add_option('runthings_secrets_rate_limit_exemption_enabled', 0, '', 'no');
+        add_option('runthings_secrets_rate_limit_exemption_roles', array(), '', 'no');
+
+        // Stats
         add_option('runthings_secrets_stats_total_secrets', 0, '', 'no');
         add_option('runthings_secrets_stats_total_views', 0, '', 'no');
-        add_option('runthings_secrets_recaptcha_score', 0.5, '', 'no');
     }
 
     /**
