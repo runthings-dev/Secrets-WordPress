@@ -165,16 +165,26 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 == Upgrade Notice ==
 
+= 1.9.0 =
+Adds admin settings for default expiration and max views, consolidates form filters, and improves autoload performance.
+
 = 1.8.0 =
 Adds manual delete feature with rate limiting, new customization filters, and developer documentation.
 
 = 1.7.0 =
 Add autogrow on view secret, fix an encoding bug, add validation warnings, and validation warning filters.
 
-= 1.6.0 =
-This update fixes a hardcoded path bug
-
 == Changelog ==
+
+= 1.9.0 - 16th December 2025 =
+* Added admin settings for default expiration date and max views (Settings → RunThings Secrets → Advanced)
+* Added filter - `runthings_secrets_add_form_data` to customize all add form context in one place
+* Deprecated filters - `runthings_secrets_show_expiration_warning` and `runthings_secrets_show_max_views_warning` (still functional, but use new filter instead)
+* Added `views_left_raw` property to secret object for template use
+* Performance - all options now registered with autoload disabled
+* Bump add-secret-form template version to 1.6.0
+* Bump view-secret template version to 1.6.0
+* Bump secret-created template version to 1.5.0
 
 = 1.8.0 - 9th November 2025 =
 * Added feature - let the user decide if a secret can be manually deleted by the viewer
