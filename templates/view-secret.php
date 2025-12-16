@@ -43,6 +43,6 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 <?php if ($context->secret->allow_delete) : ?>
     <?php
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo apply_filters('runthings_secrets_delete_button', $context->delete_button_html, $context->secret);
+    echo $context->delete_button_html;
     ?>
 <?php endif; ?>
