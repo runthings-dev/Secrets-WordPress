@@ -1,4 +1,4 @@
-# Introduction
+# RunThings Secrets
 
 Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 
@@ -8,7 +8,7 @@ Create a secret URL, and share it with someone instead of leaving a password in 
 
 Set the maximum views and expiration date, so that the secret doesn't lurk around forever.
 
-# Features
+## Features
 
 - Secure encryption of secrets when stored in the database.
 - Limit access by views and expiration date to enhance security.
@@ -25,7 +25,7 @@ Set the maximum views and expiration date, so that the secret doesn't lurk aroun
 - Fully translatable.
 - Object caching support, to improve performance.
 
-# Usage
+## Usage
 
 Follow these steps to install and configure the plugin:
 
@@ -60,13 +60,13 @@ Follow these steps to install and configure the plugin:
 7. **HTTPS Recommendation**:
    - While the plugin can operate over HTTP, using HTTPS is recommended. HTTPS enables the modern copy-to-clipboard API, providing a better user experience. Running on HTTP uses a deprecated API and may result in a degraded experience.
 
-# Download
+## Download
 
 Download and contribute issues at:
 
 https://github.com/runthings-dev/Secrets-WordPress
 
-# Encryption
+## Encryption
 
 As long as your server supports the PHP encryption library, Sodium, an encryption key is automatically generated and used to secure your secrets. However, you can set a custom encryption key in your `wp-config.php` file by adding a `define` statement.
 
@@ -84,7 +84,7 @@ You can generate a new key in the options page of the plugin, which is under Adm
 
 Note: Changing the encryption key will break the decryption of any existing secrets, making them unreadable.
 
-# Rate Limiting
+## Rate Limiting
 
 here is basic rate limiting functionality included, enabled by default, to provide protection against brute force attacks by bots.
 
@@ -100,11 +100,11 @@ This is for advanced setups, where you might want to provide your own brute forc
 
 If you have access to it, some web servers can also support setting up rate limiting via their config files, which would remove the overhead of WordPress loading for each bot request.
 
-# Developer Documentation
+## Developer Documentation
 
 For complete developer documentation including all available filters, hooks, and template overrides, see [DEVELOPERS.md](DEVELOPERS.md).
 
-# Form Defaults
+## Form Defaults
 
 The default expiration date and max views can be configured in Settings → RunThings Secrets → Advanced.
 
@@ -120,7 +120,7 @@ add_filter('runthings_secrets_add_form_data', function($data) {
 
 For complete documentation, see [DEVELOPERS.md](DEVELOPERS.md#add-form-data).
 
-# Timezone
+## Timezone
 
 The timezone displayed in the "Add Secret" form is set to match your WordPress site's timezone settings. To change the displayed timezone, follow these steps:
 
@@ -131,11 +131,11 @@ The timezone displayed in the "Add Secret" form is set to match your WordPress s
 
 Remember, the timezone setting not only affects the display of dates in the "Add Secret" form but also how the expiration dates are processed within the plugin.
 
-# Third-Party Services
+## Third-Party Services
 
 This plugin uses the following third-party service:
 
-## Google reCAPTCHA v3
+### Google reCAPTCHA v3
 
 This plugin can make use of Google reCAPTCHA v3 to prevent spam and abuse. Google reCAPTCHA is used to ensure that the requests are made by humans and not by bots.
 
@@ -145,9 +145,9 @@ This plugin can make use of Google reCAPTCHA v3 to prevent spam and abuse. Googl
 
 When you enable reCAPTCHA in the plugin settings, it will send user data, such as the user's IP address and other data, to Google for verification.
 
-# Changelog
+## Changelog
 
-## 1.9.0 - 16th December 2025
+### 1.9.0 - 16th December 2025
 
 - Added admin settings for default expiration date and max views (Settings → RunThings Secrets → Advanced)
 - Added filter - `runthings_secrets_add_form_data` to customize all add form context in one place
@@ -158,7 +158,7 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 - Bump view-secret template version to 1.6.0
 - Bump secret-created template version to 1.5.0
 
-## 1.8.0 - 9th November 2025
+### 1.8.0 - 9th November 2025
 
 - Added feature - let the user decide if a secret can be manually deleted by the viewer
 - Added filter - `runthings_secrets_delete_button` to allow customizing the delete button
@@ -171,7 +171,7 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 - Bump secret-created template version to 1.4.0
 - Bump view-secret template version to 1.5.0
 
-## 1.7.0 - 24th June 2025
+### 1.7.0 - 24th June 2025
 
 - Add autogrow on view secret and secret created pages
 - Allow selecting partial text in the view secret textarea
@@ -185,31 +185,31 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 - Added filter - max views warning threshold filter as `runthings_secrets_max_views_warning_threshold` to allow customizing the max views warning threshold
 - Bump tested up to 6.8
 
-## 1.6.0 - 9th July 2024
+### 1.6.0 - 9th July 2024
 
 - Bugfix - Remove hardcoded plugin folder name
 
-## 1.5.1 - 7th June 2024
+### 1.5.1 - 7th June 2024
 
 - Add readme files back into the release archive.
 
-## 1.5.0 - 7th June 2024
+### 1.5.0 - 7th June 2024
 
 - Full review of plugin to enhance data validation and security
 - Add third-party services section to the readme and admin panel
 - Prevent direct access to template files, bumping version numbers up
 
-## 1.4.1 - 29th May 2024
+### 1.4.1 - 29th May 2024
 
 - Bugfix - build script was excluding json files eg block.json and broke the blocks
 
-## 1.4.0 - 21st May 2024
+### 1.4.0 - 21st May 2024
 
 - Implemented dev tooling - `./bin/makepot.sh`
 - Implemented dev tooling - `./bin/build-zip.sh`
 - Replaced po and mo files with pot file
 
-## 1.3.0 - 1st May 2024
+### 1.3.0 - 1st May 2024
 
 - Update author meta field to be in line with WordPress Directory user name
 - Update cron schedule to be at 00:15 daily, instead of daily from time of install
@@ -220,7 +220,7 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 - Bump add-secret-form template version to 1.2.0
 - Add secret template - rename current date to minimum date, and add 1 day to it
 
-## 1.2.0 - 30th Apr 2024
+### 1.2.0 - 30th Apr 2024
 
 - Rate limits - Implement optional rate limiting to stop bots
 - Rate limits - Allow custom rate limits per feature (add, created, view)
@@ -243,39 +243,39 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 - Bug - Encoding of posted secret value corrupted some passwords
 - PHPCS coding standards compliance
 
-## 1.1.0 - 23rd April 2024
+### 1.1.0 - 23rd April 2024
 
 - Implement tooltips on copy to clipboard buttons
 
-## 1.0.0 - 18th April 2024
+### 1.0.0 - 18th April 2024
 
 - Initial public release
 - Security review
 - Improved default styling
 - Copy to clipboard feature added to view secret page
 
-## 0.5.0 - 29th March 2023
+### 0.5.0 - 29th March 2023
 
 - Internal release
 
-# Background
+## Background
 
 It was inspired by sites like https://pwpush.com and https://github.com/unicalabs/agrippa.
 
 I'm developing this to have it in the WordPress ecosystem, so that it can be easily branded and integrated into sites.
 
-# Licence
+## Licence
 
 This plugin is licenced under GPL 3, and is free to use on personal and
 commercial projects.
 
-# Thanks
+## Thanks
 
 Copy To Clipboard - SVG Icon from https://www.svgrepo.com/svg/389087/clipboard-copy (MIT Licence)
 
 Plugin Icon - Secret by Side Project, on Noun Project, from https://thenounproject.com/browse/icons/term/secret/ (CC BY 3.0)
 
-# Author
+## Author
 
 Built by Matthew Harris of runthings.dev, copyright 2023-2024.
 
