@@ -1,0 +1,22 @@
+# runthings-wp-build:wporg v1.0.0
+# If customized, add -custom to version (e.g., v1.0.0-custom) to prevent overwrites
+name: Deploy to WP.org
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Tag to deploy (e.g. v1.2.3)'
+        required: false
+
+jobs:
+  deploy:
+    uses: runthings-dev/.github/.github/workflows/wporg-svn-deploy.yml@v1
+    with:
+      ref: ${{ inputs.ref || github.ref }}
+    secrets:
+      WPORG_USERNAME: ${{ secrets.WPORG_USERNAME }}
+      WPORG_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
