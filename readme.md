@@ -147,6 +147,10 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 ## Changelog
 
+### 1.9.1 - 16th November 2026
+
+- Updated WordPress tested-up-to metadata to 7.1.
+
 ### 1.9.0 - 16th December 2025
 
 - Added admin settings for default expiration date and max views (Settings → RunThings Secrets → Advanced)

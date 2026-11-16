@@ -6,7 +6,7 @@ Tested up to: 7.1
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 
 Securely share secrets with a time-limited URL, avoiding passwords in chats or emails.
 
@@ -165,16 +165,19 @@ When you enable reCAPTCHA in the plugin settings, it will send user data, such a
 
 == Upgrade Notice ==
 
+= 1.9.1 =
+Updates WordPress tested-up-to metadata to 7.1.
+
 = 1.9.0 =
 Adds admin settings for default expiration and max views, consolidates form filters, and improves autoload performance.
 
 = 1.8.0 =
 Adds manual delete feature with rate limiting, new customization filters, and developer documentation.
 
-= 1.7.0 =
-Add autogrow on view secret, fix an encoding bug, add validation warnings, and validation warning filters.
-
 == Changelog ==
+
+= 1.9.1 - 16th November 2026 =
+* Updated WordPress tested-up-to metadata to 7.1.
 
 = 1.9.0 - 16th December 2025 =
 * Added admin settings for default expiration date and max views (Settings → RunThings Secrets → Advanced)
