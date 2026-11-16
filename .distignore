@@ -1,17 +1,24 @@
 # Ignore development files
 .wordpress-org/
-.github/
+.runthings/
 .git/
+.github/
+.gitignore
 node_modules/
 tests/
 build/
 .distignore
-.gitignore
+.gitattributes
 BUILD.md
+build.md
 
 # Ignore configuration files
+.editorconfig
+.prettier.js
 *.yml
 *.lock
+package.json
+package-lock.json
 
 # Ignore build scripts and macOS file system files
 /bin/

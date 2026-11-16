@@ -14,18 +14,18 @@ composer dump-autoload
 
 ## Release Build
 
-Update readme.md changelog.
-Update readme.txt changelog, upgrade notice, and stable tag.
+1. `rtp-build --changelog` to copy to clipboard
 
-Update runthings-secrets.php version number, and define.
-Update readme.txt stable tag.
+2. Paste changelog prompt into agent and run
 
-Don't commit before running the build script (it will generate pot files)
+3. Set the release version in:
 
-```bash
-./bin/build-zip.sh
-```
+   - The `Version` plugin header in root file
+   - The define or class var in the root file
+   - The `Stable tag` in `readme.txt`.
 
-**Note:** No npm pipeline. Script runs `composer dump-autoload` automatically.
+   Leave these version changes uncommitted.
 
-**Output:** `build/runthings-secrets.zip`
+4. `rtp-build`
+
+   **Note:** No npm pipeline. Script runs `composer dump-autoload` automatically.
